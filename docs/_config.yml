@@ -1,0 +1,10 @@
+title: Harness Atlas
+description: 面向 Agent Harness 的公开知识图谱与系统课程
+lang: zh-CN
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+exclude:
+  - README.md
