@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Harness Atlas</title>
+  <meta name="description" content="面向 Agent Harness 的公开知识图谱与系统课程。">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="./" aria-label="Harness Atlas Home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>HARNESS_ATLAS</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#why">WHY</a>
+        <a href="#architecture">ARCH</a>
+        <a href="#course">COURSE</a>
+        <a href="en.html">EN</a>
+        <a href="https://github.com/ceasarXuu/harness-atlas">GITHUB</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <span class="badge">SYSTEM / AGENT / HARNESS</span>
+          <h1 class="glitch">Harness<br>Atlas</h1>
+          <p class="lead">面向 Agent Harness 的公开知识图谱与系统课程。用软件工程视角解释 AI Agent 背后的运行环境、架构模式与工程实践。</p>
+          <p class="hero-copy">项目关注的不是单一工具，而是 AI Agent 产品背后的通用工程范式：如何把上下文、工具、状态、记忆、规划、评估、人类在环和治理机制组合成可运行、可控制、可评估的 Agent 系统。</p>
+          <div class="actions">
+            <a class="cta primary" href="#course">ENTER ATLAS</a>
+            <a class="cta" href="https://github.com/ceasarXuu/harness-atlas">VIEW SOURCE</a>
+          </div>
+        </div>
+
+        <aside class="system-card" aria-label="Agent Harness runtime trace">
+          <div class="system-head">
+            <span>runtime.trace</span>
+            <span>v0.1</span>
+          </div>
+          <div class="system-body">
+            <div class="trace">
+              <div class="trace-row"><strong>MODEL</strong><span>reasoning / generation</span></div>
+              <div class="trace-row"><strong>CONTEXT</strong><span>select / compress / inject</span></div>
+              <div class="trace-row"><strong>TOOLS</strong><span>shell / files / browser / api</span></div>
+              <div class="trace-row"><strong>STATE</strong><span>task / session / project</span></div>
+              <div class="trace-row"><strong>EVAL</strong><span>tests / review / metrics</span></div>
+              <div class="trace-row"><strong>POLICY</strong><span>permission / audit / risk</span></div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="why" class="section">
+        <p class="section-kicker">WHY HARNESS MATTERS</p>
+        <h2>模型能力不等于工程能力</h2>
+        <p class="section-intro">大模型具备推理和生成能力，但真实工程任务还需要上下文管理、工具执行、状态跟踪、测试验证、权限控制和人机协作。Harness 的价值在于把模型能力转化为工程能力。</p>
+        <div class="compare">
+          <div class="panel">
+            <h3>WITHOUT HARNESS</h3>
+            <ul>
+              <li>一次性 Prompt</li>
+              <li>上下文杂乱</li>
+              <li>手动调用工具</li>
+              <li>任务状态不清晰</li>
+              <li>输出难验证</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3>WITH HARNESS</h3>
+            <ul>
+              <li>可复用工作流</li>
+              <li>可管理上下文窗口</li>
+              <li>可控工具编排</li>
+              <li>显式计划与执行状态</li>
+              <li>测试、审查与反馈闭环</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="architecture" class="section">
+        <p class="section-kicker">ARCHITECTURE MATRIX</p>
+        <h2>Agent Harness 的核心组件</h2>
+        <p class="section-intro">一个实用的 Harness 会把上下文、工具、状态、记忆、规划、评估、人类监督和治理机制组合成统一的运行环境。</p>
+        <div class="matrix">
+          <div class="cell"><span>01</span><h3>Context</h3><p>上下文选择、压缩、注入、刷新。</p></div>
+          <div class="cell"><span>02</span><h3>Tools</h3><p>工具调用、权限控制、失败恢复。</p></div>
+          <div class="cell"><span>03</span><h3>State</h3><p>任务、文件、会话和项目状态。</p></div>
+          <div class="cell"><span>04</span><h3>Planning</h3><p>目标拆解、动作执行、结果观察。</p></div>
+          <div class="cell"><span>05</span><h3>Memory</h3><p>项目知识、历史决策、团队规范。</p></div>
+          <div class="cell"><span>06</span><h3>Evaluation</h3><p>测试、审查、Benchmark、指标。</p></div>
+          <div class="cell"><span>07</span><h3>Human</h3><p>审批、干预、监督和协同决策。</p></div>
+          <div class="cell"><span>08</span><h3>Governance</h3><p>安全边界、审计、成本和风险。</p></div>
+        </div>
+      </section>
+
+      <section id="course" class="section">
+        <p class="section-kicker">COURSE MAP</p>
+        <h2>从 AI Coding 工具到完整工程级 Harness</h2>
+        <p class="section-intro">Harness Atlas 从具体的 AI Coding 场景切入，逐步扩展到个人、团队和企业级软件工程系统。</p>
+        <div class="course">
+          <div class="row"><strong>00</strong><div><h3>引言</h3><p>为什么 Agent Harness 重要？它解决什么问题？</p></div></div>
+          <div class="row"><strong>01</strong><div><h3>Harness 定义</h3><p>什么是 Harness？什么不是 Harness？边界在哪里？</p></div></div>
+          <div class="row"><strong>02</strong><div><h3>Coding Agent Harness</h3><p>当前 AI Coding 工具如何组织上下文、工具、执行和反馈。</p></div></div>
+          <div class="row"><strong>03</strong><div><h3>Harness 架构</h3><p>实用 Harness 系统的核心组件与系统设计原则。</p></div></div>
+          <div class="row"><strong>04</strong><div><h3>工程级 Harness</h3><p>从编码辅助扩展到需求、设计、测试、交付、运维和治理。</p></div></div>
+          <div class="row"><strong>05</strong><div><h3>评估与 Benchmark</h3><p>衡量生产力、质量、可靠性和工作流有效性。</p></div></div>
+          <div class="row"><strong>06</strong><div><h3>个人 Harness</h3><p>个人开发者和独立开发者如何设计自己的 Harness。</p></div></div>
+          <div class="row"><strong>07</strong><div><h3>企业 Harness</h3><p>如何接入团队流程、权限、审计、知识库和工程平台。</p></div></div>
+          <div class="row"><strong>08</strong><div><h3>未来方向</h3><p>Agent Harness 产品、平台、生态和标准的长期演进。</p></div></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="section-kicker">AUDIENCE</p>
+        <h2>适合读者</h2>
+        <div class="matrix">
+          <div class="cell"><span>DEV</span><h3>开发者</h3><p>正在使用 AI Coding 工具，希望理解背后机制。</p></div>
+          <div class="cell"><span>INDIE</span><h3>独立开发者</h3><p>构建 AI 原生工作流和个人 Harness。</p></div>
+          <div class="cell"><span>PM</span><h3>产品经理</h3><p>设计 Agent 产品、Workflow 和工具系统。</p></div>
+          <div class="cell"><span>TEAM</span><h3>工程团队</h3><p>将 AI Agent 引入研发流程与组织系统。</p></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>HARNESS_ATLAS / CC BY 4.0 + MIT</span>
+      <span>MAINTAINED BY ceasarXuu</span>
+    </footer>
+  </div>
+</body>
+</html>
