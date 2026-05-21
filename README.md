@@ -1,95 +1,128 @@
 # Harness Atlas
 
-> A public course and knowledge atlas for understanding Agent Harness.
+> A public knowledge atlas for understanding Agent Harness, AI Coding, and software engineering in the age of AI agents.
 
-**Harness Atlas** 是一个面向开发者、产品经理、AI Agent 实践者的软件工程科普课程项目，目标是系统解释 **Agent Harness** 的概念、架构、工程实践与未来演化方向。
+**Harness Atlas** 是一个面向开发者、产品经理、AI Agent 实践者与软件工程团队的公开知识项目，系统介绍 **Agent Harness** 的概念、架构、工程实践与发展趋势。
 
-这个仓库不是单纯介绍某一个 Coding Agent 工具，而是试图从更高层抽象 Agent Harness：它如何把软件工程中的需求分析、设计、开发、测试、交付、运维、反馈闭环等能力，具象化为可运行、可组合、可评估的工程系统。
+Agent Harness 可以理解为围绕大模型构建的工程化运行环境。它负责组织上下文、调度工具、管理状态、约束行为、执行任务、接收反馈，并让 Agent 能够在真实软件工程流程中稳定工作。
 
----
-
-## 核心观点
-
-1. **Harness 是软件工程思想在 AI Agent 时代的具象化。**  
-   模型本身提供智能能力，但 Harness 决定智能如何被组织、约束、调度和落地。
-
-2. **当前 Agent Harness 的主流形态由 Coding Agent 引领。**  
-   Codex、Claude Code、OpenCode 等工具主要体现的是软件工程中“研发工程师”这一角色切片。
-
-3. **未来完整的 Harness 会覆盖更长的软件工程生命周期。**  
-   它不仅包含代码生成，还会延伸到需求分析、架构设计、任务管理、测试验证、缺陷追踪、交付运维等环节。
-
-4. **Harness 会走向多样化、个性化和企业化。**  
-   不同个人、团队、企业会根据自己的流程、工具链、知识库和交付标准，构建不同形态的 Harness。
+Harness Atlas 关注的不只是某一个 Coding Agent 工具，而是更底层的工程范式：如何把需求分析、设计、开发、测试、交付、运维、反馈闭环等软件工程能力，组织成可运行、可组合、可评估的 Agent 系统。
 
 ---
 
-## 课程对象
+## Why Harness Matters
 
-本课程适合：
+大模型提供了智能能力，但模型本身并不等于完整的软件工程能力。
 
-- 想系统理解 AI Agent 工程化的人
-- 正在使用 Codex、Claude Code、OpenCode 等 Coding Agent 的开发者
-- 希望设计 Agent 产品或 Agent Workflow 的产品经理
-- 关注 AI Coding、AI Software Engineering、Agentic Workflow 的独立开发者
-- 希望把 AI Agent 引入团队研发流程的软件工程管理者
+在真实工程场景中，Agent 需要面对：
+
+- 复杂上下文
+- 多工具协同
+- 长任务状态管理
+- 文件系统与代码仓库操作
+- 测试、验证与回滚
+- 人类审批与协作
+- 权限、安全、审计与成本控制
+- 团队流程、规范与知识库接入
+
+**Harness 的价值在于将模型能力转化为可控、可复用、可验证的工程执行能力。**
 
 ---
 
-## 课程结构
+## Core Ideas
 
-计划按照以下模块逐步展开：
+1. **Harness is the embodiment of software engineering thinking in the age of AI agents.**  
+   Models provide intelligence; Harness defines how that intelligence is organized, constrained, orchestrated, and delivered.
 
-| 模块 | 主题 | 说明 |
+2. **Current Agent Harness products are led by Coding Agents.**  
+   Tools such as Codex, Claude Code, and OpenCode represent an early but important slice of software engineering: the developer workflow.
+
+3. **Future Harness systems will cover a broader engineering lifecycle.**  
+   Agent Harness will extend from code generation to requirement analysis, architecture design, task management, testing, delivery, operations, and feedback loops.
+
+4. **Harness will become diverse, personalized, and organization-specific.**  
+   Individuals, teams, and companies will build Harness systems around their own workflows, toolchains, knowledge bases, policies, and delivery standards.
+
+---
+
+## What This Project Covers
+
+Harness Atlas covers the following topics:
+
+| Area | Description |
+|---|---|
+| Agent Harness Basics | Definitions, boundaries, core concepts, and terminology |
+| Coding Agent Harness | How current Coding Agent tools organize context, tools, execution, and feedback |
+| Harness Architecture | Context, tools, state, memory, workflow, policy, evaluation, and governance |
+| Software Engineering Lifecycle | How Harness can support requirement, design, development, testing, delivery, and operations |
+| Evaluation & Benchmarking | How to evaluate whether a Harness improves productivity, quality, and reliability |
+| Personal Harness | How individual developers can build practical Harness workflows |
+| Enterprise Harness | How teams and organizations can integrate Harness into engineering systems |
+| Future Directions | Possible evolution of Agent Harness products, platforms, and ecosystems |
+
+---
+
+## Target Readers
+
+Harness Atlas is designed for:
+
+- Developers using AI Coding tools
+- Independent developers building AI-native workflows
+- Product managers designing Agent products
+- Engineering managers introducing AI Agent systems into teams
+- Researchers and practitioners interested in AI software engineering
+- Anyone trying to understand the infrastructure behind Agentic workflows
+
+---
+
+## Course Map
+
+| Module | Topic | Description |
 |---|---|---|
-| 00 | Introduction | 为什么需要理解 Agent Harness |
-| 01 | What is Harness | Harness 的定义、边界与核心组成 |
-| 02 | Coding Agent Harness | 从 Codex、Claude Code、OpenCode 理解当前主流形态 |
-| 03 | Harness Architecture | Context、Tool、State、Memory、Workflow、Policy 等核心架构要素 |
-| 04 | Engineering Harness | 从编码工具扩展到完整软件工程体系 |
-| 05 | Evaluation & Benchmark | 如何评估 Harness 是否真的提升效率和质量 |
-| 06 | Personal Harness | 个人开发者如何构建适合自己的 Harness |
-| 07 | Enterprise Harness | 企业级 Harness 的流程、权限、审计、知识库与协作问题 |
-| 08 | Future Directions | Agent Harness 的未来形态与可能的产业格局 |
+| 00 | Introduction | Why Agent Harness matters |
+| 01 | What is Harness | Definitions, scope, and boundaries |
+| 02 | Coding Agent Harness | Current mainstream Harness patterns in AI Coding tools |
+| 03 | Harness Architecture | Core components and system design principles |
+| 04 | Engineering Harness | From coding tools to full software engineering systems |
+| 05 | Evaluation & Benchmark | Metrics, benchmarks, experiments, and feedback loops |
+| 06 | Personal Harness | Harness design for individual developers |
+| 07 | Enterprise Harness | Harness design for teams and organizations |
+| 08 | Future Directions | Long-term product, platform, and ecosystem evolution |
 
 ---
 
-## 什么是 Agent Harness？
+## Key Components of Agent Harness
 
-在本课程中，**Agent Harness** 暂时定义为：
+A typical Agent Harness may include:
 
-> 围绕大模型构建的一套工程化运行环境，用于组织上下文、调度工具、管理状态、约束行为、执行任务、接收反馈，并让 Agent 能够在真实软件工程流程中稳定工作。
-
-一个典型的 Agent Harness 可能包含：
-
-- **Context Management**：上下文收集、压缩、选择与注入
-- **Tool Orchestration**：工具调用、权限控制、错误恢复
-- **State Management**：任务状态、文件状态、执行状态、会话状态
-- **Planning & Execution Loop**：计划、执行、观察、修正的闭环
-- **Memory / Knowledge Integration**：项目知识、团队规范、历史经验的接入
-- **Evaluation & Feedback**：结果验证、测试、Benchmark、人工反馈
-- **Human-in-the-loop**：人类审批、干预、监督和协作
-- **Governance**：安全边界、审计、权限、成本和风险控制
+- **Context Management**: collecting, selecting, compressing, and injecting context
+- **Tool Orchestration**: invoking tools, handling permissions, and recovering from errors
+- **State Management**: tracking task state, file state, execution state, and session state
+- **Planning & Execution Loop**: planning, acting, observing, and revising
+- **Memory & Knowledge Integration**: connecting project knowledge, team conventions, and historical decisions
+- **Evaluation & Feedback**: validating outputs through tests, benchmarks, reviews, and human feedback
+- **Human-in-the-loop**: enabling approval, intervention, supervision, and collaboration
+- **Governance**: managing security boundaries, auditability, cost, and operational risk
 
 ---
 
-## 内容形式
+## Content Formats
 
-本仓库后续会逐步补充：
+The project may include:
 
-- 科普文章
-- 架构图
-- Mermaid 图
-- 案例分析
-- 对比表
-- 工程实践清单
-- 课程讲义
-- Prompt / Skill / Workflow 示例
-- Agent Harness 设计模板
+- Concept explainers
+- Architecture diagrams
+- Mermaid diagrams
+- Case studies
+- Comparison tables
+- Engineering checklists
+- Course notes
+- Prompt, Skill, and Workflow examples
+- Agent Harness design templates
 
 ---
 
-## 建议目录结构
+## Repository Structure
 
 ```text
 harness-atlas/
@@ -111,40 +144,23 @@ harness-atlas/
 ├── diagrams/
 ├── examples/
 ├── references/
-└── LICENSE
+├── LICENSE
+└── LICENSE-CODE
 ```
-
----
-
-## 项目状态
-
-当前项目处于早期整理阶段。
-
-优先建设内容：
-
-- [ ] 完成课程大纲
-- [ ] 梳理 Agent Harness 概念图谱
-- [ ] 编写 Harness 基础定义文章
-- [ ] 对比 Codex、Claude Code、OpenCode 等典型 Coding Agent Harness
-- [ ] 绘制 Harness 架构图
-- [ ] 整理个人开发者 Harness 实践路线
-- [ ] 整理企业级 Harness 演进路线
 
 ---
 
 ## License
 
-建议采用双协议：
+Harness Atlas uses a dual-license model:
 
-- 课程内容、文章、图表、讲义、Mermaid 图等文本与视觉材料：**CC BY 4.0**
-- 代码示例、脚本、配置文件、Prompt 模板等工程材料：**MIT License**
+- Text content, articles, diagrams, course notes, and visual materials: **Creative Commons Attribution 4.0 International (CC BY 4.0)**
+- Code examples, scripts, configuration files, Prompt templates, and engineering materials: **MIT License**
 
-具体协议文件后续补充。
+This allows the educational content to be freely shared and adapted with attribution, while allowing engineering materials to be reused with minimal restrictions.
 
 ---
 
-## About
+## Maintainer
 
 Maintained by [ceasarXuu](https://github.com/ceasarXuu).
-
-This project is part of an ongoing exploration of Agent Harness, AI Coding, and software engineering in the age of AI agents.
