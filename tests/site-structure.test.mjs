@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, normalize } from "node:path";
 import test from "node:test";
+import { getNav, localeMessages, locales, navModel } from "../src/data/site.mjs";
 
 const root = new URL("..", import.meta.url).pathname;
 const docs = join(root, "docs");
@@ -204,6 +205,23 @@ test("Chinese and English top navigation have matching structure", () => {
     ["./", "course.html", "products.html", "./en.html#search", "index.html", "https://github.com/ceasarXuu/harness-atlas"],
   );
   assert.match(readDocsFile("en.html"), /<section id="search" class="section">/);
+});
+
+test("Top navigation is generated from one locale-aware schema", () => {
+  const keys = navModel.map((item) => item.key);
+
+  assert.deepEqual(keys, ["home", "course", "atlas", "search", "locale", "github"]);
+  assert.deepEqual(locales, ["zh-CN", "en"]);
+
+  for (const locale of locales) {
+    assert.deepEqual(Object.keys(localeMessages[locale].nav), keys, `${locale} nav copy should match nav schema keys`);
+    assert.deepEqual(getNav(locale).map((item) => item.key), keys, `${locale} generated nav should preserve schema order`);
+
+    for (const item of getNav(locale)) {
+      assert.ok(item.href, `${locale}.${item.key} should have a href`);
+      assert.ok(item.label, `${locale}.${item.key} should have a label`);
+    }
+  }
 });
 
 test("Chinese homepage merges industry updates into the first-scroll experience", () => {

@@ -1,20 +1,65 @@
-export const zhNav = [
-  { href: "./", label: "首页" },
-  { href: "course.html", label: "学习" },
-  { href: "products.html", label: "图谱" },
-  { href: "./#search", label: "搜索" },
-  { href: "en.html", label: "EN" },
-  { href: "https://github.com/ceasarXuu/harness-atlas", label: "GitHub" },
+export const locales = ["zh-CN", "en"];
+
+export const navModel = [
+  { key: "home", href: { "zh-CN": "./", en: "./" } },
+  { key: "course", href: { "zh-CN": "course.html", en: "course.html" } },
+  { key: "atlas", href: { "zh-CN": "products.html", en: "products.html" } },
+  { key: "search", href: { "zh-CN": "./#search", en: "./en.html#search" } },
+  { key: "locale", href: { "zh-CN": "en.html", en: "index.html" } },
+  {
+    key: "github",
+    href: {
+      "zh-CN": "https://github.com/ceasarXuu/harness-atlas",
+      en: "https://github.com/ceasarXuu/harness-atlas",
+    },
+  },
 ];
 
-export const enNav = [
-  { href: "./", label: "HOME" },
-  { href: "course.html", label: "COURSE" },
-  { href: "products.html", label: "ATLAS" },
-  { href: "./en.html#search", label: "SEARCH" },
-  { href: "index.html", label: "中文" },
-  { href: "https://github.com/ceasarXuu/harness-atlas", label: "GITHUB" },
-];
+export const localeMessages = {
+  "zh-CN": {
+    aria: {
+      brand: "Harness Atlas 首页",
+      nav: "主导航",
+    },
+    nav: {
+      home: "首页",
+      course: "学习",
+      atlas: "图谱",
+      search: "搜索",
+      locale: "EN",
+      github: "GitHub",
+    },
+  },
+  en: {
+    aria: {
+      brand: "Harness Atlas Home",
+      nav: "Main navigation",
+    },
+    nav: {
+      home: "HOME",
+      course: "COURSE",
+      atlas: "ATLAS",
+      search: "SEARCH",
+      locale: "中文",
+      github: "GITHUB",
+    },
+  },
+};
+
+export function getNav(locale) {
+  const messages = localeMessages[locale];
+  if (!messages) throw new Error(`Unsupported locale: ${locale}`);
+
+  return navModel.map((item) => ({
+    key: item.key,
+    href: item.href[locale],
+    label: messages.nav[item.key],
+  }));
+}
+
+export const navByLocale = Object.fromEntries(
+  locales.map((locale) => [locale, getNav(locale)]),
+);
 
 export const prefetchRoutes = [
   "course.html",

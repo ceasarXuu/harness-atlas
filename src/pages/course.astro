@@ -1,13 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CardGrid from "../components/CardGrid.astro";
-import { courseModules, glossaryTerms, zhNav } from "../data/site.mjs";
+import { courseModules, glossaryTerms, navByLocale } from "../data/site.mjs";
 ---
 
 <BaseLayout
   title="主线课程 · Harness Atlas"
   description="Harness Atlas 主线课程模块。"
-  nav={zhNav}
+  nav={navByLocale["zh-CN"]}
   footerLeft="HARNESS_ATLAS / 学习"
   footerRight="CC BY 4.0 + MIT"
   styles={["assets/css/learn.css"]}

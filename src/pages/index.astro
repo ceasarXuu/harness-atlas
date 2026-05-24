@@ -1,10 +1,10 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CardGrid from "../components/CardGrid.astro";
-import { homeSections, updates, zhNav } from "../data/site.mjs";
+import { homeSections, navByLocale, updates } from "../data/site.mjs";
 ---
 
-<BaseLayout title="Harness Atlas" description="面向 Agent Harness 的公开知识图谱与系统课程。" nav={zhNav}>
+<BaseLayout title="Harness Atlas" description="面向 Agent Harness 的公开知识图谱与系统课程。" nav={navByLocale["zh-CN"]}>
   <section class="hero home-hero">
     <div>
       <span class="badge">系统 / 智能体 / HARNESS</span>

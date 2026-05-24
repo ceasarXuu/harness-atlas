@@ -1,19 +1,19 @@
 ---
 import SiteHeader from "../components/SiteHeader.astro";
-import { prefetchRoutes, zhNav } from "../data/site.mjs";
+import { localeMessages, navByLocale, prefetchRoutes } from "../data/site.mjs";
 
 const {
   title = "Harness Atlas",
   description = "面向 Agent Harness 的公开知识图谱与系统课程。",
   lang = "zh-CN",
-  nav = zhNav,
+  nav = navByLocale["zh-CN"],
   footerLeft = "HARNESS_ATLAS / CC BY 4.0 + MIT",
   footerRight = "维护者：ceasarXuu",
   styles = [],
 } = Astro.props;
 
-const brandAriaLabel = lang === "en" ? "Harness Atlas Home" : "Harness Atlas 首页";
-const navAriaLabel = lang === "en" ? "Main navigation" : "主导航";
+const activeLocale = lang === "en" ? "en" : "zh-CN";
+const aria = localeMessages[activeLocale].aria;
 ---
 
 <!doctype html>
@@ -31,7 +31,7 @@ const navAriaLabel = lang === "en" ? "Main navigation" : "主导航";
 </head>
 <body>
   <div class="wrap">
-    <SiteHeader nav={nav} brandAriaLabel={brandAriaLabel} navAriaLabel={navAriaLabel} />
+    <SiteHeader nav={nav} brandAriaLabel={aria.brand} navAriaLabel={aria.nav} />
     <main>
       <slot />
     </main>

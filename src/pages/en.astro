@@ -1,13 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { enNav } from "../data/site.mjs";
+import { navByLocale } from "../data/site.mjs";
 ---
 
 <BaseLayout
   title="Harness Atlas"
   description="A public knowledge atlas and systematic course for understanding Agent Harness."
   lang="en"
-  nav={enNav}
+  nav={navByLocale.en}
   footerLeft="HARNESS_ATLAS / CC BY 4.0 + MIT"
   footerRight="MAINTAINED BY ceasarXuu"
 >

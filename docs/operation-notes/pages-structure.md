@@ -32,3 +32,4 @@ When updating the Chinese homepage, keep navigation labels, CTA buttons, section
 - Chinese pages should use `lang="zh-CN"`, Chinese navigation aria labels, Chinese card titles, and Chinese footer section names.
 - English-only UI labels such as `Official Docs`, `Frameworks`, `Comparison`, and `/ PRODUCTS` should not appear on Chinese pages.
 - The English page should use `lang="en"` and can keep the single `中文` language switch, but it must explicitly state that detailed section pages are currently maintained in Chinese until English section routes exist.
+- Top navigation must be generated from the single `navModel` schema in `src/data/site.mjs`; locales may only provide labels and per-locale href values through `localeMessages`.

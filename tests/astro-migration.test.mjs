@@ -63,7 +63,10 @@ test("Astro source uses shared layouts and data instead of raw HTML passthrough"
   assert.doesNotMatch(source, /RawPage|set:html|readFileSync/, "Astro source should not stream docs HTML");
 
   const siteData = read(join(src, "data/site.mjs"));
-  assert.match(siteData, /export const zhNav/, "Chinese nav should be centralized");
+  assert.match(siteData, /export const navModel/, "navigation structure should be centralized");
+  assert.match(siteData, /export const localeMessages/, "localized navigation copy should be centralized");
+  assert.match(siteData, /export function getNav/, "navigation should be generated from schema and locale messages");
+  assert.doesNotMatch(siteData, /export const (zhNav|enNav)/, "localized nav arrays should not be maintained by hand");
   assert.match(siteData, /export const sectionPages/, "section page metadata should be centralized");
   assert.match(siteData, /export const courseModules/, "course modules should be centralized");
 });
