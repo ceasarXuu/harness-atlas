@@ -17,30 +17,24 @@
       </a>
       <nav class="nav" aria-label="Main navigation">
         <a href="./">首页</a>
-        <a href="course.html">主线课程</a>
-        <a href="products.html">产品图谱</a>
-        <a href="standards.html">标准协议</a>
-        <a href="patterns.html">设计模式</a>
-        <a href="research.html">研究资料</a>
-        <a href="timeline.html">行业时间线</a>
-        <a href="glossary.html">术语表</a>
-        <a href="references.html">参考资料</a>
+        <a href="course.html">学习</a>
+        <a href="products.html">图谱</a>
+        <a href="#search">搜索</a>
         <a href="en.html">EN</a>
         <a href="https://github.com/ceasarXuu/harness-atlas">GitHub</a>
       </nav>
     </header>
 
     <main>
-      <section class="hero">
+      <section class="hero home-hero">
         <div>
           <span class="badge">系统 / 智能体 / HARNESS</span>
           <h1 class="glitch">Harness<br>Atlas</h1>
           <p class="lead">面向 Agent Harness 的公开知识图谱与系统课程。用软件工程视角解释 AI Agent 背后的运行环境、架构模式与工程实践。</p>
           <p class="hero-copy">项目关注的不是单一工具，而是 AI Agent 产品背后的通用工程范式：如何把上下文、工具、状态、记忆、规划、评估、人类在环和治理机制组合成可运行、可控制、可评估的 Agent 系统。</p>
           <div class="actions">
-            <a class="cta primary" href="course.html">进入图谱</a>
-            <a class="cta" href="products.html">查看产品图谱</a>
-            <a class="cta" href="https://github.com/ceasarXuu/harness-atlas">查看源码</a>
+            <a class="cta primary" href="course.html">开始学习</a>
+            <a class="cta" href="products.html">查看知识图谱</a>
           </div>
         </div>
 
@@ -62,79 +56,62 @@
         </aside>
       </section>
 
-      <section id="why" class="section">
-        <p class="section-kicker">为什么需要 Harness</p>
-        <h2>模型能力不等于工程能力</h2>
-        <p class="section-intro">大模型具备推理和生成能力，但真实工程任务还需要上下文管理、工具执行、状态跟踪、测试验证、权限控制和人机协作。Harness 的价值在于把模型能力转化为工程能力。</p>
-        <div class="compare">
-          <div class="panel">
-            <h3>没有 Harness</h3>
-            <ul>
-              <li>一次性 Prompt</li>
-              <li>上下文杂乱</li>
-              <li>手动调用工具</li>
-              <li>任务状态不清晰</li>
-              <li>输出难验证</li>
-            </ul>
-          </div>
-          <div class="panel">
-            <h3>有 Harness</h3>
-            <ul>
-              <li>可复用工作流</li>
-              <li>可管理上下文窗口</li>
-              <li>可控工具编排</li>
-              <li>显式计划与执行状态</li>
-              <li>测试、审查与反馈闭环</li>
-            </ul>
-          </div>
+      <section id="industry" class="section updates-flow">
+        <p class="section-kicker">最新行业动态</p>
+        <h2>从动态里看 Harness 如何演进</h2>
+        <p class="section-intro">持续跟踪 Agent Harness 相关的产品、协议、研究和工程实践变化，让学习路径保持和真实生态同步。</p>
+        <div class="timeline-list">
+          <a class="update-row" href="timeline.html">
+            <strong>2026</strong>
+            <div><h3>Coding Agent 产品能力变化</h3><p>关注上下文、工具调用、任务状态、权限控制和评估闭环的新能力。</p></div>
+            <span>产品更新</span>
+          </a>
+          <a class="update-row" href="timeline.html">
+            <strong>2026</strong>
+            <div><h3>MCP、Skills 与 Tool Calling 生态进展</h3><p>观察协议、可迁移能力格式和工具接入方式如何影响 Harness 架构。</p></div>
+            <span>协议生态</span>
+          </a>
+          <a class="update-row" href="research.html">
+            <strong>2026</strong>
+            <div><h3>Agent 评估与基准研究</h3><p>把评估方法、实验结论和局限沉淀为可复用的学习资料。</p></div>
+            <span>研究进展</span>
+          </a>
+        </div>
+        <div class="actions section-actions">
+          <a class="cta" href="timeline.html">查看全部动态</a>
         </div>
       </section>
 
-      <section id="architecture" class="section">
-        <p class="section-kicker">架构组件矩阵</p>
-        <h2>Agent Harness 的核心组件</h2>
-        <p class="section-intro">一个实用的 Harness 会把上下文、工具、状态、记忆、规划、评估、人类监督和治理机制组合成统一的运行环境。</p>
+      <section id="learn" class="section">
+        <p class="section-kicker">学习路径</p>
+        <h2>从入门到系统理解 Agent Harness</h2>
+        <p class="section-intro">学习区把主线课程、术语表和实践检查清单放在一起，适合按目录逐步阅读，也适合随时回查概念边界。</p>
         <div class="matrix">
-          <div class="cell"><span>01</span><h3>上下文</h3><p>上下文选择、压缩、注入、刷新。</p></div>
-          <div class="cell"><span>02</span><h3>工具</h3><p>工具调用、权限控制、失败恢复。</p></div>
-          <div class="cell"><span>03</span><h3>状态</h3><p>任务、文件、会话和项目状态。</p></div>
-          <div class="cell"><span>04</span><h3>规划</h3><p>目标拆解、动作执行、结果观察。</p></div>
-          <div class="cell"><span>05</span><h3>记忆</h3><p>项目知识、历史决策、团队规范。</p></div>
-          <div class="cell"><span>06</span><h3>评估</h3><p>测试、审查、基准、指标。</p></div>
-          <div class="cell"><span>07</span><h3>人类协作</h3><p>审批、干预、监督和协同决策。</p></div>
-          <div class="cell"><span>08</span><h3>治理</h3><p>安全边界、审计、成本和风险。</p></div>
-        </div>
-      </section>
-
-      <section id="course" class="section">
-        <p class="section-kicker">课程地图</p>
-        <h2>从 AI Coding 工具到完整工程级 Harness</h2>
-        <p class="section-intro">Harness Atlas 从具体的 AI Coding 场景切入，逐步扩展到个人、团队和企业级软件工程系统。</p>
-        <div class="course">
-          <div class="row"><strong>00</strong><div><h3>引言</h3><p>为什么 Agent Harness 重要？它解决什么问题？</p></div></div>
-          <div class="row"><strong>01</strong><div><h3>Harness 定义</h3><p>什么是 Harness？什么不是 Harness？边界在哪里？</p></div></div>
-          <div class="row"><strong>02</strong><div><h3>AI 编码 Harness</h3><p>当前 AI Coding 工具如何组织上下文、工具、执行和反馈。</p></div></div>
-          <div class="row"><strong>03</strong><div><h3>Harness 架构</h3><p>实用 Harness 系统的核心组件与系统设计原则。</p></div></div>
-          <div class="row"><strong>04</strong><div><h3>工程级 Harness</h3><p>从编码辅助扩展到需求、设计、测试、交付、运维和治理。</p></div></div>
-          <div class="row"><strong>05</strong><div><h3>评估与基准</h3><p>衡量生产力、质量、可靠性和工作流有效性。</p></div></div>
-          <div class="row"><strong>06</strong><div><h3>个人 Harness</h3><p>个人开发者和独立开发者如何设计自己的 Harness。</p></div></div>
-          <div class="row"><strong>07</strong><div><h3>企业 Harness</h3><p>如何接入团队流程、权限、审计、知识库和工程平台。</p></div></div>
-          <div class="row"><strong>08</strong><div><h3>未来方向</h3><p>Agent Harness 产品、平台、生态和标准的长期演进。</p></div></div>
-        </div>
-      </section>
-
-      <section class="section">
-        <p class="section-kicker">图谱分区</p>
-        <h2>不再只是一个主页</h2>
-        <p class="section-intro">Pages 站点现在把仓库里的课程、产品、标准、模式、研究、时间线、术语和参考资料拆成独立入口，方便按知识层级浏览。</p>
-        <div class="matrix">
-          <a class="cell" href="course.html"><span>课程</span><h3>主线课程</h3><p>系统讲解 Agent Harness 的核心概念、组件和工程实践。</p></a>
-          <a class="cell" href="products.html"><span>产品</span><h3>产品图谱</h3><p>整理 Coding Agent、框架、平台和横向能力矩阵。</p></a>
-          <a class="cell" href="standards.html"><span>标准</span><h3>标准与协议</h3><p>沉淀 MCP、AGENTS.md、Skills、Tool Calling 等接口规范。</p></a>
-          <a class="cell" href="patterns.html"><span>模式</span><h3>设计模式</h3><p>把产品拆解和工程经验抽象成可复用 Harness 模式。</p></a>
-          <a class="cell" href="research.html"><span>研究</span><h3>研究资料</h3><p>收集论文、实验、理论和研究卡片。</p></a>
-          <a class="cell" href="timeline.html"><span>时间线</span><h3>行业进展</h3><p>按时间追踪对 Harness 生态有影响的事件。</p></a>
+          <a class="cell" href="course.html"><span>课程</span><h3>主线课程</h3><p>按照定义、组件、运行、评估、治理和未来方向系统学习。</p></a>
+          <a class="cell" href="course.html"><span>路线</span><h3>学习路线</h3><p>把课程拆成入门、核心、运行机制和系统治理几个阶段。</p></a>
           <a class="cell" href="glossary.html"><span>术语</span><h3>术语表</h3><p>统一 Agent、Harness、Tool、Skill、MCP 等概念边界。</p></a>
+          <a class="cell" href="patterns.html"><span>实践</span><h3>实践检查清单</h3><p>把设计模式转化为可落地、可复用、可验证的工程检查项。</p></a>
+        </div>
+      </section>
+
+      <section id="atlas" class="section">
+        <p class="section-kicker">知识图谱</p>
+        <h2>把产品、协议和模式连接起来</h2>
+        <p class="section-intro">图谱区关注不同产品和协议背后的 Harness 设计，把上下文、工具、状态、评估和治理能力串成可比较的结构。</p>
+        <div class="matrix">
+          <a class="cell" href="products.html"><span>产品</span><h3>产品图谱</h3><p>整理 Coding Agent、框架、平台和横向能力矩阵。</p></a>
+          <a class="cell" href="standards.html"><span>协议</span><h3>标准协议</h3><p>沉淀 MCP、AGENTS.md、Skills、Tool Calling 等接口规范。</p></a>
+          <a class="cell" href="patterns.html"><span>模式</span><h3>设计模式</h3><p>把产品拆解和工程经验抽象成可复用 Harness 模式。</p></a>
+          <a class="cell" href="course.html"><span>架构</span><h3>核心组件</h3><p>从上下文、工具、状态、记忆、规划、评估和治理理解系统组成。</p></a>
+        </div>
+      </section>
+
+      <section id="evidence" class="section">
+        <p class="section-kicker">研究与资料</p>
+        <h2>为课程和图谱提供证据层</h2>
+        <p class="section-intro">研究资料和参考资料用于沉淀原始信源、实验结论、论文观点和产品文档，避免课程内容只停留在概念判断。</p>
+        <div class="matrix compact-matrix">
+          <a class="cell" href="research.html"><span>研究</span><h3>研究资料</h3><p>收集论文、实验、理论和研究卡片。</p></a>
           <a class="cell" href="references.html"><span>参考</span><h3>参考资料</h3><p>维护官方文档、论文、博客和 Changelog 原始索引。</p></a>
         </div>
       </section>
@@ -148,6 +125,12 @@
           <div class="cell"><span>产品</span><h3>产品经理</h3><p>设计 Agent 产品、Workflow 和工具系统。</p></div>
           <div class="cell"><span>团队</span><h3>工程团队</h3><p>将 AI Agent 引入研发流程与组织系统。</p></div>
         </div>
+      </section>
+
+      <section id="search" class="section">
+        <p class="section-kicker">搜索</p>
+        <h2>搜索入口</h2>
+        <p class="section-intro">后续接入静态搜索后，这里会直接检索课程、图谱、动态、术语和参考资料。当前版本先保留入口位置。</p>
       </section>
     </main>
 

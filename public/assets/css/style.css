@@ -129,6 +129,11 @@ a {
   padding: 70px 0 86px;
 }
 
+.home-hero {
+  min-height: clamp(500px, calc(100vh - 230px), 680px);
+  padding: 50px 0 54px;
+}
+
 .badge {
   display: inline-block;
   margin-bottom: 22px;
@@ -242,6 +247,10 @@ a {
   border-top: 1px solid var(--line);
 }
 
+.updates-flow {
+  padding-top: 44px;
+}
+
 .section-kicker {
   margin: 0 0 12px;
   color: var(--muted);
@@ -325,6 +334,44 @@ h2 {
   border-top: 1px solid #555;
 }
 
+.timeline-list {
+  margin-top: 34px;
+  border-top: 1px solid #555;
+}
+
+.update-row {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) 124px;
+  gap: 18px;
+  align-items: start;
+  padding: 18px 0;
+  border-bottom: 1px solid #555;
+}
+
+.update-row strong,
+.update-row span {
+  color: var(--muted);
+  font: 700 12px/1.5 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.update-row h3 {
+  margin: 0 0 5px;
+  font-size: 18px;
+}
+
+.update-row p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.section-actions {
+  margin-top: 28px;
+}
+
+.compact-matrix {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .row {
   display: grid;
   grid-template-columns: 92px 1fr;
@@ -389,6 +436,14 @@ h2 {
     padding: 44px 0 62px;
   }
 
+  .home-hero {
+    padding-bottom: 42px;
+  }
+
+  .home-hero .system-card {
+    display: none;
+  }
+
   .glitch {
     font-size: 54px;
   }
@@ -398,7 +453,12 @@ h2 {
   }
 
   .row,
-  .trace-row {
+  .trace-row,
+  .update-row {
+    grid-template-columns: 1fr;
+  }
+
+  .compact-matrix {
     grid-template-columns: 1fr;
   }
 }

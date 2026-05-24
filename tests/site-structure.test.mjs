@@ -116,9 +116,29 @@ test("Chinese homepage localizes visible navigation, buttons, and section labels
     "INDIE",
     "PM",
     "TEAM",
+    "行业时间线",
   ];
 
   for (const label of forbiddenEnglishUi) {
     assert.doesNotMatch(visibleText, new RegExp(`\\b${label}\\b`), `${label} should be localized on the Chinese homepage`);
   }
+});
+
+test("Chinese homepage merges industry updates into the first-scroll experience", () => {
+  const html = readDocsFile("index.html");
+  const nav = html.match(/<nav class="nav"[\s\S]*?<\/nav>/)?.[0] ?? "";
+  const navLabels = [...nav.matchAll(/<a [^>]*>([^<]+)<\/a>/g)].map((match) => match[1]);
+
+  assert.deepEqual(navLabels, ["首页", "学习", "图谱", "搜索", "EN", "GitHub"]);
+  assert.doesNotMatch(nav, />术语表</);
+  assert.doesNotMatch(nav, />行业动态</);
+
+  assert.match(html, /<section class="hero home-hero">/, "homepage hero should use peek-sized hero class");
+  assert.match(
+    html,
+    /<\/section>\s*<section id="industry" class="section updates-flow">/,
+    "industry updates should immediately follow the hero",
+  );
+  assert.match(html, /<p class="section-kicker">最新行业动态<\/p>/);
+  assert.match(html, /href="timeline\.html"/, "homepage should still link to the full updates page");
 });
