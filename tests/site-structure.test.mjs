@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, normalize } from "node:path";
 import test from "node:test";
 import { getNav, localeMessages, locales, navModel } from "../src/data/site.mjs";
@@ -44,6 +44,13 @@ function visibleText(html) {
     .replace(/<[^>]+>/g, "\n")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function sourceFiles(dir) {
+  return readdirSync(dir).flatMap((entry) => {
+    const path = join(dir, entry);
+    return statSync(path).isDirectory() ? sourceFiles(path) : [path];
+  });
 }
 
 test("Pages site exposes first-class sections beyond the homepage", () => {
@@ -203,6 +210,50 @@ test("English page has an explicit language boundary", () => {
   assert.match(html, /aria-label="Main navigation"/, "English page should keep English navigation aria label");
   assert.match(html, /Detailed section pages are currently maintained in Chinese\./);
   assert.doesNotMatch(textWithoutLanguageSwitch, /[\u4e00-\u9fff]/, "English page should not leak Chinese UI text beyond the language switch");
+});
+
+test("Localized homepages use the same component structure", () => {
+  const zh = readDocsFile("index.html");
+  const en = readDocsFile("en.html");
+  const sectionSignature = (html) => {
+    return [...html.matchAll(/<section(?: id="([^"]+)")? class="([^"]+)"/g)]
+      .map((match) => ({ id: match[1] ?? "", className: match[2] }));
+  };
+  const cardCounts = (html) => {
+    return [...html.matchAll(/<section(?: id="([^"]+)")? class="[^"]*"[\s\S]*?<\/section>/g)]
+      .map((match) => ({
+        id: match[1] ?? "",
+        cards: [...match[0].matchAll(/class="cell"/g)].length,
+        updates: [...match[0].matchAll(/class="update-row"/g)].length,
+      }));
+  };
+
+  assert.deepEqual(sectionSignature(zh), sectionSignature(en), "localized homepages should render the same sections in the same order");
+  assert.deepEqual(cardCounts(zh), cardCounts(en), "localized homepages should render the same repeated component counts");
+  assert.doesNotMatch(en, /VIEW SOURCE/, "English homepage should not add a language-only source button");
+});
+
+test("Astro pages, layouts, and components do not hard-code localized UI copy", () => {
+  const source = [
+    ...sourceFiles(join(root, "src/pages")),
+    ...sourceFiles(join(root, "src/components")),
+    ...sourceFiles(join(root, "src/layouts")),
+  ];
+  const forbiddenUiCopy = [
+    /[\u4e00-\u9fff]/,
+    /VIEW SOURCE/,
+    /ENTER ATLAS/,
+    /PRODUCT MAP/,
+    /MAINTAINED BY/,
+    /Detailed section pages are currently maintained in Chinese/,
+  ];
+
+  for (const file of source) {
+    const text = readFileSync(file, "utf8");
+    for (const pattern of forbiddenUiCopy) {
+      assert.doesNotMatch(text, pattern, `${file} should receive localized UI copy from data, not hard-code it`);
+    }
+  }
 });
 
 test("Chinese and English top navigation have matching structure", () => {

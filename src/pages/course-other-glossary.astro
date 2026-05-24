@@ -1,16 +1,17 @@
 ---
 import CardGrid from "../components/CardGrid.astro";
 import LearningLayout from "../components/LearningLayout.astro";
-import { glossaryTerms } from "../data/site.mjs";
+import { glossaryPage } from "../data/site.mjs";
 ---
 
 <LearningLayout
-  active="glossary"
-  title="术语表 · Harness Atlas"
-  description="Agent Harness 相关术语解释。"
-  kicker="学习 / 术语表"
-  heading="术语表"
-  intro="术语表作为学习目录中“其他”下面的一节，用于统一 Agent、Harness、Tool、Skill、Workflow、MCP、Subagent 等概念边界。"
+  active={glossaryPage.active}
+  locale={glossaryPage.locale}
+  title={glossaryPage.title}
+  description={glossaryPage.description}
+  kicker={glossaryPage.kicker}
+  heading={glossaryPage.heading}
+  intro={glossaryPage.intro}
 >
-  <CardGrid cards={glossaryTerms} compact />
+  <CardGrid cards={glossaryPage.cards} compact />
 </LearningLayout>

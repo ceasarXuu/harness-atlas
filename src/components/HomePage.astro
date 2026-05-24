@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CardGrid from "./CardGrid.astro";
+import { navByLocale } from "../data/site.mjs";
+import { homePages } from "../data/home.mjs";
+
+const { locale } = Astro.props;
+const page = homePages[locale];
+---
+
+<BaseLayout
+  title={page.title}
+  description={page.description}
+  lang={page.lang}
+  nav={navByLocale[locale]}
+  footerLeft={page.footerLeft}
+  footerRight={page.footerRight}
+>
+  <section class="hero home-hero">
+    <div>
+      <span class="badge">{page.hero.badge}</span>
+      <h1 class="glitch">Harness<br>Atlas</h1>
+      <p class="lead">{page.hero.lead}</p>
+      {page.hero.copy.map((copy) => <p class="hero-copy">{copy}</p>)}
+      <div class="actions">
+        {page.hero.actions.map(([href, label, primary]) => (
+          <a class:list={["cta", primary && "primary"]} href={href}>{label}</a>
+        ))}
+      </div>
+    </div>
+
+    <aside class="system-card" aria-label={page.hero.traceAria}>
+      <div class="system-head"><span>{page.hero.traceHead[0]}</span><span>{page.hero.traceHead[1]}</span></div>
+      <div class="system-body">
+        <div class="trace">
+          {page.hero.traceRows.map(([label, body]) => (
+            <div class="trace-row"><strong>{label}</strong><span>{body}</span></div>
+          ))}
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  {page.sections.map((section) => (
+    <section id={section.id} class={section.className}>
+      <p class="section-kicker">{section.kicker}</p>
+      <h2>{section.heading}</h2>
+      {section.intro && <p class="section-intro">{section.intro}</p>}
+      {section.updates && (
+        <div class="timeline-list">
+          {section.updates.map(([href, year, title, body, tag]) => (
+            <a class="update-row" href={href}>
+              <strong>{year}</strong>
+              <div><h3>{title}</h3><p>{body}</p></div>
+              <span>{tag}</span>
+            </a>
+          ))}
+        </div>
+      )}
+      {section.action && <div class="actions section-actions"><a class="cta" href={section.action[0]}>{section.action[1]}</a></div>}
+      {section.cards && <CardGrid cards={section.cards} compact={section.compact} />}
+    </section>
+  ))}
+</BaseLayout>

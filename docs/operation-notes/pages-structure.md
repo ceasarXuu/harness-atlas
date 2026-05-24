@@ -33,6 +33,8 @@ When updating the Chinese homepage, keep navigation labels, CTA buttons, section
 - English-only UI labels such as `Official Docs`, `Frameworks`, `Comparison`, and `/ PRODUCTS` should not appear on Chinese pages.
 - The English page should use `lang="en"` and can keep the single `中文` language switch, but it must explicitly state that detailed section pages are currently maintained in Chinese until English section routes exist.
 - Top navigation must be generated from the single `navModel` schema in `src/data/site.mjs`; locales may only provide labels and per-locale href values through `localeMessages`.
+- Astro pages, layouts, and components must not hard-code localized UI copy. Route files choose locale or data records; data files provide copy; shared components render the same element structure for every locale.
+- Localized homepage variants must share the same section order, class names, repeated card counts, update-row counts, and CTA structure. A language should never add a one-off component such as a source button.
 
 ## Learning Shell
 

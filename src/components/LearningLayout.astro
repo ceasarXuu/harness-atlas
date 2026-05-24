@@ -1,33 +1,36 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { courseLessons, learningOther, navByLocale } from "../data/site.mjs";
+import { courseLessons, learningChrome, learningOther, navByLocale } from "../data/site.mjs";
 
 const {
   active,
+  locale = "zh-CN",
   title,
   description,
   kicker,
   heading,
   intro,
 } = Astro.props;
+const chrome = learningChrome[locale];
 ---
 
 <BaseLayout
   title={title}
   description={description}
-  nav={navByLocale["zh-CN"]}
-  footerLeft="HARNESS_ATLAS / 学习"
-  footerRight="CC BY 4.0 + MIT"
+  lang={locale}
+  nav={navByLocale[locale]}
+  footerLeft={chrome.footerLeft}
+  footerRight={chrome.footerRight}
   styles={["assets/css/learn.css"]}
 >
   <section class="section learn-shell">
-    <aside class="learn-sidebar" aria-label="学习目录">
-      <p class="section-kicker">学习目录</p>
-      <nav class="learn-nav" aria-label="学习页目录导航">
+    <aside class="learn-sidebar" aria-label={chrome.sidebarAria}>
+      <p class="section-kicker">{chrome.sidebarKicker}</p>
+      <nav class="learn-nav" aria-label={chrome.directoryAria}>
         {courseLessons.map((lesson) => (
           <a class:list={[lesson.key === active && "active"]} href={lesson.href}><span>{lesson.num}</span>{lesson.title}</a>
         ))}
-        <p class="learn-nav-group">其他</p>
+        <p class="learn-nav-group">{chrome.otherGroup}</p>
         {learningOther.map((item) => (
           <a class:list={[item.key === active && "active"]} href={item.href}><span>{item.eyebrow}</span>{item.label}</a>
         ))}

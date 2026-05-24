@@ -156,6 +156,17 @@ export const learningOther = [
   { key: "glossary", eyebrow: "其他", label: "术语表", href: "course-other-glossary.html" },
 ];
 
+export const learningChrome = {
+  "zh-CN": {
+    footerLeft: "HARNESS_ATLAS / 学习",
+    footerRight: "CC BY 4.0 + MIT",
+    sidebarAria: "学习目录",
+    sidebarKicker: "学习目录",
+    directoryAria: "学习页目录导航",
+    otherGroup: "其他",
+  },
+};
+
 export const updates = [
   {
     year: "2026",
@@ -205,6 +216,27 @@ export const learningRoadmap = [
   ["演进", "未来方向", "跟踪行业动态、产品形态和标准生态的长期变化。"],
 ];
 
+export const courseLessonPages = courseLessons.map((lesson) => {
+  const isRoadmap = lesson.num === "00";
+  return {
+    key: lesson.key,
+    locale: "zh-CN",
+    title: `${lesson.title} · Harness Atlas`,
+    description: `Harness Atlas ${lesson.title}。`,
+    kicker: `学习 / ${lesson.title}`,
+    heading: lesson.title,
+    intro: lesson.body,
+    compact: !isRoadmap,
+    cards: isRoadmap
+      ? learningRoadmap
+      : [
+          ["目标", "本课目标", `理解 ${lesson.title} 在 Agent Harness 中解决的问题。`],
+          ["关注点", "关键边界", lesson.body],
+          ["输出", "学习产出", "能够把这一节内容映射到真实产品、协议或工程流程，并形成可复查的判断。"],
+        ],
+  };
+});
+
 export const glossaryTerms = [
   ["AGENT", "Agent", "基于模型、上下文、工具和反馈执行任务的行为主体。"],
   ["HARNESS", "Harness", "围绕 Agent 构建的运行时、控制、编排和治理层。"],
@@ -214,14 +246,27 @@ export const glossaryTerms = [
   ["SUB", "Subagent", "在主 Agent 或 Harness 编排下执行局部任务的 Agent。"],
 ];
 
+export const glossaryPage = {
+  active: "glossary",
+  locale: "zh-CN",
+  title: "术语表 · Harness Atlas",
+  description: "Agent Harness 相关术语解释。",
+  kicker: "学习 / 术语表",
+  heading: "术语表",
+  intro: "术语表作为学习目录中“其他”下面的一节，用于统一 Agent、Harness、Tool、Skill、Workflow、MCP、Subagent 等概念边界。",
+  cards: glossaryTerms,
+};
+
 export const sectionPages = {
   products: {
+    locale: "zh-CN",
     title: "产品图谱 · Harness Atlas",
     description: "Agent Harness 相关产品、框架和工具生态。",
     kicker: "产品图谱 / ECOSYSTEM",
     heading: "产品生态入口",
     intro: "整理 Agent Harness 相关产品、框架和工具生态。这里不做泛泛产品评测，而关注每个产品体现了什么 Harness 设计。",
     footer: "HARNESS_ATLAS / 产品图谱",
+    footerRight: "CC BY 4.0 + MIT",
     cards: [
       ["产品", "Coding Agent 产品", "Codex、Claude Code、OpenCode 等研发工作流产品。"],
       ["框架", "框架与 SDK", "Agent 框架、开发 SDK 与运行时抽象。"],
@@ -230,12 +275,14 @@ export const sectionPages = {
     ],
   },
   standards: {
+    locale: "zh-CN",
     title: "标准与协议 · Harness Atlas",
     description: "Agent Harness 相关标准、协议和接口规范。",
     kicker: "标准协议 / PROTOCOLS",
     heading: "协议层目录",
     intro: "整理 Agent Harness 相关的标准、协议、接口规范和可迁移能力格式，重点关注相对稳定的协议层和抽象层。",
     footer: "HARNESS_ATLAS / 标准协议",
+    footerRight: "CC BY 4.0 + MIT",
     cards: [
       ["MCP", "Model Context Protocol", "工具和资源接入的标准化接口。"],
       ["AGENTS", "AGENTS.md", "项目级 Agent 指令、约束和工作流说明。"],
@@ -245,12 +292,14 @@ export const sectionPages = {
     ],
   },
   patterns: {
+    locale: "zh-CN",
     title: "设计模式 · Harness Atlas",
     description: "Agent Harness 可复用设计模式。",
     kicker: "设计模式 / REUSABLE DESIGN",
     heading: "模式族",
     intro: "沉淀 Agent Harness 的可复用设计模式，连接产品拆解、研究资料、实验结果和工程实践。",
     footer: "HARNESS_ATLAS / 设计模式",
+    footerRight: "CC BY 4.0 + MIT",
     cards: [
       ["上下文", "上下文", "上下文选择、压缩、刷新和边界控制。"],
       ["工具", "工具系统", "工具调用、权限控制、错误恢复和日志。"],
@@ -261,12 +310,14 @@ export const sectionPages = {
     ],
   },
   research: {
+    locale: "zh-CN",
     title: "研究资料 · Harness Atlas",
     description: "Agent Harness 相关理论研究、论文、实验和报告。",
     kicker: "研究资料 / EVIDENCE",
     heading: "研究入口",
     intro: "收集 Agent Harness 相关的理论研究、论文、实验和报告，并沉淀为问题、方法、结论、局限清晰的研究卡片。",
     footer: "HARNESS_ATLAS / 研究资料",
+    footerRight: "CC BY 4.0 + MIT",
     cards: [
       ["PAPERS", "论文与报告", "论文、技术报告、研究文章和预印本。"],
       ["EXPERIMENTS", "实验", "可复现实验、对比实验和 A/B 测试设计。"],
@@ -275,12 +326,14 @@ export const sectionPages = {
     ],
   },
   timeline: {
+    locale: "zh-CN",
     title: "行业进展时间线 · Harness Atlas",
     description: "Agent Harness 相关行业进展时间线。",
     kicker: "行业动态 / INDUSTRY SIGNALS",
     heading: "收录范围",
     intro: "按时间记录 Agent Harness 相关行业进展，只收录影响 Harness 形态、协议、产品能力、工程实践或生态格局的事件。",
     footer: "HARNESS_ATLAS / 行业动态",
+    footerRight: "CC BY 4.0 + MIT",
     cards: [
       ["产品", "Coding Agent 更新", "影响上下文、工具、权限、执行和评估方式的重要功能。"],
       ["协议", "协议与框架", "MCP、Skills、Tools、Multi-agent 等协议或框架进展。"],
@@ -289,12 +342,14 @@ export const sectionPages = {
     ],
   },
   references: {
+    locale: "zh-CN",
     title: "参考资料 · Harness Atlas",
     description: "Agent Harness 相关原始资料索引。",
     kicker: "参考资料 / SOURCE INDEX",
     heading: "资料索引",
     intro: "维护 Agent Harness 相关原始资料索引。References 保存原始链接和资料索引；Research 对资料进行阅读、摘要和分析。",
     footer: "HARNESS_ATLAS / 参考资料",
+    footerRight: "CC BY 4.0 + MIT",
     cards: [
       ["文档", "官方文档", "Agent 产品、框架、协议和平台官方文档。"],
       ["论文", "论文索引", "论文、预印本和技术报告索引。"],
