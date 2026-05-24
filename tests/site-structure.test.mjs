@@ -182,6 +182,30 @@ test("English page has an explicit language boundary", () => {
   assert.doesNotMatch(textWithoutLanguageSwitch, /[\u4e00-\u9fff]/, "English page should not leak Chinese UI text beyond the language switch");
 });
 
+test("Chinese and English top navigation have matching structure", () => {
+  const navByPage = {};
+
+  for (const page of ["index.html", "en.html"]) {
+    const html = readDocsFile(page);
+    const nav = html.match(/<nav class="nav"[\s\S]*?<\/nav>/)?.[0] ?? "";
+    navByPage[page] = [...nav.matchAll(/<a [^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/g)]
+      .map((match) => ({ href: match[1], label: match[2] }));
+  }
+
+  assert.deepEqual(navByPage["index.html"].map((item) => item.label), ["首页", "学习", "图谱", "搜索", "EN", "GitHub"]);
+  assert.deepEqual(navByPage["en.html"].map((item) => item.label), ["HOME", "COURSE", "ATLAS", "SEARCH", "中文", "GITHUB"]);
+  assert.equal(navByPage["index.html"].length, navByPage["en.html"].length, "localized top nav should expose the same number of tabs");
+  assert.deepEqual(
+    navByPage["index.html"].map((item) => item.href),
+    ["./", "course.html", "products.html", "./#search", "en.html", "https://github.com/ceasarXuu/harness-atlas"],
+  );
+  assert.deepEqual(
+    navByPage["en.html"].map((item) => item.href),
+    ["./", "course.html", "products.html", "./en.html#search", "index.html", "https://github.com/ceasarXuu/harness-atlas"],
+  );
+  assert.match(readDocsFile("en.html"), /<section id="search" class="section">/);
+});
+
 test("Chinese homepage merges industry updates into the first-scroll experience", () => {
   const html = readDocsFile("index.html");
   const nav = html.match(/<nav class="nav"[\s\S]*?<\/nav>/)?.[0] ?? "";

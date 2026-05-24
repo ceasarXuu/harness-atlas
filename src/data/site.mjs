@@ -10,12 +10,8 @@ export const zhNav = [
 export const enNav = [
   { href: "./", label: "HOME" },
   { href: "course.html", label: "COURSE" },
-  { href: "products.html", label: "PRODUCTS" },
-  { href: "standards.html", label: "STANDARDS" },
-  { href: "patterns.html", label: "PATTERNS" },
-  { href: "research.html", label: "RESEARCH" },
-  { href: "timeline.html", label: "TIMELINE" },
-  { href: "references.html", label: "REFERENCES" },
+  { href: "products.html", label: "ATLAS" },
+  { href: "./en.html#search", label: "SEARCH" },
   { href: "index.html", label: "中文" },
   { href: "https://github.com/ceasarXuu/harness-atlas", label: "GITHUB" },
 ];
