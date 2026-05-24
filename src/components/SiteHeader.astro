@@ -1,13 +1,17 @@
 ---
-const { nav } = Astro.props;
+const {
+  nav,
+  brandAriaLabel = "Harness Atlas 首页",
+  navAriaLabel = "主导航",
+} = Astro.props;
 ---
 
 <header class="top">
-  <a class="brand" href="./" aria-label="Harness Atlas Home">
+  <a class="brand" href="./" aria-label={brandAriaLabel}>
     <span class="brand-mark" aria-hidden="true"></span>
     <span>HARNESS_ATLAS</span>
   </a>
-  <nav class="nav" aria-label="Main navigation">
+  <nav class="nav" aria-label={navAriaLabel}>
     {nav.map((item) => <a href={item.href}>{item.label}</a>)}
   </nav>
 </header>

@@ -11,6 +11,9 @@ const {
   footerRight = "维护者：ceasarXuu",
   styles = [],
 } = Astro.props;
+
+const brandAriaLabel = lang === "en" ? "Harness Atlas Home" : "Harness Atlas 首页";
+const navAriaLabel = lang === "en" ? "Main navigation" : "主导航";
 ---
 
 <!doctype html>
@@ -28,7 +31,7 @@ const {
 </head>
 <body>
   <div class="wrap">
-    <SiteHeader nav={nav} />
+    <SiteHeader nav={nav} brandAriaLabel={brandAriaLabel} navAriaLabel={navAriaLabel} />
     <main>
       <slot />
     </main>

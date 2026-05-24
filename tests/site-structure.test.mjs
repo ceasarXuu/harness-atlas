@@ -31,6 +31,15 @@ function localHtmlLinks(html) {
   });
 }
 
+function visibleText(html) {
+  return html
+    .replace(/<script[\s\S]*?<\/script>/g, "")
+    .replace(/<style[\s\S]*?<\/style>/g, "")
+    .replace(/<[^>]+>/g, "\n")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 test("Pages site exposes first-class sections beyond the homepage", () => {
   const index = readDocsFile("index.html");
 
@@ -123,6 +132,54 @@ test("Chinese homepage localizes visible navigation, buttons, and section labels
   for (const label of forbiddenEnglishUi) {
     assert.doesNotMatch(visibleText, new RegExp(`\\b${label}\\b`), `${label} should be localized on the Chinese homepage`);
   }
+});
+
+test("Chinese pages localize page chrome, cards, and accessibility labels", () => {
+  const chinesePages = requiredPages.filter((page) => page !== "en.html");
+  const forbiddenChineseUi = [
+    /aria-label="Main navigation"/,
+    /aria-label="Harness Atlas Home"/,
+    />Official Docs</,
+    />Papers</,
+    />Blogs</,
+    />Changelogs</,
+    />Frameworks</,
+    />Comparison</,
+    />Interaction</,
+    />Context</,
+    />Tools</,
+    />Execution</,
+    />Evaluation</,
+    />Governance</,
+    /HARNESS_ATLAS \/ PRODUCTS/,
+    /HARNESS_ATLAS \/ STANDARDS/,
+    /HARNESS_ATLAS \/ PATTERNS/,
+    /HARNESS_ATLAS \/ RESEARCH/,
+    /HARNESS_ATLAS \/ TIMELINE/,
+    /HARNESS_ATLAS \/ REFERENCES/,
+    /HARNESS_ATLAS \/ COURSE/,
+  ];
+
+  for (const page of ["index.html", ...chinesePages]) {
+    const html = readDocsFile(page);
+    assert.match(html, /<html lang="zh-CN"/, `${page} should declare Chinese language`);
+    assert.match(html, /aria-label="主导航"/, `${page} should localize main navigation aria label`);
+    assert.match(html, /aria-label="Harness Atlas 首页"/, `${page} should localize home aria label`);
+
+    for (const pattern of forbiddenChineseUi) {
+      assert.doesNotMatch(html, pattern, `${page} contains non-localized UI: ${pattern}`);
+    }
+  }
+});
+
+test("English page has an explicit language boundary", () => {
+  const html = readDocsFile("en.html");
+  const textWithoutLanguageSwitch = visibleText(html).replace(/中文/g, "");
+
+  assert.match(html, /<html lang="en"/, "English page should declare English language");
+  assert.match(html, /aria-label="Main navigation"/, "English page should keep English navigation aria label");
+  assert.match(html, /Detailed section pages are currently maintained in Chinese\./);
+  assert.doesNotMatch(textWithoutLanguageSwitch, /[\u4e00-\u9fff]/, "English page should not leak Chinese UI text beyond the language switch");
 });
 
 test("Chinese homepage merges industry updates into the first-scroll experience", () => {
