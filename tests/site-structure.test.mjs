@@ -343,6 +343,48 @@ test("Learning page exposes a left-side directory navigation", () => {
   }
 });
 
+test("Learning pages expose previous and next navigation at top and bottom", () => {
+  const sequence = [
+    ["course.html", "学习路线"],
+    ["course-01.html", "Agent Harness 定义"],
+    ["course-02.html", "Context Engineering"],
+    ["course-03.html", "Tools and MCP"],
+    ["course-04.html", "Skills and Workflows"],
+    ["course-05.html", "State, Memory and Session"],
+    ["course-06.html", "Planning and Execution Loop"],
+    ["course-07.html", "Multi-agent Orchestration"],
+    ["course-08.html", "Evaluation and Benchmark"],
+    ["course-09.html", "Security, Permission and Governance"],
+    ["course-10.html", "Product Architecture"],
+    ["course-11.html", "Future of Harness"],
+    ["course-other-glossary.html", "术语表"],
+  ];
+
+  sequence.forEach(([page], index) => {
+    const html = readDocsFile(page);
+    const pagers = [...html.matchAll(/<nav class="[^"]*\blearn-pager\b[^"]*"[\s\S]*?<\/nav>/g)].map((match) => match[0]);
+    const previous = sequence[index - 1];
+    const next = sequence[index + 1];
+
+    assert.equal(pagers.length, 2, `${page} should render pager navigation at top and bottom`);
+    for (const pager of pagers) {
+      if (previous) {
+        assert.match(pager, new RegExp(`href="${previous[0]}"`), `${page} should link previous page ${previous[0]}`);
+        assert.match(pager, new RegExp(`上一节[\\s\\S]*?${previous[1]}`), `${page} should label previous page`);
+      } else {
+        assert.doesNotMatch(pager, /上一节/, `${page} should not render previous on the first lesson`);
+      }
+
+      if (next) {
+        assert.match(pager, new RegExp(`href="${next[0]}"`), `${page} should link next page ${next[0]}`);
+        assert.match(pager, new RegExp(`下一节[\\s\\S]*?${next[1]}`), `${page} should label next page`);
+      } else {
+        assert.doesNotMatch(pager, /下一节/, `${page} should not render next on the last lesson`);
+      }
+    }
+  });
+});
+
 test("Section pages start directly with content instead of top heading blocks", () => {
   const sectionPages = [
     "course.html",

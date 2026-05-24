@@ -164,8 +164,32 @@ export const learningChrome = {
     sidebarKicker: "学习目录",
     directoryAria: "学习页目录导航",
     otherGroup: "其他",
+    previousLabel: "上一节",
+    nextLabel: "下一节",
   },
 };
+
+export function getLearningPager(activeKey) {
+  const sequence = [
+    ...courseLessons.map((lesson) => ({
+      key: lesson.key,
+      href: lesson.href,
+      title: lesson.title,
+    })),
+    ...learningOther.map((item) => ({
+      key: item.key,
+      href: item.href,
+      title: item.label,
+    })),
+  ];
+  const index = sequence.findIndex((item) => item.key === activeKey);
+  if (index === -1) return {};
+
+  return {
+    previous: sequence[index - 1],
+    next: sequence[index + 1],
+  };
+}
 
 export const updates = [
   {

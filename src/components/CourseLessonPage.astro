@@ -1,8 +1,10 @@
 ---
 import CardGrid from "./CardGrid.astro";
 import LearningLayout from "./LearningLayout.astro";
+import { getLearningPager } from "../data/site.mjs";
 
 const { page } = Astro.props;
+const pager = getLearningPager(page.key);
 ---
 
 <LearningLayout
@@ -13,6 +15,7 @@ const { page } = Astro.props;
   kicker={page.kicker}
   heading={page.heading}
   intro={page.intro}
+  pager={pager}
 >
   <CardGrid cards={page.cards} compact={page.compact} />
 </LearningLayout>

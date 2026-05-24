@@ -10,8 +10,10 @@ const {
   kicker,
   heading,
   intro,
+  pager = {},
 } = Astro.props;
 const chrome = learningChrome[locale];
+const hasPager = Boolean(pager.previous || pager.next);
 ---
 
 <BaseLayout
@@ -38,10 +40,22 @@ const chrome = learningChrome[locale];
     </aside>
 
     <div class="learn-content">
+      {hasPager && (
+        <nav class="learn-pager top" aria-label={chrome.directoryAria}>
+          {pager.previous && <a href={pager.previous.href}><span>{chrome.previousLabel}</span><strong>{pager.previous.title}</strong></a>}
+          {pager.next && <a href={pager.next.href}><span>{chrome.nextLabel}</span><strong>{pager.next.title}</strong></a>}
+        </nav>
+      )}
       <p class="section-kicker">{kicker}</p>
       <h1 class="content-title">{heading}</h1>
       <p class="section-intro">{intro}</p>
       <slot />
+      {hasPager && (
+        <nav class="learn-pager bottom" aria-label={chrome.directoryAria}>
+          {pager.previous && <a href={pager.previous.href}><span>{chrome.previousLabel}</span><strong>{pager.previous.title}</strong></a>}
+          {pager.next && <a href={pager.next.href}><span>{chrome.nextLabel}</span><strong>{pager.next.title}</strong></a>}
+        </nav>
+      )}
     </div>
   </section>
 </BaseLayout>
