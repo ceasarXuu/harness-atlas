@@ -215,7 +215,7 @@ test("Chinese and English top navigation have matching structure", () => {
       .map((match) => ({ href: match[1], label: match[2] }));
   }
 
-  assert.deepEqual(navByPage["index.html"].map((item) => item.label), ["首页", "学习", "图谱", "EN", "GitHub"]);
+  assert.deepEqual(navByPage["index.html"].map((item) => item.label), ["首页", "学习", "生态", "EN", "GitHub"]);
   assert.deepEqual(navByPage["en.html"].map((item) => item.label), ["HOME", "COURSE", "ATLAS", "中文", "GITHUB"]);
   assert.equal(navByPage["index.html"].length, navByPage["en.html"].length, "localized top nav should expose the same number of tabs");
   assert.deepEqual(
@@ -251,7 +251,7 @@ test("Chinese homepage merges industry updates into the first-scroll experience"
   const nav = html.match(/<nav class="nav"[\s\S]*?<\/nav>/)?.[0] ?? "";
   const navLabels = [...nav.matchAll(/<a [^>]*>([^<]+)<\/a>/g)].map((match) => match[1]);
 
-  assert.deepEqual(navLabels, ["首页", "学习", "图谱", "EN", "GitHub"]);
+  assert.deepEqual(navLabels, ["首页", "学习", "生态", "EN", "GitHub"]);
   assert.doesNotMatch(nav, />术语表</);
   assert.doesNotMatch(nav, />行业动态</);
 

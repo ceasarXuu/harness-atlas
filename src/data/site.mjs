@@ -23,7 +23,7 @@ export const localeMessages = {
     nav: {
       home: "首页",
       course: "学习",
-      atlas: "图谱",
+      atlas: "生态",
       locale: "EN",
       github: "GitHub",
     },
