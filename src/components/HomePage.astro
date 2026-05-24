@@ -81,7 +81,7 @@ const page = homePages[locale];
 
   {page.sections.map((section) => (
     <section id={section.id} class={section.className}>
-      <p class="section-kicker">{section.kicker}</p>
+      {section.kicker && <p class="section-kicker">{section.kicker}</p>}
       <h2>{section.heading}</h2>
       {section.intro && <p class="section-intro">{section.intro}</p>}
       {section.updates && (

@@ -52,9 +52,7 @@ export const homePages = {
       {
         id: "industry",
         className: "section updates-flow",
-        kicker: "最新行业动态",
-        heading: "从动态里看 Harness 如何演进",
-        intro: "持续跟踪 Agent Harness 相关的产品、协议、研究和工程实践变化，让学习路径保持和真实生态同步。",
+        heading: "行业动态",
         updates: [
           ["timeline.html", "2026", "Coding Agent 产品能力变化", "关注上下文、工具调用、任务状态、权限控制和评估闭环的新能力。", "产品更新"],
           ["timeline.html", "2026", "MCP、Skills 与 Tool Calling 生态进展", "观察协议、可迁移能力格式和工具接入方式如何影响 Harness 架构。", "协议生态"],
@@ -117,9 +115,7 @@ export const homePages = {
       {
         id: "industry",
         className: "section updates-flow",
-        kicker: "INDUSTRY SIGNALS",
-        heading: "Track Harness evolution through ecosystem updates",
-        intro: "Follow product, protocol, research, and engineering-practice changes so the learning path stays connected to the real ecosystem.",
+        heading: "Industry Updates",
         updates: [
           ["timeline.html", "2026", "Coding Agent product capability shifts", "Track new capabilities around context, tool use, task state, permission control, and evaluation loops.", "Product"],
           ["timeline.html", "2026", "MCP, Skills, and Tool Calling ecosystem progress", "Watch how protocols, portable capability formats, and tool access patterns reshape Harness architecture.", "Protocols"],

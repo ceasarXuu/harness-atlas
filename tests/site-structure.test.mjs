@@ -299,7 +299,10 @@ test("Chinese homepage merges industry updates into the first-scroll experience"
     /<\/section>\s*<section id="industry" class="section updates-flow"/,
     "industry updates should immediately follow the hero",
   );
-  assert.match(html, /<p class="section-kicker"[^>]*>最新行业动态<\/p>/);
+  const industry = html.match(/<section id="industry" class="section updates-flow"[\s\S]*?<\/section>/)?.[0] ?? "";
+  assert.match(industry, /<h2[^>]*>行业动态<\/h2>/, "industry section should use one concise heading");
+  assert.doesNotMatch(industry, /section-kicker/, "industry section should not render a kicker");
+  assert.doesNotMatch(industry, /section-intro/, "industry section should not render an intro paragraph");
   assert.match(html, /href="timeline\.html"/, "homepage should still link to the full updates page");
 });
 
