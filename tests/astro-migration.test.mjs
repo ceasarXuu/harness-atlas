@@ -7,14 +7,16 @@ import test from "node:test";
 const root = new URL("..", import.meta.url).pathname;
 const src = join(root, "src");
 const dist = join(root, "dist");
+const courseLessonPages = Array.from({ length: 11 }, (_, index) => {
+  return `course-${String(index + 1).padStart(2, "0")}.html`;
+});
 
 const pages = [
   "index.html",
   "en.html",
   "course.html",
-  "course-modules.html",
-  "course-glossary.html",
-  "course-practice.html",
+  ...courseLessonPages,
+  "course-other-glossary.html",
   "products.html",
   "standards.html",
   "patterns.html",
@@ -71,7 +73,7 @@ test("Astro source uses shared layouts and data instead of raw HTML passthrough"
   assert.match(siteData, /export function getNav/, "navigation should be generated from schema and locale messages");
   assert.doesNotMatch(siteData, /export const (zhNav|enNav)/, "localized nav arrays should not be maintained by hand");
   assert.match(siteData, /export const sectionPages/, "section page metadata should be centralized");
-  assert.match(siteData, /export const courseModules/, "course modules should be centralized");
+  assert.match(siteData, /export const courseLessons/, "course lessons should be centralized");
 });
 
 test("Astro build emits static Pages-compatible routes and assets", () => {
@@ -88,6 +90,8 @@ test("Astro build emits static Pages-compatible routes and assets", () => {
     assert.ok(existsSync(join(dist, page)), `missing built route dist/${page}`);
   }
   assert.equal(existsSync(join(dist, "glossary.html")), false, "glossary should be part of learning, not a standalone route");
+  assert.equal(existsSync(join(dist, "course-modules.html")), false, "course outline page should not be emitted");
+  assert.equal(existsSync(join(dist, "course-practice.html")), false, "practice checklist page should not be emitted");
 
   assert.ok(existsSync(join(dist, "assets/css/style.css")), "missing shared stylesheet");
   assert.ok(existsSync(join(dist, "assets/css/learn.css")), "missing learning stylesheet");
@@ -95,7 +99,7 @@ test("Astro build emits static Pages-compatible routes and assets", () => {
 });
 
 test("Built pages keep page-specific loading boundaries", () => {
-  const learningPages = new Set(["course.html", "course-modules.html", "course-glossary.html", "course-practice.html"]);
+  const learningPages = new Set(["course.html", ...courseLessonPages, "course-other-glossary.html"]);
 
   for (const page of pages) {
     const html = read(join(dist, page));
@@ -133,7 +137,7 @@ test("Built pages have complete local links and visible content", () => {
 });
 
 test("Glossary content is nested under the learning page", () => {
-  const course = read(join(dist, "course-glossary.html"));
+  const course = read(join(dist, "course-other-glossary.html"));
   const allBuiltHtml = pages.map((page) => read(join(dist, page))).join("\n");
 
   assert.match(course, /学习 \/ 术语表/, "glossary should render inside the learning shell");
@@ -143,7 +147,7 @@ test("Glossary content is nested under the learning page", () => {
 });
 
 test("Learning directory entries are subpages, not scroll anchors", () => {
-  const learningPages = ["course.html", "course-modules.html", "course-glossary.html", "course-practice.html"];
+  const learningPages = ["course.html", ...courseLessonPages, "course-other-glossary.html"];
   const expectedLinks = learningPages.map((page) => `href="${page}"`);
 
   for (const page of learningPages) {
@@ -158,5 +162,7 @@ test("Learning directory entries are subpages, not scroll anchors", () => {
     const sidebar = html.match(/<aside class="learn-sidebar"[\s\S]*?<\/aside>/)?.[0] ?? "";
     assert.doesNotMatch(sidebar, /href="#/, `${page} sidebar should not use in-page anchors`);
     assert.doesNotMatch(sidebar, /href="patterns\.html"/, `${page} sidebar should not jump outside the learning shell`);
+    assert.doesNotMatch(sidebar, /href="course-practice\.html"/, `${page} sidebar should not expose practice checklist`);
+    assert.match(sidebar, />其他</, `${page} sidebar should group glossary under Other`);
   }
 });

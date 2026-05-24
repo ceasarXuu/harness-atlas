@@ -1,0 +1,26 @@
+---
+import CardGrid from "./CardGrid.astro";
+import LearningLayout from "./LearningLayout.astro";
+import { learningRoadmap } from "../data/site.mjs";
+
+const { lesson } = Astro.props;
+const isRoadmap = lesson.num === "00";
+const cards = isRoadmap
+  ? learningRoadmap
+  : [
+      ["目标", "本课目标", `理解 ${lesson.title} 在 Agent Harness 中解决的问题。`],
+      ["关注点", "关键边界", lesson.body],
+      ["输出", "学习产出", "能够把这一节内容映射到真实产品、协议或工程流程，并形成可复查的判断。"],
+    ];
+---
+
+<LearningLayout
+  active={lesson.key}
+  title={`${lesson.title} · Harness Atlas`}
+  description={`Harness Atlas ${lesson.title}。`}
+  kicker={`学习 / ${lesson.title}`}
+  heading={lesson.title}
+  intro={lesson.body}
+>
+  <CardGrid cards={cards} compact={!isRoadmap} />
+</LearningLayout>

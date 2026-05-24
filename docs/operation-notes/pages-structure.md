@@ -10,7 +10,7 @@ The published `docs/` site only exposed `index.html` and `en.html`, so the repos
 ## Durable Fix
 
 - Add first-class static HTML entry pages under `docs/` for top-level sections.
-- Keep glossary terms under a learning subpage, currently `course-glossary.html`, so learning concepts stay in the learning flow.
+- Keep glossary terms under the learning sidebar's `其他` group, currently `course-other-glossary.html`, so learning concepts stay in the learning flow.
 - Keep the global navigation explicit on every public page.
 - Add a Node test that verifies required Pages files exist, the homepage links them, each public page keeps shared navigation, and local links are not broken.
 
@@ -36,6 +36,6 @@ When updating the Chinese homepage, keep navigation labels, CTA buttons, section
 
 ## Learning Shell
 
-- Learning directory entries should be static subpages under the same learning shell: `course.html`, `course-modules.html`, `course-glossary.html`, and `course-practice.html`.
+- Learning directory entries should be static course subpages under the same learning shell: `course.html`, `course-01.html` through `course-11.html`, plus `course-other-glossary.html`.
 - The left learning sidebar must stay visible on every learning subpage and should not use in-page hash links or jump to a non-learning page.
-- Module anchors can exist in page content later if needed, but they should not appear as the primary learning directory.
+- The body should render the active lesson content, not duplicate the full course outline that already lives in the sidebar.

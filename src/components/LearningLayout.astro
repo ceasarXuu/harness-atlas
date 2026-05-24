@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { learningNav, navByLocale } from "../data/site.mjs";
+import { courseLessons, learningOther, navByLocale } from "../data/site.mjs";
 
 const {
   active,
@@ -24,7 +24,11 @@ const {
     <aside class="learn-sidebar" aria-label="学习目录">
       <p class="section-kicker">学习目录</p>
       <nav class="learn-nav" aria-label="学习页目录导航">
-        {learningNav.map((item) => (
+        {courseLessons.map((lesson) => (
+          <a class:list={[lesson.key === active && "active"]} href={lesson.href}><span>{lesson.num}</span>{lesson.title}</a>
+        ))}
+        <p class="learn-nav-group">其他</p>
+        {learningOther.map((item) => (
           <a class:list={[item.key === active && "active"]} href={item.href}><span>{item.eyebrow}</span>{item.label}</a>
         ))}
       </nav>

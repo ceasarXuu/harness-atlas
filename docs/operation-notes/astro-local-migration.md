@@ -20,9 +20,9 @@
 
 - Use `src/layouts/BaseLayout.astro` for the shared document shell, metadata, header, footer, favicon, shared CSS preload, and low-priority route prefetch hints.
 - Keep route content in `src/pages/*.astro`; simple section routes should delegate to `src/components/SectionPage.astro`.
-- Keep shared route labels, homepage blocks, course modules, industry updates, and section cards in `src/data/site.mjs` so navigation and page structure are edited in one place.
-- Load `assets/css/style.css` on every page and load `assets/css/learn.css` only on `course.html`.
-- Keep glossary content under the learning shell, currently `course-glossary.html`; do not create or link a standalone top-level `glossary.html` route.
+- Keep shared route labels, homepage blocks, course lessons, industry updates, and section cards in `src/data/site.mjs` so navigation and page structure are edited in one place.
+- Load `assets/css/style.css` on every page and load `assets/css/learn.css` only on learning pages.
+- Keep glossary content under the learning shell, currently `course-other-glossary.html`; do not create or link a standalone top-level `glossary.html` route.
 - Do not use `RawPage`, `set:html`, or filesystem reads from `docs/*.html` for runtime rendering once the Astro route shell is in place.
 
 ## Migration Checkpoints
@@ -49,6 +49,6 @@ For the learning-site homepage, keep the structure vertical: header, hero, then 
 
 ## Learning Page Sidebar
 
-The learning page should open with a compact `.learn-hero`, then a `.learn-shell` two-column section. Keep `.learn-sidebar` visible in the first viewport on desktop and mobile; hide the learning hero trace card on mobile if it pushes the sidebar too far down.
+The learning pages should use a `.learn-shell` two-column section without a top hero. Keep `.learn-sidebar` visible on every lesson page and render course lessons directly in the sidebar. Treat `course.html` as lesson 00, use `course-01.html` through `course-11.html` for the main sequence, and put the glossary under an `其他` group.
 
 Section pages other than home should not use `.hero` or a separate `.page-heading` block. Start `main` directly with the content section so readers reach navigation, directories, and article lists faster. Keep the full visual hero only for the homepage and the English homepage.

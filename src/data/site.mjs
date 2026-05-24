@@ -4,7 +4,6 @@ export const navModel = [
   { key: "home", href: { "zh-CN": "./", en: "./" } },
   { key: "course", href: { "zh-CN": "course.html", en: "course.html" } },
   { key: "atlas", href: { "zh-CN": "products.html", en: "products.html" } },
-  { key: "search", href: { "zh-CN": "./#search", en: "./en.html#search" } },
   { key: "locale", href: { "zh-CN": "en.html", en: "index.html" } },
   {
     key: "github",
@@ -25,7 +24,6 @@ export const localeMessages = {
       home: "首页",
       course: "学习",
       atlas: "图谱",
-      search: "搜索",
       locale: "EN",
       github: "GitHub",
     },
@@ -39,7 +37,6 @@ export const localeMessages = {
       home: "HOME",
       course: "COURSE",
       atlas: "ATLAS",
-      search: "SEARCH",
       locale: "中文",
       github: "GITHUB",
     },
@@ -63,31 +60,100 @@ export const navByLocale = Object.fromEntries(
 
 export const prefetchRoutes = [
   "course.html",
-  "course-modules.html",
+  "course-01.html",
   "products.html",
   "timeline.html",
 ];
 
-export const learningNav = [
-  { key: "roadmap", eyebrow: "路径", label: "学习路线", href: "course.html" },
-  { key: "modules", eyebrow: "课程", label: "主线课程", href: "course-modules.html" },
-  { key: "glossary", eyebrow: "术语", label: "术语表", href: "course-glossary.html" },
-  { key: "practice", eyebrow: "实践", label: "实践检查清单", href: "course-practice.html" },
+export const courseLessons = [
+  {
+    key: "course-00",
+    num: "00",
+    title: "学习路线",
+    href: "course.html",
+    body: "把 Agent Harness 的学习分成基础概念、核心组件、工程实践和生态演进四个阶段。",
+  },
+  {
+    key: "course-01",
+    num: "01",
+    title: "Agent Harness 定义",
+    href: "course-01.html",
+    body: "厘清概念边界、核心组成与常见误区，先判断什么是 Harness、什么只是一次性提示或工具调用。",
+  },
+  {
+    key: "course-02",
+    num: "02",
+    title: "Context Engineering",
+    href: "course-02.html",
+    body: "学习上下文选择、压缩、注入与刷新机制，理解 Harness 如何把项目事实稳定交给模型。",
+  },
+  {
+    key: "course-03",
+    num: "03",
+    title: "Tools and MCP",
+    href: "course-03.html",
+    body: "梳理工具协议、Schema、权限和失败恢复，把外部能力变成可审计、可回放、可治理的接口。",
+  },
+  {
+    key: "course-04",
+    num: "04",
+    title: "Skills and Workflows",
+    href: "course-04.html",
+    body: "理解可复用能力、工作流封装和迁移方式，把一次经验沉淀为可以重复调用的任务能力。",
+  },
+  {
+    key: "course-05",
+    num: "05",
+    title: "State, Memory and Session",
+    href: "course-05.html",
+    body: "处理长任务状态、项目记忆和会话连续性，让 Agent 能在多轮协作里保留判断依据和任务进度。",
+  },
+  {
+    key: "course-06",
+    num: "06",
+    title: "Planning and Execution Loop",
+    href: "course-06.html",
+    body: "拆解计划、行动、观察、修正的闭环，理解 Harness 如何把开放目标变成可验证步骤。",
+  },
+  {
+    key: "course-07",
+    num: "07",
+    title: "Multi-agent Orchestration",
+    href: "course-07.html",
+    body: "学习多 Agent 分工、委派和协作边界，避免并行任务在上下文、权限和结果合并上失控。",
+  },
+  {
+    key: "course-08",
+    num: "08",
+    title: "Evaluation and Benchmark",
+    href: "course-08.html",
+    body: "建立衡量 Harness 质量的方法，把测试、评审、Benchmark 和运行时信号组合成评估闭环。",
+  },
+  {
+    key: "course-09",
+    num: "09",
+    title: "Security, Permission and Governance",
+    href: "course-09.html",
+    body: "设计安全边界、审计、风险和组织治理，让 Agent 能进入真实工程系统而不突破控制面。",
+  },
+  {
+    key: "course-10",
+    num: "10",
+    title: "Product Architecture",
+    href: "course-10.html",
+    body: "观察 Harness 产品形态和工程集成架构，理解 IDE、终端、云端和团队平台各自的系统取舍。",
+  },
+  {
+    key: "course-11",
+    num: "11",
+    title: "Future of Harness",
+    href: "course-11.html",
+    body: "跟踪 Agent Harness 生态的长期演进，连接协议标准、产品能力、组织流程和行业动态。",
+  },
 ];
 
-export const courseModules = [
-  ["00", "引言", "为什么 Agent Harness 重要。"],
-  ["01", "Agent Harness 定义", "概念边界、核心组成与常见误区。"],
-  ["02", "Context Engineering", "上下文选择、压缩、注入与刷新机制。"],
-  ["03", "Tools and MCP", "工具协议、Schema、权限和失败恢复。"],
-  ["04", "Skills and Workflows", "可复用能力、工作流封装和迁移。"],
-  ["05", "State, Memory and Session", "长任务状态、记忆和会话连续性。"],
-  ["06", "Planning and Execution Loop", "计划、行动、观察、修正的闭环。"],
-  ["07", "Multi-agent Orchestration", "多 Agent 分工、委派和协作边界。"],
-  ["08", "Evaluation and Benchmark", "如何衡量 Harness 的质量与有效性。"],
-  ["09", "Security, Permission and Governance", "安全边界、审计、风险和组织治理。"],
-  ["10", "Product Architecture", "Harness 产品形态和工程集成架构。"],
-  ["11", "Future of Harness", "Agent Harness 生态的长期演进。"],
+export const learningOther = [
+  { key: "glossary", eyebrow: "其他", label: "术语表", href: "course-other-glossary.html" },
 ];
 
 export const updates = [
@@ -117,9 +183,8 @@ export const updates = [
 export const homeSections = {
   learn: [
     ["course.html", "路线", "学习路线", "把课程拆成入门、核心、运行机制和系统治理几个阶段。"],
-    ["course-modules.html", "课程", "主线课程", "按照定义、组件、运行、评估、治理和未来方向系统学习。"],
-    ["course-glossary.html", "术语", "术语表", "统一 Agent、Harness、Tool、Skill、MCP 等概念边界。"],
-    ["course-practice.html", "实践", "实践检查清单", "把设计模式转化为可落地、可复用、可验证的工程检查项。"],
+    ["course-01.html", "课程", "第 1 课", "从 Agent Harness 定义开始，按照课程目录逐课进入。"],
+    ["course-other-glossary.html", "其他", "术语表", "统一 Agent、Harness、Tool、Skill、MCP 等概念边界。"],
   ],
   atlas: [
     ["products.html", "产品", "产品图谱", "整理 Coding Agent、框架、平台和横向能力矩阵。"],
@@ -147,14 +212,6 @@ export const glossaryTerms = [
   ["SKILL", "Skill", "可复用任务能力封装，包含触发条件、步骤、资源和示例。"],
   ["MCP", "MCP", "连接 AI 应用、工具、资源和外部系统的协议层。"],
   ["SUB", "Subagent", "在主 Agent 或 Harness 编排下执行局部任务的 Agent。"],
-];
-
-export const practiceChecklist = [
-  ["上下文", "上下文边界", "明确哪些文件、资料、历史和约束应该进入任务上下文。"],
-  ["工具", "工具权限", "为 Shell、文件、浏览器和外部 API 设计可审计的权限边界。"],
-  ["状态", "任务状态", "记录计划、执行、阻塞、验证和交付物，避免长任务失忆。"],
-  ["评估", "验证闭环", "把测试、人工审查、运行时检查和日志信号组合成质量闭环。"],
-  ["治理", "风险控制", "在成本、安全、合规和组织流程上设置可复用的约束。"],
 ];
 
 export const sectionPages = {
