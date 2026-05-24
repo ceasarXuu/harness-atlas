@@ -50,6 +50,11 @@ function textContent(html) {
   return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 }
 
+function harnessMapText(html) {
+  const map = html.match(/<aside class="system-card harness-map"[\s\S]*?<\/aside>/)?.[0] ?? "";
+  return textContent(map);
+}
+
 function sourceFiles(dir) {
   return readdirSync(dir).flatMap((entry) => {
     const path = join(dir, entry);
@@ -222,6 +227,37 @@ test("Localized homepages use the same component structure", () => {
   assert.doesNotMatch(zh, /<section id="evidence"/, "homepage should not keep a standalone research/source section");
   assert.doesNotMatch(zh, /<section id="learn"/, "homepage should not keep a standalone learning path section");
   assert.doesNotMatch(zh, /<p class="section-kicker">适合读者<\/p>/, "homepage should not keep audience as a heavy standalone section");
+});
+
+test("Homepage runtime map copy is localized without changing structure", () => {
+  const chineseMap = harnessMapText(readDocsFile("index.html"));
+  const englishMap = harnessMapText(readDocsFile("en.html"));
+
+  assert.match(chineseMap, /运行时图/);
+  assert.match(chineseMap, /任务 \/ 目标 \/ 规格/);
+  assert.match(chineseMap, /基础能力 模型/);
+  assert.match(chineseMap, /上下文/);
+  assert.match(chineseMap, /工具/);
+  assert.match(chineseMap, /状态/);
+  assert.match(chineseMap, /策略/);
+  assert.match(chineseMap, /评估/);
+  assert.match(chineseMap, /记忆/);
+  assert.match(chineseMap, /计划 执行 观察 验证 修复/);
+  assert.match(chineseMap, /受控 Agent 工作/);
+  assert.doesNotMatch(chineseMap, /task \/ goal \/ spec/i);
+  assert.doesNotMatch(chineseMap, /base capability/i);
+  assert.doesNotMatch(chineseMap, /controlled agent work/i);
+
+  assert.match(englishMap, /runtime\.map/);
+  assert.match(englishMap, /task \/ goal \/ spec/);
+  assert.match(englishMap, /base capability MODEL/i);
+  assert.match(englishMap, /plan act observe verify repair/i);
+  assert.match(englishMap, /controlled agent work/i);
+  assert.equal(
+    (readDocsFile("index.html").match(/class="ring-node/g) ?? []).length,
+    (readDocsFile("en.html").match(/class="ring-node/g) ?? []).length,
+    "localized runtime maps should keep the same node count",
+  );
 });
 
 test("Astro pages, layouts, and components do not hard-code localized UI copy", () => {
