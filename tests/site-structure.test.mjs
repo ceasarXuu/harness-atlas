@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, normalize } from "node:path";
 import test from "node:test";
-import { getNav, localeMessages, locales, navModel } from "../src/data/site.mjs";
+import { getNav, githubStars, localeMessages, locales, navModel } from "../src/data/site.mjs";
 
 const root = new URL("..", import.meta.url).pathname;
 const docs = join(root, "docs");
@@ -44,6 +44,10 @@ function visibleText(html) {
     .replace(/<[^>]+>/g, "\n")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function textContent(html) {
+  return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 }
 
 function sourceFiles(dir) {
@@ -249,12 +253,17 @@ test("Chinese and English top navigation have matching structure", () => {
   for (const page of ["index.html", "en.html"]) {
     const html = readDocsFile(page);
     const nav = html.match(/<nav class="nav"[\s\S]*?<\/nav>/)?.[0] ?? "";
-    navByPage[page] = [...nav.matchAll(/<a [^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/g)]
-      .map((match) => ({ href: match[1], label: match[2] }));
+    navByPage[page] = [...nav.matchAll(/<a ([^>]*)>([\s\S]*?)<\/a>/g)]
+      .map((match) => {
+        const href = match[1].match(/href="([^"]+)"/)?.[1] ?? "";
+        const target = match[1].match(/target="([^"]+)"/)?.[1] ?? "";
+        const rel = match[1].match(/rel="([^"]+)"/)?.[1] ?? "";
+        return { href, label: textContent(match[2]), rel, target };
+      });
   }
 
-  assert.deepEqual(navByPage["index.html"].map((item) => item.label), ["首页", "学习", "生态", "EN", "GitHub"]);
-  assert.deepEqual(navByPage["en.html"].map((item) => item.label), ["HOME", "COURSE", "ATLAS", "中文", "GITHUB"]);
+  assert.deepEqual(navByPage["index.html"].map((item) => item.label), ["首页", "学习", "生态", "EN", `GitHub ★ ${githubStars}`]);
+  assert.deepEqual(navByPage["en.html"].map((item) => item.label), ["HOME", "COURSE", "ATLAS", "中文", `GITHUB ★ ${githubStars}`]);
   assert.equal(navByPage["index.html"].length, navByPage["en.html"].length, "localized top nav should expose the same number of tabs");
   assert.deepEqual(
     navByPage["index.html"].map((item) => item.href),
@@ -264,6 +273,11 @@ test("Chinese and English top navigation have matching structure", () => {
     navByPage["en.html"].map((item) => item.href),
     ["./", "course.html", "products.html", "index.html", "https://github.com/ceasarXuu/harness-atlas"],
   );
+  for (const page of ["index.html", "en.html"]) {
+    const github = navByPage[page].at(-1);
+    assert.equal(github.target, "_blank", `${page} GitHub nav should open in a new tab`);
+    assert.equal(github.rel, "noreferrer", `${page} GitHub nav should avoid opener access`);
+  }
   assert.doesNotMatch(readDocsFile("en.html"), /<section id="search" class="section">/);
 });
 
@@ -287,9 +301,9 @@ test("Top navigation is generated from one locale-aware schema", () => {
 test("Chinese homepage merges industry updates into the first-scroll experience", () => {
   const html = readDocsFile("index.html");
   const nav = html.match(/<nav class="nav"[\s\S]*?<\/nav>/)?.[0] ?? "";
-  const navLabels = [...nav.matchAll(/<a [^>]*>([^<]+)<\/a>/g)].map((match) => match[1]);
+  const navLabels = [...nav.matchAll(/<a [^>]*>([\s\S]*?)<\/a>/g)].map((match) => textContent(match[1]));
 
-  assert.deepEqual(navLabels, ["首页", "学习", "生态", "EN", "GitHub"]);
+  assert.deepEqual(navLabels, ["首页", "学习", "生态", "EN", `GitHub ★ ${githubStars}`]);
   assert.doesNotMatch(nav, />术语表</);
   assert.doesNotMatch(nav, />行业动态</);
 

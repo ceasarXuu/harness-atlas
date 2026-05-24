@@ -1,5 +1,7 @@
 export const locales = ["zh-CN", "en"];
 
+export const githubStars = 0;
+
 export const navModel = [
   { key: "home", href: { "zh-CN": "./", en: "./" } },
   { key: "course", href: { "zh-CN": "course.html", en: "course.html" } },
@@ -11,6 +13,8 @@ export const navModel = [
       "zh-CN": "https://github.com/ceasarXuu/harness-atlas",
       en: "https://github.com/ceasarXuu/harness-atlas",
     },
+    external: true,
+    stat: { value: githubStars },
   },
 ];
 
@@ -27,6 +31,9 @@ export const localeMessages = {
       locale: "EN",
       github: "GitHub",
     },
+    navStats: {
+      github: "GitHub stars",
+    },
   },
   en: {
     aria: {
@@ -40,6 +47,9 @@ export const localeMessages = {
       locale: "中文",
       github: "GITHUB",
     },
+    navStats: {
+      github: "GitHub stars",
+    },
   },
 };
 
@@ -51,6 +61,13 @@ export function getNav(locale) {
     key: item.key,
     href: item.href[locale],
     label: messages.nav[item.key],
+    external: item.external ?? false,
+    stat: item.stat
+      ? {
+          ...item.stat,
+          label: messages.navStats[item.key],
+        }
+      : undefined,
   }));
 }
 

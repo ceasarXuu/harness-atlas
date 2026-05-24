@@ -105,6 +105,9 @@ a {
 }
 
 .nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   color: var(--fg);
   border: 1px solid #555;
   padding: 7px 10px;
@@ -113,11 +116,20 @@ a {
   background: rgba(0, 0, 0, 0.55);
 }
 
+.nav-stat {
+  color: var(--muted);
+  font-size: 11px;
+}
+
 .nav a:hover,
 .cta:hover {
   color: #000;
   background: #fff;
   border-color: #fff;
+}
+
+.nav a:hover .nav-stat {
+  color: #000;
 }
 
 .hero {

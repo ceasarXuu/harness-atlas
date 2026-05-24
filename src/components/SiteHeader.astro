@@ -12,6 +12,21 @@ const {
     <span>HARNESS_ATLAS</span>
   </a>
   <nav class="nav" aria-label={navAriaLabel}>
-    {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+    {
+      nav.map((item) => (
+        <a
+          href={item.href}
+          target={item.external ? "_blank" : undefined}
+          rel={item.external ? "noreferrer" : undefined}
+        >
+          <span>{item.label}</span>
+          {item.stat && (
+            <span class="nav-stat" aria-label={item.stat.label}>
+              ★ {item.stat.value}
+            </span>
+          )}
+        </a>
+      ))
+    }
   </nav>
 </header>
