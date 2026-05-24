@@ -5,11 +5,12 @@
 
 ## Problem
 
-The published `docs/` site only exposed `index.html` and `en.html`, so the repository looked like a single landing page even though the project has course, products, standards, patterns, research, timeline, glossary, and references content areas.
+The published `docs/` site only exposed `index.html` and `en.html`, so the repository looked like a single landing page even though the project has course, products, standards, patterns, research, timeline, and references content areas. Glossary content belongs inside the learning page instead of becoming a standalone section.
 
 ## Durable Fix
 
-- Add first-class static HTML entry pages under `docs/`.
+- Add first-class static HTML entry pages under `docs/` for top-level sections.
+- Keep glossary terms nested under `course.html#glossary` so learning concepts stay in the learning flow.
 - Keep the global navigation explicit on every public page.
 - Add a Node test that verifies required Pages files exist, the homepage links them, each public page keeps shared navigation, and local links are not broken.
 

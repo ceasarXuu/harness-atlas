@@ -13,7 +13,6 @@ const requiredPages = [
   "patterns.html",
   "research.html",
   "timeline.html",
-  "glossary.html",
   "references.html",
   "en.html",
 ];
@@ -42,6 +41,8 @@ test("Pages site exposes first-class sections beyond the homepage", () => {
     );
     assert.match(index, new RegExp(`href="${page}"`), `index should link ${page}`);
   }
+  assert.equal(existsSync(join(docs, "glossary.html")), false, "glossary should not be a standalone docs page");
+  assert.match(index, /href="course\.html#glossary"/, "index should link glossary inside learning");
 });
 
 test("Every public docs page has shared navigation and a unique heading", () => {
@@ -51,7 +52,7 @@ test("Every public docs page has shared navigation and a unique heading", () => 
     assert.match(html, /<h1[^>]*>[\s\S]*?<\/h1>/, `${page} should include an h1`);
     assert.match(html, /href="course\.html"/, `${page} should link Course`);
     assert.match(html, /href="products\.html"/, `${page} should link Products`);
-    assert.match(html, /href="glossary\.html"/, `${page} should link Glossary`);
+    assert.doesNotMatch(html, /href="glossary\.html"/, `${page} should not link standalone Glossary`);
   }
 });
 
@@ -152,6 +153,8 @@ test("Learning page exposes a left-side directory navigation", () => {
   assert.match(html, /学习路线/);
   assert.match(html, /主线课程/);
   assert.match(html, /术语表/);
+  assert.match(html, /id="glossary"/);
+  assert.match(html, /href="#glossary"/);
   assert.match(html, /实践检查清单/);
   assert.match(html, /class="learn-content"/, "learning page should include a main content panel");
 });
@@ -164,7 +167,6 @@ test("Section pages start directly with content instead of top heading blocks", 
     "patterns.html",
     "research.html",
     "timeline.html",
-    "glossary.html",
     "references.html",
   ];
 

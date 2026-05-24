@@ -22,6 +22,7 @@
 - Keep route content in `src/pages/*.astro`; simple section routes should delegate to `src/components/SectionPage.astro`.
 - Keep shared route labels, homepage blocks, course modules, industry updates, and section cards in `src/data/site.mjs` so navigation and page structure are edited in one place.
 - Load `assets/css/style.css` on every page and load `assets/css/learn.css` only on `course.html`.
+- Keep glossary content under `course.html#glossary`; do not create or link a standalone `glossary.html` route.
 - Do not use `RawPage`, `set:html`, or filesystem reads from `docs/*.html` for runtime rendering once the Astro route shell is in place.
 
 ## Migration Checkpoints

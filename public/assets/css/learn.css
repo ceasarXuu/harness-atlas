@@ -66,6 +66,17 @@
   min-width: 0;
 }
 
+.learn-subsection {
+  border-top: 1px solid var(--line);
+  margin-top: 56px;
+  padding-top: 32px;
+}
+
+.learn-subsection .content-title {
+  font-size: clamp(32px, 5vw, 56px);
+  margin-bottom: 16px;
+}
+
 @media (max-width: 900px) {
   .learn-shell {
     grid-template-columns: 1fr;

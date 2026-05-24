@@ -17,7 +17,6 @@ const pages = [
   "patterns.html",
   "research.html",
   "timeline.html",
-  "glossary.html",
   "references.html",
 ];
 
@@ -82,6 +81,7 @@ test("Astro build emits static Pages-compatible routes and assets", () => {
   for (const page of pages) {
     assert.ok(existsSync(join(dist, page)), `missing built route dist/${page}`);
   }
+  assert.equal(existsSync(join(dist, "glossary.html")), false, "glossary should be part of learning, not a standalone route");
 
   assert.ok(existsSync(join(dist, "assets/css/style.css")), "missing shared stylesheet");
   assert.ok(existsSync(join(dist, "assets/css/learn.css")), "missing learning stylesheet");
@@ -122,4 +122,14 @@ test("Built pages have complete local links and visible content", () => {
       assert.ok(existsSync(target), `${page} links to missing local asset or route: ${relative(dist, target)}`);
     }
   }
+});
+
+test("Glossary content is nested under the learning page", () => {
+  const course = read(join(dist, "course.html"));
+  const allBuiltHtml = pages.map((page) => read(join(dist, page))).join("\n");
+
+  assert.match(course, /id="glossary"/, "course should expose the glossary anchor");
+  assert.match(course, /术语表/, "course should contain glossary content");
+  assert.match(course, /href="#glossary"/, "learning sidebar should jump to the local glossary section");
+  assert.doesNotMatch(allBuiltHtml, /href="glossary\.html"/, "built pages should not link a standalone glossary page");
 });

@@ -15,7 +15,6 @@ export const enNav = [
   { href: "patterns.html", label: "PATTERNS" },
   { href: "research.html", label: "RESEARCH" },
   { href: "timeline.html", label: "TIMELINE" },
-  { href: "glossary.html", label: "GLOSSARY" },
   { href: "references.html", label: "REFERENCES" },
   { href: "index.html", label: "中文" },
   { href: "https://github.com/ceasarXuu/harness-atlas", label: "GITHUB" },
@@ -25,7 +24,6 @@ export const prefetchRoutes = [
   "course.html",
   "products.html",
   "timeline.html",
-  "glossary.html",
 ];
 
 export const courseModules = [
@@ -71,7 +69,7 @@ export const homeSections = {
   learn: [
     ["course.html", "课程", "主线课程", "按照定义、组件、运行、评估、治理和未来方向系统学习。"],
     ["course.html", "路线", "学习路线", "把课程拆成入门、核心、运行机制和系统治理几个阶段。"],
-    ["glossary.html", "术语", "术语表", "统一 Agent、Harness、Tool、Skill、MCP 等概念边界。"],
+    ["course.html#glossary", "术语", "术语表", "统一 Agent、Harness、Tool、Skill、MCP 等概念边界。"],
     ["patterns.html", "实践", "实践检查清单", "把设计模式转化为可落地、可复用、可验证的工程检查项。"],
   ],
   atlas: [
@@ -85,6 +83,15 @@ export const homeSections = {
     ["references.html", "参考", "参考资料", "维护官方文档、论文、博客和 Changelog 原始索引。"],
   ],
 };
+
+export const glossaryTerms = [
+  ["AGENT", "Agent", "基于模型、上下文、工具和反馈执行任务的行为主体。"],
+  ["HARNESS", "Harness", "围绕 Agent 构建的运行时、控制、编排和治理层。"],
+  ["TOOL", "Tool", "暴露给 Agent 的外部能力，例如 Shell、文件、浏览器或 API。"],
+  ["SKILL", "Skill", "可复用任务能力封装，包含触发条件、步骤、资源和示例。"],
+  ["MCP", "MCP", "连接 AI 应用、工具、资源和外部系统的协议层。"],
+  ["SUB", "Subagent", "在主 Agent 或 Harness 编排下执行局部任务的 Agent。"],
+];
 
 export const sectionPages = {
   products: {
@@ -158,22 +165,6 @@ export const sectionPages = {
       ["PROTOCOL", "协议与框架", "MCP、Skills、Tools、Multi-agent 等协议或框架进展。"],
       ["RESEARCH", "研究与实验", "重要研究文章、技术报告和实验结果。"],
       ["ECOSYSTEM", "生态变化", "影响 Harness 生态的集成、平台和标准变化。"],
-    ],
-  },
-  glossary: {
-    title: "术语表 · Harness Atlas",
-    description: "Agent Harness 相关术语解释。",
-    kicker: "术语表 / CONCEPT BOUNDARY",
-    heading: "核心术语",
-    intro: "统一 Agent Harness 相关术语解释，避免 Agent、Harness、Tool、Skill、Workflow、MCP、Subagent 等概念混用。",
-    footer: "HARNESS_ATLAS / GLOSSARY",
-    cards: [
-      ["AGENT", "Agent", "基于模型、上下文、工具和反馈执行任务的行为主体。"],
-      ["HARNESS", "Harness", "围绕 Agent 构建的运行时、控制、编排和治理层。"],
-      ["TOOL", "Tool", "暴露给 Agent 的外部能力，例如 Shell、文件、浏览器或 API。"],
-      ["SKILL", "Skill", "可复用任务能力封装，包含触发条件、步骤、资源和示例。"],
-      ["MCP", "MCP", "连接 AI 应用、工具、资源和外部系统的协议层。"],
-      ["SUB", "Subagent", "在主 Agent 或 Harness 编排下执行局部任务的 Agent。"],
     ],
   },
   references: {
