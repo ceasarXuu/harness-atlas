@@ -16,13 +16,36 @@ const page = homePages[locale];
   footerLeft={page.footerLeft}
   footerRight={page.footerRight}
 >
-  <section class="hero home-hero">
-    <div>
+  <section class="hero home-hero harness-hero">
+    <div class="hero-main">
       <span class="badge">{page.hero.badge}</span>
-      <h1 class="glitch">Harness<br>Atlas</h1>
-      <p class="lead">{page.hero.lead}</p>
-      {page.hero.copy.map((copy) => <p class="hero-copy">{copy}</p>)}
-      <p class="hero-audience">{page.hero.audience}</p>
+
+      <h1 class="hero-equation" aria-label={page.hero.titleAria}>
+        {page.hero.equation.map((token) => (
+          <span class:list={["equation-token", token.role]}>{token.text}</span>
+        ))}
+      </h1>
+
+      <p class="lead hero-thesis">{page.hero.lead}</p>
+
+      <div class="formula-stack" aria-label={page.hero.formulaAria}>
+        {page.hero.formulas.map(([label, expression]) => (
+          <div class="formula-line">
+            <span>{label}</span>
+            <code>{expression}</code>
+          </div>
+        ))}
+      </div>
+
+      <div class="hero-principles">
+        {page.hero.principles.map(([label, body]) => (
+          <div class="hero-principle">
+            <span>{label}</span>
+            <p>{body}</p>
+          </div>
+        ))}
+      </div>
+
       <div class="actions">
         {page.hero.actions.map(([href, label, primary]) => (
           <a class:list={["cta", primary && "primary"]} href={href}>{label}</a>
@@ -30,14 +53,26 @@ const page = homePages[locale];
       </div>
     </div>
 
-    <aside class="system-card" aria-label={page.hero.traceAria}>
-      <div class="system-head"><span>{page.hero.traceHead[0]}</span><span>{page.hero.traceHead[1]}</span></div>
-      <div class="system-body">
-        <div class="trace">
-          {page.hero.traceRows.map(([label, body]) => (
-            <div class="trace-row"><strong>{label}</strong><span>{body}</span></div>
+    <aside class="system-card harness-map" aria-label={page.hero.mapAria}>
+      <div class="system-head"><span>{page.hero.mapHead[0]}</span><span>{page.hero.mapHead[1]}</span></div>
+      <div class="harness-map-body">
+        <div class="map-strip map-goal">{page.hero.mapGoal}</div>
+
+        <div class="runtime-ring">
+          {page.hero.ringNodes.map(([label, position]) => (
+            <span class={`ring-node ${position}`}>{label}</span>
           ))}
+          <div class="model-core">
+            <span>{page.hero.coreEyebrow}</span>
+            <strong>{page.hero.coreTitle}</strong>
+          </div>
         </div>
+
+        <div class="loop-pipeline" aria-label={page.hero.loopAria}>
+          {page.hero.loop.map((step) => <span>{step}</span>)}
+        </div>
+
+        <div class="map-strip map-result">{page.hero.mapResult}</div>
       </div>
     </aside>
   </section>
@@ -63,3 +98,317 @@ const page = homePages[locale];
     </section>
   ))}
 </BaseLayout>
+
+<style>
+  .harness-hero {
+    min-height: clamp(560px, calc(100vh - 190px), 760px);
+    grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+    gap: clamp(34px, 5vw, 64px);
+    padding: 56px 0 64px;
+  }
+
+  .hero-main {
+    position: relative;
+  }
+
+  .hero-equation {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: clamp(10px, 1.8vw, 20px);
+    max-width: 860px;
+    margin: 0;
+    font: 900 clamp(44px, 7vw, 88px) / 0.95 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: -0.08em;
+    text-transform: uppercase;
+  }
+
+  .equation-token {
+    display: inline-block;
+  }
+
+  .equation-token.model,
+  .equation-token.agent {
+    text-shadow: 3px 0 #777, -3px 0 #333;
+  }
+
+  .equation-token.operator {
+    color: #777;
+    font-size: 0.7em;
+    letter-spacing: -0.02em;
+    text-shadow: none;
+    transform: translateY(-0.08em);
+  }
+
+  .equation-token.harness {
+    color: #000;
+    background: #fff;
+    border: 1px solid #fff;
+    padding: 0.04em 0.13em 0.09em;
+    box-shadow: 9px 9px 0 rgba(255, 255, 255, 0.10);
+    text-shadow: none;
+  }
+
+  .hero-thesis {
+    max-width: 760px;
+    margin-top: 28px;
+  }
+
+  .formula-stack {
+    display: grid;
+    gap: 10px;
+    max-width: 780px;
+    margin-top: 24px;
+  }
+
+  .formula-line {
+    display: grid;
+    grid-template-columns: 118px minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
+    padding: 12px 14px;
+    border: 1px solid #3a3a3a;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .formula-line span {
+    color: #aaa;
+    font: 800 12px / 1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+  }
+
+  .formula-line code {
+    color: #fff;
+    white-space: normal;
+    font: 800 14px / 1.45 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  .hero-principles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    max-width: 780px;
+    margin-top: 14px;
+  }
+
+  .hero-principle {
+    min-height: 92px;
+    padding: 12px;
+    border: 1px solid #333;
+    background: rgba(0, 0, 0, 0.58);
+  }
+
+  .hero-principle span {
+    color: #fff;
+    font: 800 12px / 1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .hero-principle p {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .harness-map {
+    align-self: stretch;
+    min-height: 510px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .harness-map-body {
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+    gap: 18px;
+    height: 100%;
+    padding: 18px;
+  }
+
+  .map-strip {
+    display: flex;
+    justify-content: center;
+    padding: 10px 12px;
+    border: 1px solid #444;
+    background: rgba(255, 255, 255, 0.035);
+    color: #e8e8e8;
+    font: 800 12px / 1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .runtime-ring {
+    position: relative;
+    min-height: 300px;
+    overflow: hidden;
+    border: 1px solid #3a3a3a;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12), transparent 34%),
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: auto, 24px 24px, 24px 24px;
+  }
+
+  .runtime-ring::before {
+    content: "";
+    position: absolute;
+    inset: 38px;
+    border: 1px dashed #5a5a5a;
+    border-radius: 999px;
+  }
+
+  .runtime-ring::after {
+    content: "";
+    position: absolute;
+    inset: 92px;
+    border: 1px solid #444;
+    transform: rotate(45deg);
+  }
+
+  .model-core {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 50%;
+    width: 148px;
+    height: 148px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    border: 2px solid #fff;
+    background: #000;
+    text-align: center;
+    box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.05);
+  }
+
+  .model-core span {
+    color: #888;
+    font: 700 10px / 1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .model-core strong {
+    color: #fff;
+    font: 900 24px / 1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: -0.05em;
+  }
+
+  .ring-node {
+    position: absolute;
+    z-index: 3;
+    padding: 7px 9px;
+    border: 1px solid #555;
+    background: #050505;
+    color: #eee;
+    font: 800 11px / 1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ring-node.north {
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .ring-node.north-east {
+    top: 78px;
+    right: 22px;
+  }
+
+  .ring-node.south-east {
+    right: 28px;
+    bottom: 72px;
+  }
+
+  .ring-node.south {
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .ring-node.south-west {
+    bottom: 72px;
+    left: 22px;
+  }
+
+  .ring-node.north-west {
+    top: 78px;
+    left: 22px;
+  }
+
+  .loop-pipeline {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 20px;
+    padding: 12px 0;
+    border-top: 1px solid #444;
+    border-bottom: 1px solid #444;
+  }
+
+  .loop-pipeline span {
+    position: relative;
+    color: #f5f5f5;
+    font: 800 12px / 1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    text-transform: uppercase;
+  }
+
+  .loop-pipeline span:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    right: -16px;
+    color: #777;
+  }
+
+  .map-result {
+    color: #000;
+    background: #fff;
+    border-color: #fff;
+  }
+
+  @media (max-width: 900px) {
+    .harness-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .harness-map {
+      min-height: 460px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .harness-hero {
+      padding-top: 36px;
+    }
+
+    .hero-equation {
+      gap: 8px 12px;
+      font-size: clamp(38px, 13vw, 56px);
+    }
+
+    .equation-token.harness {
+      box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.10);
+    }
+
+    .formula-line {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .hero-principles {
+      grid-template-columns: 1fr;
+    }
+
+    .harness-map {
+      display: none;
+    }
+  }
+</style>
