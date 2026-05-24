@@ -1,0 +1,13 @@
+---
+const { nav } = Astro.props;
+---
+
+<header class="top">
+  <a class="brand" href="./" aria-label="Harness Atlas Home">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <span>HARNESS_ATLAS</span>
+  </a>
+  <nav class="nav" aria-label="Main navigation">
+    {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+  </nav>
+</header>

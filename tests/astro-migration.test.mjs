@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { join, relative } from "node:path";
 import { spawnSync } from "node:child_process";
 import test from "node:test";
 
 const root = new URL("..", import.meta.url).pathname;
-const docs = join(root, "docs");
+const src = join(root, "src");
 const dist = join(root, "dist");
 
 const pages = [
@@ -25,12 +25,11 @@ function read(path) {
   return readFileSync(path, "utf8");
 }
 
-function count(html, selector) {
-  if (selector === "nav a") return (html.match(/<nav[\s\S]*?<\/nav>/)?.[0].match(/<a\b/g) ?? []).length;
-  if (selector === ".cell") return (html.match(/class="[^"]*\bcell\b[^"]*"/g) ?? []).length;
-  if (selector === ".row") return (html.match(/class="[^"]*\brow\b[^"]*"/g) ?? []).length;
-  if (selector === ".trace-row") return (html.match(/class="[^"]*\btrace-row\b[^"]*"/g) ?? []).length;
-  throw new Error(`Unknown selector ${selector}`);
+function sourceFiles(dir) {
+  return readdirSync(dir).flatMap((entry) => {
+    const path = join(dir, entry);
+    return statSync(path).isDirectory() ? sourceFiles(path) : [path];
+  });
 }
 
 function visibleText(html) {
@@ -42,9 +41,36 @@ function visibleText(html) {
     .trim();
 }
 
-test("Astro source can build the current Pages routes", () => {
+function localLinks(html) {
+  return [...html.matchAll(/\s(?:href|src)="([^"]+)"/g)]
+    .map((match) => match[1])
+    .filter((href) => {
+      return !href.startsWith("#")
+        && !href.startsWith("http:")
+        && !href.startsWith("https:")
+        && !href.startsWith("mailto:")
+        && !href.startsWith("data:");
+    });
+}
+
+test("Astro source uses shared layouts and data instead of raw HTML passthrough", () => {
+  assert.ok(existsSync(join(src, "layouts/BaseLayout.astro")), "missing BaseLayout");
+  assert.ok(existsSync(join(src, "components/SiteHeader.astro")), "missing SiteHeader");
+  assert.ok(existsSync(join(src, "components/SectionPage.astro")), "missing SectionPage");
+  assert.ok(existsSync(join(src, "data/site.mjs")), "missing central site data");
+  assert.equal(existsSync(join(src, "components/RawPage.astro")), false, "RawPage passthrough should be removed");
+
+  const source = sourceFiles(src).map(read).join("\n");
+  assert.doesNotMatch(source, /RawPage|set:html|readFileSync/, "Astro source should not stream docs HTML");
+
+  const siteData = read(join(src, "data/site.mjs"));
+  assert.match(siteData, /export const zhNav/, "Chinese nav should be centralized");
+  assert.match(siteData, /export const sectionPages/, "section page metadata should be centralized");
+  assert.match(siteData, /export const courseModules/, "course modules should be centralized");
+});
+
+test("Astro build emits static Pages-compatible routes and assets", () => {
   assert.ok(existsSync(join(root, "astro.config.mjs")), "missing astro.config.mjs");
-  assert.ok(existsSync(join(root, "src/pages/index.astro")), "missing src/pages/index.astro");
 
   const build = spawnSync("npm", ["run", "build"], {
     cwd: root,
@@ -56,17 +82,44 @@ test("Astro source can build the current Pages routes", () => {
   for (const page of pages) {
     assert.ok(existsSync(join(dist, page)), `missing built route dist/${page}`);
   }
+
+  assert.ok(existsSync(join(dist, "assets/css/style.css")), "missing shared stylesheet");
+  assert.ok(existsSync(join(dist, "assets/css/learn.css")), "missing learning stylesheet");
+  assert.ok(existsSync(join(dist, "favicon.svg")), "missing favicon");
 });
 
-test("Astro build preserves existing visible page structure", () => {
+test("Built pages keep page-specific loading boundaries", () => {
   for (const page of pages) {
-    const before = read(join(docs, page));
-    const after = read(join(dist, page));
+    const html = read(join(dist, page));
+    const stylesheetHrefs = [...html.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="([^"]+)"/g)].map((match) => match[1]);
 
-    assert.equal(count(after, "nav a"), count(before, "nav a"), `${page} nav link count changed`);
-    assert.equal(count(after, ".cell"), count(before, ".cell"), `${page} card count changed`);
-    assert.equal(count(after, ".row"), count(before, ".row"), `${page} row count changed`);
-    assert.equal(count(after, ".trace-row"), count(before, ".trace-row"), `${page} trace row count changed`);
-    assert.equal(visibleText(after), visibleText(before), `${page} visible text changed`);
+    assert.equal(stylesheetHrefs.filter((href) => href === "assets/css/style.css").length, 1, `${page} should load shared CSS once`);
+    assert.equal(stylesheetHrefs.includes("assets/css/learn.css"), page === "course.html", `${page} should only load learning CSS on course`);
+    assert.doesNotMatch(html, /<script\b/i, `${page} should stay static and script-free`);
+
+    if (page === "index.html" || page === "en.html") {
+      assert.match(html, /class="[^"]*\bhero\b/, `${page} should keep a homepage hero`);
+    } else {
+      assert.doesNotMatch(html, /class="[^"]*\bhero\b/, `${page} should not render the old top hero`);
+      assert.doesNotMatch(html, /page-heading/, `${page} should not render the old page heading block`);
+    }
+  }
+});
+
+test("Built pages have complete local links and visible content", () => {
+  for (const page of pages) {
+    const html = read(join(dist, page));
+    const text = visibleText(html);
+
+    assert.match(html, /<h1\b|<h2\b/, `${page} should expose a primary heading`);
+    assert.ok(text.length > 200, `${page} should contain meaningful visible text`);
+
+    for (const href of localLinks(html)) {
+      const withoutAnchor = href.split("#")[0] || ".";
+      const target = withoutAnchor.endsWith("/")
+        ? join(dist, withoutAnchor, "index.html")
+        : join(dist, withoutAnchor);
+      assert.ok(existsSync(target), `${page} links to missing local asset or route: ${relative(dist, target)}`);
+    }
   }
 });

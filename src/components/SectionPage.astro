@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CardGrid from "./CardGrid.astro";
+import { zhNav } from "../data/site.mjs";
+
+const { page } = Astro.props;
+---
+
+<BaseLayout title={page.title} description={page.description} nav={zhNav} footerLeft={page.footer} footerRight="CC BY 4.0 + MIT">
+  <section class="section">
+    <p class="section-kicker">{page.kicker}</p>
+    <h1 class="content-title">{page.heading}</h1>
+    <p class="section-intro">{page.intro}</p>
+    <CardGrid cards={page.cards} />
+  </section>
+</BaseLayout>

@@ -1,0 +1,38 @@
+---
+import SiteHeader from "../components/SiteHeader.astro";
+import { prefetchRoutes, zhNav } from "../data/site.mjs";
+
+const {
+  title = "Harness Atlas",
+  description = "面向 Agent Harness 的公开知识图谱与系统课程。",
+  lang = "zh-CN",
+  nav = zhNav,
+  footerLeft = "HARNESS_ATLAS / CC BY 4.0 + MIT",
+  footerRight = "维护者：ceasarXuu",
+  styles = [],
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/css/style.css" as="style">
+  <link rel="stylesheet" href="assets/css/style.css">
+  {styles.map((href) => <link rel="stylesheet" href={href} />)}
+  {prefetchRoutes.map((href) => <link rel="prefetch" href={href} />)}
+</head>
+<body>
+  <div class="wrap">
+    <SiteHeader nav={nav} />
+    <main>
+      <slot />
+    </main>
+    <footer class="footer"><span>{footerLeft}</span><span>{footerRight}</span></footer>
+  </div>
+</body>
+</html>

@@ -1,5 +1,88 @@
 ---
-import RawPage from "../components/RawPage.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CardGrid from "../components/CardGrid.astro";
+import { homeSections, updates, zhNav } from "../data/site.mjs";
 ---
 
-<RawPage file="index.html" />
+<BaseLayout title="Harness Atlas" description="面向 Agent Harness 的公开知识图谱与系统课程。" nav={zhNav}>
+  <section class="hero home-hero">
+    <div>
+      <span class="badge">系统 / 智能体 / HARNESS</span>
+      <h1 class="glitch">Harness<br>Atlas</h1>
+      <p class="lead">面向 Agent Harness 的公开知识图谱与系统课程。用软件工程视角解释 AI Agent 背后的运行环境、架构模式与工程实践。</p>
+      <p class="hero-copy">项目关注的不是单一工具，而是 AI Agent 产品背后的通用工程范式：如何把上下文、工具、状态、记忆、规划、评估、人类在环和治理机制组合成可运行、可控制、可评估的 Agent 系统。</p>
+      <div class="actions">
+        <a class="cta primary" href="course.html">开始学习</a>
+        <a class="cta" href="products.html">查看知识图谱</a>
+      </div>
+    </div>
+
+    <aside class="system-card" aria-label="Agent Harness 运行时轨迹">
+      <div class="system-head"><span>运行时轨迹</span><span>版本 0.1</span></div>
+      <div class="system-body">
+        <div class="trace">
+          <div class="trace-row"><strong>模型</strong><span>推理 / 生成</span></div>
+          <div class="trace-row"><strong>上下文</strong><span>选择 / 压缩 / 注入</span></div>
+          <div class="trace-row"><strong>工具</strong><span>终端 / 文件 / 浏览器 / API</span></div>
+          <div class="trace-row"><strong>状态</strong><span>任务 / 会话 / 项目</span></div>
+          <div class="trace-row"><strong>评估</strong><span>测试 / 审查 / 指标</span></div>
+          <div class="trace-row"><strong>策略</strong><span>权限 / 审计 / 风险</span></div>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <section id="industry" class="section updates-flow">
+    <p class="section-kicker">最新行业动态</p>
+    <h2>从动态里看 Harness 如何演进</h2>
+    <p class="section-intro">持续跟踪 Agent Harness 相关的产品、协议、研究和工程实践变化，让学习路径保持和真实生态同步。</p>
+    <div class="timeline-list">
+      {updates.map((item) => (
+        <a class="update-row" href={item.href}>
+          <strong>{item.year}</strong>
+          <div><h3>{item.title}</h3><p>{item.body}</p></div>
+          <span>{item.tag}</span>
+        </a>
+      ))}
+    </div>
+    <div class="actions section-actions"><a class="cta" href="timeline.html">查看全部动态</a></div>
+  </section>
+
+  <section id="learn" class="section">
+    <p class="section-kicker">学习路径</p>
+    <h2>从入门到系统理解 Agent Harness</h2>
+    <p class="section-intro">学习区把主线课程、术语表和实践检查清单放在一起，适合按目录逐步阅读，也适合随时回查概念边界。</p>
+    <CardGrid cards={homeSections.learn} />
+  </section>
+
+  <section id="atlas" class="section">
+    <p class="section-kicker">知识图谱</p>
+    <h2>把产品、协议和模式连接起来</h2>
+    <p class="section-intro">图谱区关注不同产品和协议背后的 Harness 设计，把上下文、工具、状态、评估和治理能力串成可比较的结构。</p>
+    <CardGrid cards={homeSections.atlas} />
+  </section>
+
+  <section id="evidence" class="section">
+    <p class="section-kicker">研究与资料</p>
+    <h2>为课程和图谱提供证据层</h2>
+    <p class="section-intro">研究资料和参考资料用于沉淀原始信源、实验结论、论文观点和产品文档，避免课程内容只停留在概念判断。</p>
+    <CardGrid cards={homeSections.evidence} compact />
+  </section>
+
+  <section class="section">
+    <p class="section-kicker">适合读者</p>
+    <h2>适合读者</h2>
+    <div class="matrix">
+      <div class="cell"><span>开发</span><h3>开发者</h3><p>正在使用 AI Coding 工具，希望理解背后机制。</p></div>
+      <div class="cell"><span>独立</span><h3>独立开发者</h3><p>构建 AI 原生工作流和个人 Harness。</p></div>
+      <div class="cell"><span>产品</span><h3>产品经理</h3><p>设计 Agent 产品、Workflow 和工具系统。</p></div>
+      <div class="cell"><span>团队</span><h3>工程团队</h3><p>将 AI Agent 引入研发流程与组织系统。</p></div>
+    </div>
+  </section>
+
+  <section id="search" class="section">
+    <p class="section-kicker">搜索</p>
+    <h2>搜索入口</h2>
+    <p class="section-intro">后续接入静态搜索后，这里会直接检索课程、图谱、动态、术语和参考资料。当前版本先保留入口位置。</p>
+  </section>
+</BaseLayout>

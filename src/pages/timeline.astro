@@ -1,5 +1,6 @@
 ---
-import RawPage from "../components/RawPage.astro";
+import SectionPage from "../components/SectionPage.astro";
+import { sectionPages } from "../data/site.mjs";
 ---
 
-<RawPage file="timeline.html" />
+<SectionPage page={sectionPages.timeline} />

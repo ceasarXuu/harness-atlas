@@ -1,0 +1,18 @@
+---
+const { cards, compact = false } = Astro.props;
+---
+
+<div class:list={["matrix", compact && "compact-matrix"]}>
+  {cards.map(([hrefOrLabel, labelOrTitle, titleOrBody, maybeBody]) => {
+    const hasHref = typeof maybeBody === "string";
+    const href = hasHref ? hrefOrLabel : undefined;
+    const label = hasHref ? labelOrTitle : hrefOrLabel;
+    const title = hasHref ? titleOrBody : labelOrTitle;
+    const body = hasHref ? maybeBody : titleOrBody;
+    return hasHref ? (
+      <a class="cell" href={href}><span>{label}</span><h3>{title}</h3><p>{body}</p></a>
+    ) : (
+      <div class="cell"><span>{label}</span><h3>{title}</h3><p>{body}</p></div>
+    );
+  })}
+</div>
