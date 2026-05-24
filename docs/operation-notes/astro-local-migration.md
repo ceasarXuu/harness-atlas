@@ -31,3 +31,7 @@ Do not run two Astro builds against the same checkout in parallel because both w
 ## Homepage Industry Updates
 
 For the learning-site homepage, keep the structure vertical: header, hero, then industry updates. Size `.home-hero` so the first industry updates section starts inside the first viewport on desktop. On mobile, the runtime trace card can be hidden in the first hero because otherwise it pushes the industry updates below the first viewport.
+
+## Learning Page Sidebar
+
+The learning page should open with a compact `.learn-hero`, then a `.learn-shell` two-column section. Keep `.learn-sidebar` visible in the first viewport on desktop and mobile; hide the learning hero trace card on mobile if it pushes the sidebar too far down.

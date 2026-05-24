@@ -142,3 +142,17 @@ test("Chinese homepage merges industry updates into the first-scroll experience"
   assert.match(html, /<p class="section-kicker">最新行业动态<\/p>/);
   assert.match(html, /href="timeline\.html"/, "homepage should still link to the full updates page");
 });
+
+test("Learning page exposes a left-side directory navigation", () => {
+  const html = readDocsFile("course.html");
+
+  assert.match(html, /<section class="section learn-shell">/, "learning page should use the two-column shell");
+  assert.match(html, /<aside class="learn-sidebar"/, "learning page should include a sidebar");
+  assert.match(html, /<nav class="learn-nav"/, "learning sidebar should contain directory navigation");
+  assert.match(html, /学习路线/);
+  assert.match(html, /主线课程/);
+  assert.match(html, /术语表/);
+  assert.match(html, /实践检查清单/);
+  assert.match(html, /<section class="hero learn-hero">/, "learning page should use a compact hero");
+  assert.match(html, /class="learn-content"/, "learning page should include a main content panel");
+});
