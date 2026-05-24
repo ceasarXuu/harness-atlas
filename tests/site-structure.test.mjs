@@ -153,11 +153,10 @@ test("Learning page exposes a left-side directory navigation", () => {
   assert.match(html, /主线课程/);
   assert.match(html, /术语表/);
   assert.match(html, /实践检查清单/);
-  assert.match(html, /<section class="page-heading">/, "learning page should use a compact page heading");
   assert.match(html, /class="learn-content"/, "learning page should include a main content panel");
 });
 
-test("Section pages use compact page headings instead of hero blocks", () => {
+test("Section pages start directly with content instead of top heading blocks", () => {
   const sectionPages = [
     "course.html",
     "products.html",
@@ -172,6 +171,7 @@ test("Section pages use compact page headings instead of hero blocks", () => {
   for (const page of sectionPages) {
     const html = readDocsFile(page);
     assert.doesNotMatch(html, /<section class="hero/, `${page} should not use a hero block`);
-    assert.match(html, /<section class="page-heading">/, `${page} should use compact page heading`);
+    assert.doesNotMatch(html, /<section class="page-heading">/, `${page} should not use a separate page heading block`);
+    assert.match(html, /<main>\s*<section class="section/, `${page} should start main content immediately`);
   }
 });
