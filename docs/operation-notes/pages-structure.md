@@ -21,3 +21,7 @@ python3 -m http.server 4173 --directory docs
 ```
 
 For browser verification, use bundled Playwright with the local Chrome executable and check both desktop and mobile viewports for all public Pages files. The important regression signal is zero horizontal overflow plus visible `h1` and nav links on every page.
+
+## Chinese Homepage Copy
+
+When updating the Chinese homepage, keep navigation labels, CTA buttons, section kickers, comparison headings, card titles, runtime panel labels, and footer labels in Chinese. Product names and technical terms such as `Harness Atlas`, `Agent Harness`, `MCP`, and `GitHub` can stay as-is when they are used as names rather than UI chrome.

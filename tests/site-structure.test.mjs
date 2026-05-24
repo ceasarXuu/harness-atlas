@@ -69,3 +69,56 @@ test("Public docs pages do not contain broken local links", () => {
     }
   }
 });
+
+test("Chinese homepage localizes visible navigation, buttons, and section labels", () => {
+  const html = readDocsFile("index.html");
+  const visibleText = html
+    .replace(/<script[\s\S]*?<\/script>/g, "")
+    .replace(/<style[\s\S]*?<\/style>/g, "")
+    .replace(/<[^>]+>/g, "\n");
+
+  const forbiddenEnglishUi = [
+    "HOME",
+    "COURSE",
+    "PRODUCTS",
+    "STANDARDS",
+    "PATTERNS",
+    "RESEARCH",
+    "TIMELINE",
+    "GLOSSARY",
+    "REFERENCES",
+    "ENTER ATLAS",
+    "PRODUCT MAP",
+    "VIEW SOURCE",
+    "WHY HARNESS MATTERS",
+    "ARCHITECTURE MATRIX",
+    "COURSE MAP",
+    "ATLAS SECTIONS",
+    "AUDIENCE",
+    "WITHOUT HARNESS",
+    "WITH HARNESS",
+    "MAINTAINED BY",
+    "MODEL",
+    "CONTEXT",
+    "TOOLS",
+    "STATE",
+    "EVAL",
+    "POLICY",
+    "Context",
+    "Tools",
+    "State",
+    "Planning",
+    "Memory",
+    "Evaluation",
+    "Human",
+    "Governance",
+    "DEV",
+    "INDIE",
+    "PM",
+    "TEAM",
+  ];
+
+  for (const label of forbiddenEnglishUi) {
+    assert.doesNotMatch(visibleText, new RegExp(`\\b${label}\\b`), `${label} should be localized on the Chinese homepage`);
+  }
+});
