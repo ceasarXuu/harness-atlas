@@ -1,0 +1,16 @@
+---
+import CardGrid from "../components/CardGrid.astro";
+import LearningLayout from "../components/LearningLayout.astro";
+import { practiceChecklist } from "../data/site.mjs";
+---
+
+<LearningLayout
+  active="practice"
+  title="实践检查清单 · Harness Atlas"
+  description="Agent Harness 实践检查清单。"
+  kicker="学习 / 实践检查清单"
+  heading="实践检查清单"
+  intro="把 Agent Harness 的设计模式转化为可落地、可复用、可验证的工程检查项。"
+>
+  <CardGrid cards={practiceChecklist} compact />
+</LearningLayout>

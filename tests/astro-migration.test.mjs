@@ -12,6 +12,9 @@ const pages = [
   "index.html",
   "en.html",
   "course.html",
+  "course-modules.html",
+  "course-glossary.html",
+  "course-practice.html",
   "products.html",
   "standards.html",
   "patterns.html",
@@ -92,12 +95,14 @@ test("Astro build emits static Pages-compatible routes and assets", () => {
 });
 
 test("Built pages keep page-specific loading boundaries", () => {
+  const learningPages = new Set(["course.html", "course-modules.html", "course-glossary.html", "course-practice.html"]);
+
   for (const page of pages) {
     const html = read(join(dist, page));
     const stylesheetHrefs = [...html.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="([^"]+)"/g)].map((match) => match[1]);
 
     assert.equal(stylesheetHrefs.filter((href) => href === "assets/css/style.css").length, 1, `${page} should load shared CSS once`);
-    assert.equal(stylesheetHrefs.includes("assets/css/learn.css"), page === "course.html", `${page} should only load learning CSS on course`);
+    assert.equal(stylesheetHrefs.includes("assets/css/learn.css"), learningPages.has(page), `${page} should only load learning CSS inside learning pages`);
     assert.doesNotMatch(html, /<script\b/i, `${page} should stay static and script-free`);
 
     if (page === "index.html" || page === "en.html") {
@@ -128,11 +133,30 @@ test("Built pages have complete local links and visible content", () => {
 });
 
 test("Glossary content is nested under the learning page", () => {
-  const course = read(join(dist, "course.html"));
+  const course = read(join(dist, "course-glossary.html"));
   const allBuiltHtml = pages.map((page) => read(join(dist, page))).join("\n");
 
-  assert.match(course, /id="glossary"/, "course should expose the glossary anchor");
-  assert.match(course, /术语表/, "course should contain glossary content");
-  assert.match(course, /href="#glossary"/, "learning sidebar should jump to the local glossary section");
+  assert.match(course, /学习 \/ 术语表/, "glossary should render inside the learning shell");
+  assert.match(course, /术语表/, "glossary subpage should contain glossary content");
+  assert.match(course, /<aside class="learn-sidebar"/, "glossary subpage should keep the learning sidebar");
   assert.doesNotMatch(allBuiltHtml, /href="glossary\.html"/, "built pages should not link a standalone glossary page");
+});
+
+test("Learning directory entries are subpages, not scroll anchors", () => {
+  const learningPages = ["course.html", "course-modules.html", "course-glossary.html", "course-practice.html"];
+  const expectedLinks = learningPages.map((page) => `href="${page}"`);
+
+  for (const page of learningPages) {
+    const html = read(join(dist, page));
+    assert.match(html, /<aside class="learn-sidebar"/, `${page} should keep the learning sidebar`);
+    assert.match(html, /<nav class="learn-nav"/, `${page} should keep the learning directory`);
+
+    for (const link of expectedLinks) {
+      assert.match(html, new RegExp(link), `${page} should link ${link}`);
+    }
+
+    const sidebar = html.match(/<aside class="learn-sidebar"[\s\S]*?<\/aside>/)?.[0] ?? "";
+    assert.doesNotMatch(sidebar, /href="#/, `${page} sidebar should not use in-page anchors`);
+    assert.doesNotMatch(sidebar, /href="patterns\.html"/, `${page} sidebar should not jump outside the learning shell`);
+  }
 });

@@ -63,8 +63,16 @@ export const navByLocale = Object.fromEntries(
 
 export const prefetchRoutes = [
   "course.html",
+  "course-modules.html",
   "products.html",
   "timeline.html",
+];
+
+export const learningNav = [
+  { key: "roadmap", eyebrow: "路径", label: "学习路线", href: "course.html" },
+  { key: "modules", eyebrow: "课程", label: "主线课程", href: "course-modules.html" },
+  { key: "glossary", eyebrow: "术语", label: "术语表", href: "course-glossary.html" },
+  { key: "practice", eyebrow: "实践", label: "实践检查清单", href: "course-practice.html" },
 ];
 
 export const courseModules = [
@@ -108,10 +116,10 @@ export const updates = [
 
 export const homeSections = {
   learn: [
-    ["course.html", "课程", "主线课程", "按照定义、组件、运行、评估、治理和未来方向系统学习。"],
     ["course.html", "路线", "学习路线", "把课程拆成入门、核心、运行机制和系统治理几个阶段。"],
-    ["course.html#glossary", "术语", "术语表", "统一 Agent、Harness、Tool、Skill、MCP 等概念边界。"],
-    ["patterns.html", "实践", "实践检查清单", "把设计模式转化为可落地、可复用、可验证的工程检查项。"],
+    ["course-modules.html", "课程", "主线课程", "按照定义、组件、运行、评估、治理和未来方向系统学习。"],
+    ["course-glossary.html", "术语", "术语表", "统一 Agent、Harness、Tool、Skill、MCP 等概念边界。"],
+    ["course-practice.html", "实践", "实践检查清单", "把设计模式转化为可落地、可复用、可验证的工程检查项。"],
   ],
   atlas: [
     ["products.html", "产品", "产品图谱", "整理 Coding Agent、框架、平台和横向能力矩阵。"],
@@ -125,6 +133,13 @@ export const homeSections = {
   ],
 };
 
+export const learningRoadmap = [
+  ["入门", "基础概念", "先建立 Agent Harness 的边界、价值和核心组成。"],
+  ["核心", "运行组件", "集中理解上下文、工具、状态、记忆和执行循环。"],
+  ["工程", "系统实践", "把模式、协议、评估和治理连接到真实开发流程。"],
+  ["演进", "未来方向", "跟踪行业动态、产品形态和标准生态的长期变化。"],
+];
+
 export const glossaryTerms = [
   ["AGENT", "Agent", "基于模型、上下文、工具和反馈执行任务的行为主体。"],
   ["HARNESS", "Harness", "围绕 Agent 构建的运行时、控制、编排和治理层。"],
@@ -132,6 +147,14 @@ export const glossaryTerms = [
   ["SKILL", "Skill", "可复用任务能力封装，包含触发条件、步骤、资源和示例。"],
   ["MCP", "MCP", "连接 AI 应用、工具、资源和外部系统的协议层。"],
   ["SUB", "Subagent", "在主 Agent 或 Harness 编排下执行局部任务的 Agent。"],
+];
+
+export const practiceChecklist = [
+  ["上下文", "上下文边界", "明确哪些文件、资料、历史和约束应该进入任务上下文。"],
+  ["工具", "工具权限", "为 Shell、文件、浏览器和外部 API 设计可审计的权限边界。"],
+  ["状态", "任务状态", "记录计划、执行、阻塞、验证和交付物，避免长任务失忆。"],
+  ["评估", "验证闭环", "把测试、人工审查、运行时检查和日志信号组合成质量闭环。"],
+  ["治理", "风险控制", "在成本、安全、合规和组织流程上设置可复用的约束。"],
 ];
 
 export const sectionPages = {

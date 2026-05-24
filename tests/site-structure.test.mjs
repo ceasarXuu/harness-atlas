@@ -9,6 +9,9 @@ const docs = join(root, "docs");
 
 const requiredPages = [
   "course.html",
+  "course-modules.html",
+  "course-glossary.html",
+  "course-practice.html",
   "products.html",
   "standards.html",
   "patterns.html",
@@ -52,7 +55,7 @@ test("Pages site exposes first-class sections beyond the homepage", () => {
     assert.match(index, new RegExp(`href="${page}"`), `index should link ${page}`);
   }
   assert.equal(existsSync(join(docs, "glossary.html")), false, "glossary should not be a standalone docs page");
-  assert.match(index, /href="course\.html#glossary"/, "index should link glossary inside learning");
+  assert.match(index, /href="course-glossary\.html"/, "index should link glossary as a learning subpage");
 });
 
 test("Every public docs page has shared navigation and a unique heading", () => {
@@ -244,23 +247,37 @@ test("Chinese homepage merges industry updates into the first-scroll experience"
 });
 
 test("Learning page exposes a left-side directory navigation", () => {
-  const html = readDocsFile("course.html");
+  const learningPages = [
+    ["course.html", "学习路线"],
+    ["course-modules.html", "主线课程"],
+    ["course-glossary.html", "术语表"],
+    ["course-practice.html", "实践检查清单"],
+  ];
 
-  assert.match(html, /<section class="section learn-shell">/, "learning page should use the two-column shell");
-  assert.match(html, /<aside class="learn-sidebar"/, "learning page should include a sidebar");
-  assert.match(html, /<nav class="learn-nav"/, "learning sidebar should contain directory navigation");
-  assert.match(html, /学习路线/);
-  assert.match(html, /主线课程/);
-  assert.match(html, /术语表/);
-  assert.match(html, /id="glossary"/);
-  assert.match(html, /href="#glossary"/);
-  assert.match(html, /实践检查清单/);
-  assert.match(html, /class="learn-content"/, "learning page should include a main content panel");
+  for (const [page, heading] of learningPages) {
+    const html = readDocsFile(page);
+    const sidebar = html.match(/<aside class="learn-sidebar"[\s\S]*?<\/aside>/)?.[0] ?? "";
+
+    assert.match(html, /<section class="section learn-shell">/, `${page} should use the two-column shell`);
+    assert.match(html, /<aside class="learn-sidebar"/, `${page} should include a sidebar`);
+    assert.match(html, /<nav class="learn-nav"/, `${page} sidebar should contain directory navigation`);
+    assert.match(html, new RegExp(`<h1 class="content-title">${heading}</h1>`), `${page} should render its learning subpage`);
+    assert.match(html, /class="learn-content"/, `${page} should include a main content panel`);
+    assert.match(sidebar, /href="course\.html"/);
+    assert.match(sidebar, /href="course-modules\.html"/);
+    assert.match(sidebar, /href="course-glossary\.html"/);
+    assert.match(sidebar, /href="course-practice\.html"/);
+    assert.doesNotMatch(sidebar, /href="#/);
+    assert.doesNotMatch(sidebar, /href="patterns\.html"/);
+  }
 });
 
 test("Section pages start directly with content instead of top heading blocks", () => {
   const sectionPages = [
     "course.html",
+    "course-modules.html",
+    "course-glossary.html",
+    "course-practice.html",
     "products.html",
     "standards.html",
     "patterns.html",

@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { learningNav, navByLocale } from "../data/site.mjs";
+
+const {
+  active,
+  title,
+  description,
+  kicker,
+  heading,
+  intro,
+} = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  nav={navByLocale["zh-CN"]}
+  footerLeft="HARNESS_ATLAS / 学习"
+  footerRight="CC BY 4.0 + MIT"
+  styles={["assets/css/learn.css"]}
+>
+  <section class="section learn-shell">
+    <aside class="learn-sidebar" aria-label="学习目录">
+      <p class="section-kicker">学习目录</p>
+      <nav class="learn-nav" aria-label="学习页目录导航">
+        {learningNav.map((item) => (
+          <a class:list={[item.key === active && "active"]} href={item.href}><span>{item.eyebrow}</span>{item.label}</a>
+        ))}
+      </nav>
+    </aside>
+
+    <div class="learn-content">
+      <p class="section-kicker">{kicker}</p>
+      <h1 class="content-title">{heading}</h1>
+      <p class="section-intro">{intro}</p>
+      <slot />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,19 @@
+---
+import LearningLayout from "../components/LearningLayout.astro";
+import { courseModules } from "../data/site.mjs";
+---
+
+<LearningLayout
+  active="modules"
+  title="主线课程 · Harness Atlas"
+  description="Harness Atlas 主线课程模块。"
+  kicker="学习 / 主线课程"
+  heading="主线课程"
+  intro="系统讲解 Agent Harness 的基础概念、架构组件、协议标准、工程实践与未来演化。"
+>
+  <div class="course">
+    {courseModules.map(([num, title, body]) => (
+      <div class="row"><strong>{num}</strong><div><h3>{title}</h3><p>{body}</p></div></div>
+    ))}
+  </div>
+</LearningLayout>

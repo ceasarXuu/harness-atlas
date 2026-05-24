@@ -1,0 +1,16 @@
+---
+import CardGrid from "../components/CardGrid.astro";
+import LearningLayout from "../components/LearningLayout.astro";
+import { glossaryTerms } from "../data/site.mjs";
+---
+
+<LearningLayout
+  active="glossary"
+  title="术语表 · Harness Atlas"
+  description="Agent Harness 相关术语解释。"
+  kicker="学习 / 术语表"
+  heading="术语表"
+  intro="统一 Agent Harness 相关术语解释，避免 Agent、Harness、Tool、Skill、Workflow、MCP、Subagent 等概念混用。"
+>
+  <CardGrid cards={glossaryTerms} compact />
+</LearningLayout>

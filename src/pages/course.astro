@@ -1,49 +1,16 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
 import CardGrid from "../components/CardGrid.astro";
-import { courseModules, glossaryTerms, navByLocale } from "../data/site.mjs";
+import LearningLayout from "../components/LearningLayout.astro";
+import { learningRoadmap } from "../data/site.mjs";
 ---
 
-<BaseLayout
-  title="主线课程 · Harness Atlas"
-  description="Harness Atlas 主线课程模块。"
-  nav={navByLocale["zh-CN"]}
-  footerLeft="HARNESS_ATLAS / 学习"
-  footerRight="CC BY 4.0 + MIT"
-  styles={["assets/css/learn.css"]}
+<LearningLayout
+  active="roadmap"
+  title="学习路线 · Harness Atlas"
+  description="Harness Atlas 学习路线。"
+  kicker="学习 / 学习路线"
+  heading="学习路线"
+  intro="把 Agent Harness 的学习拆成入门、核心、工程和演进几个阶段。左侧目录在学习区子页面之间切换，并保持同一套学习导航。"
 >
-  <section class="section learn-shell">
-    <aside class="learn-sidebar" aria-label="学习目录">
-      <p class="section-kicker">学习目录</p>
-      <nav class="learn-nav" aria-label="学习页目录导航">
-        <a href="course.html"><span>路径</span>学习路线</a>
-        <a class="active" href="#course-modules"><span>课程</span>主线课程</a>
-        <a href="#glossary"><span>术语</span>术语表</a>
-        <a href="patterns.html"><span>实践</span>实践检查清单</a>
-      </nav>
-      <div class="learn-module-list" aria-label="主线课程模块">
-        {courseModules.map(([num, title]) => (
-          <a href={`#module-${num}`}>{num} {title}</a>
-        ))}
-      </div>
-    </aside>
-
-    <div id="course-modules" class="learn-content">
-      <p class="section-kicker">学习 / 主线课程</p>
-      <h1 class="content-title">课程目录</h1>
-      <p class="section-intro">系统讲解 Agent Harness 的基础概念、架构组件、协议标准、工程实践与未来演化。左侧目录用于在学习路线、主线课程、术语表和实践检查清单之间切换。</p>
-      <div class="course">
-        {courseModules.map(([num, title, body]) => (
-          <div id={`module-${num}`} class="row"><strong>{num}</strong><div><h3>{title}</h3><p>{body}</p></div></div>
-        ))}
-      </div>
-
-      <section id="glossary" class="learn-subsection">
-        <p class="section-kicker">学习 / 术语表</p>
-        <h2 class="content-title">核心术语</h2>
-        <p class="section-intro">统一 Agent Harness 相关术语解释，避免 Agent、Harness、Tool、Skill、Workflow、MCP、Subagent 等概念混用。</p>
-        <CardGrid cards={glossaryTerms} compact />
-      </section>
-    </div>
-  </section>
-</BaseLayout>
+  <CardGrid cards={learningRoadmap} />
+</LearningLayout>
