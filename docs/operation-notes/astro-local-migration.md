@@ -35,3 +35,5 @@ For the learning-site homepage, keep the structure vertical: header, hero, then 
 ## Learning Page Sidebar
 
 The learning page should open with a compact `.learn-hero`, then a `.learn-shell` two-column section. Keep `.learn-sidebar` visible in the first viewport on desktop and mobile; hide the learning hero trace card on mobile if it pushes the sidebar too far down.
+
+Section pages other than home should not use `.hero`. Use `.page-heading` for compact title blocks so readers reach navigation, directories, and article lists faster. Keep the full visual hero only for the homepage and the English homepage.

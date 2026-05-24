@@ -153,6 +153,25 @@ test("Learning page exposes a left-side directory navigation", () => {
   assert.match(html, /主线课程/);
   assert.match(html, /术语表/);
   assert.match(html, /实践检查清单/);
-  assert.match(html, /<section class="hero learn-hero">/, "learning page should use a compact hero");
+  assert.match(html, /<section class="page-heading">/, "learning page should use a compact page heading");
   assert.match(html, /class="learn-content"/, "learning page should include a main content panel");
+});
+
+test("Section pages use compact page headings instead of hero blocks", () => {
+  const sectionPages = [
+    "course.html",
+    "products.html",
+    "standards.html",
+    "patterns.html",
+    "research.html",
+    "timeline.html",
+    "glossary.html",
+    "references.html",
+  ];
+
+  for (const page of sectionPages) {
+    const html = readDocsFile(page);
+    assert.doesNotMatch(html, /<section class="hero/, `${page} should not use a hero block`);
+    assert.match(html, /<section class="page-heading">/, `${page} should use compact page heading`);
+  }
 });

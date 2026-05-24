@@ -247,6 +247,21 @@ a {
   border-top: 1px solid var(--line);
 }
 
+.page-heading {
+  padding: 46px 0 56px;
+  border-top: 1px solid var(--line);
+}
+
+.page-heading h1 {
+  margin: 0;
+  max-width: 900px;
+  font-size: clamp(42px, 7vw, 82px);
+  line-height: 0.95;
+  letter-spacing: -0.07em;
+  text-transform: uppercase;
+  text-shadow: 2px 0 #777, -2px 0 #333;
+}
+
 .updates-flow {
   padding-top: 44px;
 }

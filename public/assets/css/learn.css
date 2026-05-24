@@ -1,12 +1,3 @@
-.learn-hero {
-  min-height: auto;
-  padding: 46px 0 58px;
-}
-
-.learn-hero .glitch {
-  font-size: clamp(58px, 8vw, 92px);
-}
-
 .learn-shell {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
@@ -82,11 +73,5 @@
 
   .learn-sidebar {
     position: static;
-  }
-}
-
-@media (max-width: 640px) {
-  .learn-hero .system-card {
-    display: none;
   }
 }
