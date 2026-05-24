@@ -61,18 +61,6 @@ export const homePages = {
         ],
         action: ["timeline.html", "查看全部动态"],
       },
-      {
-        id: "learn",
-        className: "section",
-        kicker: "学习路径",
-        heading: "从入门到系统理解 Agent Harness",
-        intro: "学习区把课程目录直接放在左侧导航中，适合按课逐步阅读，也适合随时回查术语边界。",
-        cards: [
-          ["course.html", "路线", "学习路线", "把课程拆成入门、核心、运行机制和系统治理几个阶段。"],
-          ["course-01.html", "课程", "第 1 课", "从 Agent Harness 定义开始，按照课程目录逐课进入。"],
-          ["course-other-glossary.html", "其他", "术语表", "统一 Agent、Harness、Tool、Skill、MCP 等概念边界。"],
-        ],
-      },
     ],
   },
   en: {
@@ -136,18 +124,6 @@ export const homePages = {
           ["research.html", "2026", "Agent evaluation and benchmark research", "Turn methods, findings, and limitations into reusable learning material.", "Research"],
         ],
         action: ["timeline.html", "View all updates"],
-      },
-      {
-        id: "learn",
-        className: "section",
-        kicker: "LEARNING PATH",
-        heading: "Build a systematic view of Agent Harness",
-        intro: "The learning area keeps the course directory in the left sidebar, so readers can move lesson by lesson and still return to shared terminology.",
-        cards: [
-          ["course.html", "PATH", "Learning Route", "Split the course into foundations, core runtime pieces, engineering practice, and governance."],
-          ["course-01.html", "COURSE", "Lesson 1", "Start from the Agent Harness definition and move through the course sequence."],
-          ["course-other-glossary.html", "OTHER", "Glossary", "Align definitions for Agent, Harness, Tool, Skill, MCP, and related terms."],
-        ],
       },
     ],
   },

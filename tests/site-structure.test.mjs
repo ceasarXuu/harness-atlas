@@ -57,8 +57,6 @@ test("Pages site exposes first-class sections beyond the homepage", () => {
   const index = readDocsFile("index.html");
   const homepageEntryPages = [
     "course.html",
-    "course-01.html",
-    "course-other-glossary.html",
     "research.html",
     "timeline.html",
   ];
@@ -76,7 +74,7 @@ test("Pages site exposes first-class sections beyond the homepage", () => {
   assert.equal(existsSync(join(docs, "glossary.html")), false, "glossary should not be a standalone docs page");
   assert.equal(existsSync(join(docs, "course-practice.html")), false, "practice checklist should be removed");
   assert.equal(existsSync(join(docs, "course-modules.html")), false, "course outline page should be removed");
-  assert.match(index, /href="course-other-glossary\.html"/, "index should link glossary as a learning subpage");
+  assert.doesNotMatch(index, /href="course-other-glossary\.html"/, "homepage should not link glossary after removing learning path module");
   assert.doesNotMatch(index, /href="[^"]*#search"/, "homepage should not expose search anchors");
 });
 
@@ -227,11 +225,12 @@ test("Localized homepages use the same component structure", () => {
   assert.deepEqual(sectionSignature(zh), sectionSignature(en), "localized homepages should render the same sections in the same order");
   assert.deepEqual(cardCounts(zh), cardCounts(en), "localized homepages should render the same repeated component counts");
   assert.doesNotMatch(en, /VIEW SOURCE/, "English homepage should not add a language-only source button");
-  assert.deepEqual(sectionSignature(zh).map((section) => section.id), ["", "industry", "learn"], "homepages should stay focused on hero, industry updates, and learning");
+  assert.deepEqual(sectionSignature(zh).map((section) => section.id), ["", "industry"], "homepages should stay focused on hero and industry updates");
   assert.match(zh, /class="hero-audience"/, "homepage audience copy should live inside hero");
   assert.match(en, /class="hero-audience"/, "English homepage audience copy should live inside hero");
   assert.doesNotMatch(zh, /<section id="atlas"/, "homepage should not keep a standalone ecosystem atlas section");
   assert.doesNotMatch(zh, /<section id="evidence"/, "homepage should not keep a standalone research/source section");
+  assert.doesNotMatch(zh, /<section id="learn"/, "homepage should not keep a standalone learning path section");
   assert.doesNotMatch(zh, /<p class="section-kicker">适合读者<\/p>/, "homepage should not keep audience as a heavy standalone section");
 });
 
