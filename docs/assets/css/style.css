@@ -168,6 +168,14 @@ a {
   color: var(--muted);
 }
 
+.hero-audience {
+  max-width: 780px;
+  margin: 14px 0 0;
+  color: var(--muted-2);
+  font: 700 12px/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  text-transform: uppercase;
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;

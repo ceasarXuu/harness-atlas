@@ -59,12 +59,8 @@ test("Pages site exposes first-class sections beyond the homepage", () => {
     "course.html",
     "course-01.html",
     "course-other-glossary.html",
-    "products.html",
-    "standards.html",
-    "patterns.html",
     "research.html",
     "timeline.html",
-    "references.html",
   ];
 
   for (const page of requiredPages) {
@@ -231,6 +227,12 @@ test("Localized homepages use the same component structure", () => {
   assert.deepEqual(sectionSignature(zh), sectionSignature(en), "localized homepages should render the same sections in the same order");
   assert.deepEqual(cardCounts(zh), cardCounts(en), "localized homepages should render the same repeated component counts");
   assert.doesNotMatch(en, /VIEW SOURCE/, "English homepage should not add a language-only source button");
+  assert.deepEqual(sectionSignature(zh).map((section) => section.id), ["", "industry", "learn"], "homepages should stay focused on hero, industry updates, and learning");
+  assert.match(zh, /class="hero-audience"/, "homepage audience copy should live inside hero");
+  assert.match(en, /class="hero-audience"/, "English homepage audience copy should live inside hero");
+  assert.doesNotMatch(zh, /<section id="atlas"/, "homepage should not keep a standalone ecosystem atlas section");
+  assert.doesNotMatch(zh, /<section id="evidence"/, "homepage should not keep a standalone research/source section");
+  assert.doesNotMatch(zh, /<p class="section-kicker">适合读者<\/p>/, "homepage should not keep audience as a heavy standalone section");
 });
 
 test("Astro pages, layouts, and components do not hard-code localized UI copy", () => {

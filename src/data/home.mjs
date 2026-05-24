@@ -14,8 +14,8 @@ export const homePages = {
       ],
       actions: [
         ["course.html", "开始学习", true],
-        ["products.html", "查看生态"],
       ],
+      audience: "适合读者：开发者、独立开发者、产品经理、工程团队。",
       traceAria: "Agent Harness 运行时轨迹",
       traceHead: ["运行时轨迹", "版本 0.1"],
       traceRows: [
@@ -53,42 +53,6 @@ export const homePages = {
           ["course-other-glossary.html", "其他", "术语表", "统一 Agent、Harness、Tool、Skill、MCP 等概念边界。"],
         ],
       },
-      {
-        id: "atlas",
-        className: "section",
-        kicker: "生态图谱",
-        heading: "把产品、协议和模式连接起来",
-        intro: "生态区关注不同产品和协议背后的 Harness 设计，把上下文、工具、状态、评估和治理能力串成可比较的结构。",
-        cards: [
-          ["products.html", "产品", "产品图谱", "整理 Coding Agent、框架、平台和横向能力矩阵。"],
-          ["standards.html", "协议", "标准协议", "沉淀 MCP、AGENTS.md、Skills、Tool Calling 等接口规范。"],
-          ["patterns.html", "模式", "设计模式", "把产品拆解和工程经验抽象成可复用 Harness 模式。"],
-          ["course.html", "架构", "核心组件", "从上下文、工具、状态、记忆、规划、评估和治理理解系统组成。"],
-        ],
-      },
-      {
-        id: "evidence",
-        className: "section",
-        kicker: "研究与资料",
-        heading: "为课程和图谱提供证据层",
-        intro: "研究资料和参考资料用于沉淀原始信源、实验结论、论文观点和产品文档，避免课程内容只停留在概念判断。",
-        compact: true,
-        cards: [
-          ["research.html", "研究", "研究资料", "收集论文、实验、理论和研究卡片。"],
-          ["references.html", "参考", "参考资料", "维护官方文档、论文、博客和 Changelog 原始索引。"],
-        ],
-      },
-      {
-        className: "section",
-        kicker: "适合读者",
-        heading: "适合读者",
-        cards: [
-          ["开发", "开发者", "正在使用 AI Coding 工具，希望理解背后机制。"],
-          ["独立", "独立开发者", "构建 AI 原生工作流和个人 Harness。"],
-          ["产品", "产品经理", "设计 Agent 产品、Workflow 和工具系统。"],
-          ["团队", "工程团队", "将 AI Agent 引入研发流程与组织系统。"],
-        ],
-      },
     ],
   },
   en: {
@@ -106,8 +70,8 @@ export const homePages = {
       ],
       actions: [
         ["course.html", "ENTER ATLAS", true],
-        ["products.html", "PRODUCT MAP"],
       ],
+      audience: "For developers, indie builders, product managers, and engineering teams.",
       traceAria: "Agent Harness runtime trace",
       traceHead: ["runtime.trace", "v0.1"],
       traceRows: [
@@ -143,42 +107,6 @@ export const homePages = {
           ["course.html", "PATH", "Learning Route", "Split the course into foundations, core runtime pieces, engineering practice, and governance."],
           ["course-01.html", "COURSE", "Lesson 1", "Start from the Agent Harness definition and move through the course sequence."],
           ["course-other-glossary.html", "OTHER", "Glossary", "Align definitions for Agent, Harness, Tool, Skill, MCP, and related terms."],
-        ],
-      },
-      {
-        id: "atlas",
-        className: "section",
-        kicker: "ECOSYSTEM ATLAS",
-        heading: "Connect products, protocols, and patterns",
-        intro: "The ecosystem area compares the Harness design behind products and protocols through context, tools, state, evaluation, and governance.",
-        cards: [
-          ["products.html", "PRODUCTS", "Product Map", "Coding agents, frameworks, platforms, and capability matrices."],
-          ["standards.html", "PROTOCOLS", "Standards", "MCP, AGENTS.md, Skills, Tool Calling, and adjacent interface formats."],
-          ["patterns.html", "PATTERNS", "Design Patterns", "Reusable Harness patterns derived from products and engineering work."],
-          ["course.html", "ARCH", "Core Components", "Understand systems through context, tools, state, memory, planning, evaluation, and governance."],
-        ],
-      },
-      {
-        id: "evidence",
-        className: "section",
-        kicker: "RESEARCH AND SOURCES",
-        heading: "Evidence for the course and atlas",
-        intro: "Research and references preserve source material, experiments, papers, and product documents so course content does not rely on loose claims.",
-        compact: true,
-        cards: [
-          ["research.html", "RESEARCH", "Research", "Papers, experiments, theory, and research-card material."],
-          ["references.html", "REFERENCES", "References", "Official docs, papers, blogs, and changelog source indexes."],
-        ],
-      },
-      {
-        className: "section",
-        kicker: "AUDIENCE",
-        heading: "Target readers",
-        cards: [
-          ["DEV", "Developers", "Users of AI Coding tools who want to understand the underlying mechanism."],
-          ["INDIE", "Indie builders", "Independent developers building AI-native workflows and personal Harness systems."],
-          ["PM", "Product managers", "Designers of agent products, workflows, and tool systems."],
-          ["TEAM", "Engineering teams", "Teams introducing AI agents into software development workflows."],
         ],
       },
     ],

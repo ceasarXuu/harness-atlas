@@ -22,6 +22,7 @@ const page = homePages[locale];
       <h1 class="glitch">Harness<br>Atlas</h1>
       <p class="lead">{page.hero.lead}</p>
       {page.hero.copy.map((copy) => <p class="hero-copy">{copy}</p>)}
+      <p class="hero-audience">{page.hero.audience}</p>
       <div class="actions">
         {page.hero.actions.map(([href, label, primary]) => (
           <a class:list={["cta", primary && "primary"]} href={href}>{label}</a>
