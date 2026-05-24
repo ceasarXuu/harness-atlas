@@ -46,6 +46,8 @@ const page = homePages[locale];
         ))}
       </div>
 
+      <p class="hero-audience">{page.hero.audience}</p>
+
       <div class="actions">
         {page.hero.actions.map(([href, label, primary]) => (
           <a class:list={["cta", primary && "primary"]} href={href}>{label}</a>
@@ -211,6 +213,14 @@ const page = homePages[locale];
     color: var(--muted);
     font-size: 13px;
     line-height: 1.55;
+  }
+
+  .hero-audience {
+    max-width: 780px;
+    margin: 16px 0 0;
+    color: var(--muted-2);
+    font: 700 12px / 1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    text-transform: uppercase;
   }
 
   .harness-map {

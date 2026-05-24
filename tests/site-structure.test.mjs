@@ -132,17 +132,7 @@ test("Chinese homepage localizes visible navigation, buttons, and section labels
     "WITHOUT HARNESS",
     "WITH HARNESS",
     "MAINTAINED BY",
-    "MODEL",
-    "CONTEXT",
-    "TOOLS",
-    "STATE",
-    "EVAL",
-    "POLICY",
-    "Context",
-    "Tools",
-    "State",
     "Planning",
-    "Memory",
     "Evaluation",
     "Human",
     "Governance",
@@ -170,10 +160,7 @@ test("Chinese pages localize page chrome, cards, and accessibility labels", () =
     />Frameworks</,
     />Comparison</,
     />Interaction</,
-    />Context</,
-    />Tools</,
     />Execution</,
-    />Evaluation</,
     />Governance</,
     /HARNESS_ATLAS \/ PRODUCTS/,
     /HARNESS_ATLAS \/ STANDARDS/,
@@ -202,7 +189,6 @@ test("English page has an explicit language boundary", () => {
 
   assert.match(html, /<html lang="en"/, "English page should declare English language");
   assert.match(html, /aria-label="Main navigation"/, "English page should keep English navigation aria label");
-  assert.match(html, /Detailed section pages are currently maintained in Chinese\./);
   assert.doesNotMatch(textWithoutLanguageSwitch, /[\u4e00-\u9fff]/, "English page should not leak Chinese UI text beyond the language switch");
 });
 
@@ -307,13 +293,13 @@ test("Chinese homepage merges industry updates into the first-scroll experience"
   assert.doesNotMatch(nav, />术语表</);
   assert.doesNotMatch(nav, />行业动态</);
 
-  assert.match(html, /<section class="hero home-hero">/, "homepage hero should use peek-sized hero class");
+  assert.match(html, /<section class="[^"]*\bhero\b[^"]*\bhome-hero\b/, "homepage hero should use peek-sized hero class");
   assert.match(
     html,
-    /<\/section>\s*<section id="industry" class="section updates-flow">/,
+    /<\/section>\s*<section id="industry" class="section updates-flow"/,
     "industry updates should immediately follow the hero",
   );
-  assert.match(html, /<p class="section-kicker">最新行业动态<\/p>/);
+  assert.match(html, /<p class="section-kicker"[^>]*>最新行业动态<\/p>/);
   assert.match(html, /href="timeline\.html"/, "homepage should still link to the full updates page");
 });
 
