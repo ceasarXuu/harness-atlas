@@ -107,7 +107,11 @@ test("Built pages keep page-specific loading boundaries", () => {
 
     assert.equal(stylesheetHrefs.filter((href) => href === "assets/css/style.css").length, 1, `${page} should load shared CSS once`);
     assert.equal(stylesheetHrefs.includes("assets/css/learn.css"), learningPages.has(page), `${page} should only load learning CSS inside learning pages`);
-    assert.doesNotMatch(html, /<script\b/i, `${page} should stay static and script-free`);
+    if (page === "index.html" || page === "en.html") {
+      assert.match(html, /<script\b[\s\S]*IntersectionObserver/, `${page} should only use script for homepage feed pagination`);
+    } else {
+      assert.doesNotMatch(html, /<script\b/i, `${page} should stay static and script-free`);
+    }
 
     if (page === "index.html" || page === "en.html") {
       assert.match(html, /class="[^"]*\bhero\b/, `${page} should keep a homepage hero`);

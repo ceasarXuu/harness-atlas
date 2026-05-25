@@ -1,0 +1,146 @@
+---
+const { section } = Astro.props;
+const initialVisible = section.initialVisible ?? section.updates.length;
+const pageSize = section.pageSize ?? section.updates.length;
+---
+
+<div
+  class="timeline-list"
+  data-feed-list
+  data-initial-visible={initialVisible}
+  data-page-size={pageSize}
+>
+  {section.updates.map((item, index) => (
+    <a
+      class="update-row"
+      href={item.href}
+      target={item.external ? "_blank" : undefined}
+      rel={item.external ? "noreferrer" : undefined}
+      data-feed-item
+      hidden={index >= initialVisible}
+    >
+      <time datetime={item.dateTime}>{item.date}</time>
+      <div class="update-copy">
+        <h3>{item.title}</h3>
+        <p>{item.description}</p>
+      </div>
+      <span class="update-tag">{item.tag}</span>
+    </a>
+  ))}
+  {section.updates.length > initialVisible && (
+    <div class="feed-sentinel" data-feed-sentinel aria-hidden="true"></div>
+  )}
+</div>
+
+<script is:inline>
+  document.querySelectorAll("[data-feed-list]").forEach((list) => {
+    const items = [...list.querySelectorAll("[data-feed-item]")];
+    const sentinel = list.querySelector("[data-feed-sentinel]");
+    const pageSize = Number(list.dataset.pageSize) || items.length;
+    let visible = Number(list.dataset.initialVisible) || items.length;
+
+    const revealNextPage = () => {
+      visible = Math.min(visible + pageSize, items.length);
+      items.forEach((item, index) => {
+        item.hidden = index >= visible;
+      });
+      if (sentinel && visible >= items.length) sentinel.remove();
+    };
+
+    if (!sentinel) return;
+    if (!("IntersectionObserver" in window)) {
+      revealNextPage();
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      observer.unobserve(sentinel);
+      revealNextPage();
+      if (visible >= items.length) {
+        observer.disconnect();
+        return;
+      }
+      const reobserveAfterInput = () => {
+        window.removeEventListener("wheel", reobserveAfterInput);
+        window.removeEventListener("touchstart", reobserveAfterInput);
+        window.removeEventListener("keydown", reobserveAfterInput);
+        observer.observe(sentinel);
+      };
+      window.addEventListener("wheel", reobserveAfterInput, { once: true, passive: true });
+      window.addEventListener("touchstart", reobserveAfterInput, { once: true, passive: true });
+      window.addEventListener("keydown", reobserveAfterInput, { once: true });
+    }, { rootMargin: "240px 0px" });
+
+    observer.observe(sentinel);
+  });
+</script>
+
+<style>
+  .timeline-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .update-row {
+    display: grid;
+    grid-template-columns: 108px minmax(0, 1fr) 132px;
+    gap: 18px;
+    align-items: start;
+    padding: 18px;
+    border: 1px solid #555;
+    background: rgba(0, 0, 0, 0.58);
+  }
+
+  .update-row[hidden] {
+    display: none;
+  }
+
+  .update-row:hover {
+    color: var(--fg);
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .update-row time,
+  .update-tag {
+    color: var(--muted);
+    font: 800 12px / 1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.08em;
+  }
+
+  .update-tag {
+    justify-self: end;
+    padding: 5px 7px;
+    border: 1px solid #444;
+    text-transform: uppercase;
+  }
+
+  .update-copy h3 {
+    margin: 0 0 7px;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .update-copy p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .feed-sentinel {
+    min-height: 1px;
+  }
+
+  @media (max-width: 640px) {
+    .update-row {
+      grid-template-columns: 1fr;
+    }
+
+    .update-tag {
+      justify-self: start;
+    }
+  }
+</style>

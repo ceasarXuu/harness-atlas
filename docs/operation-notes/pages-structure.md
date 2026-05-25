@@ -32,6 +32,7 @@ When updating the Chinese homepage, keep navigation labels, CTA buttons, section
 - Keep industry updates in `homePages[locale].sections[].updates` as short records with `date`, `dateTime`, `title`, `tag`, `description`, `href`, and optional `external`.
 - Descriptions must stay under 200 characters, titles under 80 characters, and tags under 24 characters so the feed remains scannable on the homepage.
 - Render each update as one clickable row with date, title, tag, and description. Do not put the feed into heavy nested cards or long article previews.
+- The homepage feed should auto-reveal later rows while scrolling via the feed sentinel; do not use a manual `查看全部动态` / `View all updates` CTA.
 
 ## Multilingual Guardrails
 
