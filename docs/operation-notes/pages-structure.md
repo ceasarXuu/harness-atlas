@@ -43,6 +43,7 @@ When updating the Chinese homepage, keep navigation labels, CTA buttons, section
 - Astro pages, layouts, and components must not hard-code localized UI copy. Route files choose locale or data records; data files provide copy; shared components render the same element structure for every locale.
 - Localized homepage variants must share the same section order, class names, repeated card counts, update-row counts, and CTA structure. A language should never add a one-off component such as a source button.
 - Homepage runtime map labels, node names, loop steps, and accessibility labels belong in `homePages[locale].hero`; the map component must stay language-neutral and render the same node count for every locale.
+- The homepage hero can use a stacked layout where the formula copy comes first and the runtime map follows as a full-width block; verify the map sits below the copy and keeps zero horizontal overflow.
 
 ## Learning Shell
 

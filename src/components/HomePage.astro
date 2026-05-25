@@ -111,14 +111,16 @@ const page = homePages[locale];
 
 <style>
   .harness-hero {
-    min-height: clamp(560px, calc(100vh - 190px), 760px);
-    grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
-    gap: clamp(34px, 5vw, 64px);
-    padding: 56px 0 64px;
+    min-height: auto;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: 28px;
+    padding: 46px 0 58px;
   }
 
   .hero-main {
     position: relative;
+    max-width: 980px;
   }
 
   .hero-equation {
@@ -233,7 +235,7 @@ const page = homePages[locale];
 
   .harness-map {
     align-self: stretch;
-    min-height: 510px;
+    min-height: 520px;
     display: flex;
     flex-direction: column;
   }
@@ -260,7 +262,7 @@ const page = homePages[locale];
 
   .runtime-ring {
     position: relative;
-    min-height: 300px;
+    min-height: 360px;
     overflow: hidden;
     border: 1px solid #3a3a3a;
     background:
@@ -442,12 +444,12 @@ const page = homePages[locale];
   }
 
   @media (max-width: 900px) {
-    .harness-hero {
-      grid-template-columns: 1fr;
-    }
-
     .harness-map {
       min-height: 460px;
+    }
+
+    .runtime-ring {
+      min-height: 300px;
     }
   }
 
