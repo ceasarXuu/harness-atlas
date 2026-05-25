@@ -226,6 +226,8 @@ test("Localized homepages use the same component structure", () => {
   assert.match(en, /class="hero-audience"/, "English homepage audience copy should live inside hero");
   assert.doesNotMatch(zh, /class="badge"/, "homepage should not duplicate the equation in a badge");
   assert.doesNotMatch(en, /class="badge"/, "English homepage should not duplicate the equation in a badge");
+  assert.doesNotMatch(zh, />读第 1 课</, "homepage should not keep the secondary first-lesson CTA");
+  assert.doesNotMatch(en, />Read Lesson 1</, "English homepage should not keep the secondary first-lesson CTA");
   assert.match(zh, /class="equation-group"[\s\S]*?Model[\s\S]*?×[\s\S]*?Harness[\s\S]*?<\/span>/, "Model times Harness should stay in one equation group");
   assert.match(en, /class="equation-group"[\s\S]*?Model[\s\S]*?×[\s\S]*?Harness[\s\S]*?<\/span>/, "English homepage should keep Model times Harness in one equation group");
   assert.doesNotMatch(zh, /<section id="atlas"/, "homepage should not keep a standalone ecosystem atlas section");

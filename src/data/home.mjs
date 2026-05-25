@@ -27,7 +27,6 @@ export const homePages = {
       ],
       actions: [
         ["course.html", "进入课程", true],
-        ["course-01.html", "读第 1 课", false],
       ],
       audience: "适合读者：开发者、独立开发者、产品经理、工程团队。",
       mapAria: "Agent Harness 运行时结构图",
@@ -109,7 +108,6 @@ export const homePages = {
       ],
       actions: [
         ["course.html", "Enter Course", true],
-        ["course-01.html", "Read Lesson 1", false],
       ],
       audience: "For developers, indie builders, product managers, and engineering teams.",
       mapAria: "Agent Harness runtime structure map",
