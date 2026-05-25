@@ -100,13 +100,15 @@ test("Public docs pages do not contain broken local links", () => {
     const html = readDocsFile(page);
     for (const href of localHtmlLinks(html)) {
       const target = href.split("#")[0] || page;
-      const absoluteTarget = normalize(join(docs, dirname(page), target));
+      const localTarget = target.startsWith("/harness-atlas/") ? target.slice("/harness-atlas/".length) : target;
+      const absoluteTarget = normalize(join(docs, dirname(page), localTarget));
       assert.ok(
         absoluteTarget.startsWith(docs),
         `${page} link ${href} should stay inside docs or use an absolute URL`,
       );
       assert.ok(existsSync(absoluteTarget), `${page} link ${href} is broken`);
     }
+    assert.doesNotMatch(html, /(?:href|src)="\/_astro\//, `${page} should prefix Astro assets for GitHub Pages project paths`);
   }
 });
 

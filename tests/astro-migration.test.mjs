@@ -7,6 +7,7 @@ import test from "node:test";
 const root = new URL("..", import.meta.url).pathname;
 const src = join(root, "src");
 const dist = join(root, "dist");
+const pagesBase = "/harness-atlas/";
 const courseLessonPages = Array.from({ length: 11 }, (_, index) => {
   return `course-${String(index + 1).padStart(2, "0")}.html`;
 });
@@ -131,7 +132,8 @@ test("Built pages have complete local links and visible content", () => {
     assert.ok(text.length > 200, `${page} should contain meaningful visible text`);
 
     for (const href of localLinks(html)) {
-      const withoutAnchor = href.split("#")[0] || ".";
+      const localHref = href.startsWith(pagesBase) ? href.slice(pagesBase.length) : href;
+      const withoutAnchor = localHref.split("#")[0] || ".";
       const target = withoutAnchor.endsWith("/")
         ? join(dist, withoutAnchor, "index.html")
         : join(dist, withoutAnchor);
