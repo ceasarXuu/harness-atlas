@@ -278,7 +278,7 @@ test("Homepage industry feed uses short linked update records", () => {
       for (const field of ["href", "date", "dateTime", "title", "tag", "description", "sourceName"]) assert.ok(update[field], `${locale} update should have ${field}`);
       assert.ok(update.title.length <= 80, `${locale} update title should stay short`);
       assert.ok(update.tag.length <= 24, `${locale} update tag should stay short`);
-      assert.ok(update.description.length <= 200, `${locale} update description should stay under 200 characters`);
+      assert.ok(update.description.length >= 100 && update.description.length <= 200, `${locale} update description should stay between 100 and 200 characters`);
     }
   }
 
