@@ -294,7 +294,7 @@ test("Homepage industry feed uses short linked update records", () => {
       assert.match(row, /rel="noopener noreferrer"/, `${page} update row should use safe external-link rel`);
       assert.match(row, /<time [^>]*datetime="[^"]+"[^>]*>[\s\S]*?<\/time>/, `${page} update row should render a date`);
       assert.match(row, /<h3[^>]*>[\s\S]*?<\/h3>/, `${page} update row should render a title`);
-      assert.match(row, /class="update-meta"/, `${page} update row should render tag and source metadata`);
+      assert.match(row, /class="update-content"[\s\S]*class="update-copy"[\s\S]*class="update-meta"/, `${page} update row should render tag metadata below the copy`);
       assert.match(row, /class="source-link-label"/, `${page} update row should show an explicit source link cue`);
       assert.match(row, /<p[^>]*>[\s\S]*?<\/p>/, `${page} update row should render a description`);
     }

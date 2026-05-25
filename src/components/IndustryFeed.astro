@@ -20,15 +20,17 @@ const pageSize = section.pageSize ?? section.updates.length;
       hidden={index >= initialVisible}
     >
       <time datetime={item.dateTime}>{item.date}</time>
-      <div class="update-copy">
-        <h3>{item.title}</h3>
-        <p>{item.description}</p>
+      <div class="update-content">
+        <div class="update-copy">
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+        </div>
+        <span class="update-meta">
+          <span>{item.tag}</span>
+          {item.sourceName && <span>{item.sourceName}</span>}
+          {item.external && section.sourceLinkLabel && <span class="source-link-label">{section.sourceLinkLabel}</span>}
+        </span>
       </div>
-      <span class="update-meta">
-        <span>{item.tag}</span>
-        {item.sourceName && <span>{item.sourceName}</span>}
-        {item.external && section.sourceLinkLabel && <span class="source-link-label">{section.sourceLinkLabel}</span>}
-      </span>
     </a>
   ))}
   {section.updates.length > initialVisible && (
@@ -89,7 +91,7 @@ const pageSize = section.pageSize ?? section.updates.length;
 
   .update-row {
     display: grid;
-    grid-template-columns: 108px minmax(0, 1fr) 132px;
+    grid-template-columns: 108px minmax(0, 1fr);
     gap: 18px;
     align-items: start;
     padding: 18px;
@@ -115,10 +117,10 @@ const pageSize = section.pageSize ?? section.updates.length;
   }
 
   .update-meta {
-    justify-self: end;
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     gap: 7px;
-    justify-items: end;
+    margin-top: 12px;
   }
 
   .update-meta span {
@@ -152,11 +154,6 @@ const pageSize = section.pageSize ?? section.updates.length;
   @media (max-width: 640px) {
     .update-row {
       grid-template-columns: 1fr;
-    }
-
-    .update-meta {
-      justify-self: start;
-      justify-items: start;
     }
   }
 </style>
