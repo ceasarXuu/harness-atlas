@@ -123,6 +123,18 @@ test("Built pages keep page-specific loading boundaries", () => {
   }
 });
 
+test("Homepage hero keeps the equation above the runtime map", () => {
+  for (const page of ["index.html", "en.html"]) {
+    const html = read(join(dist, page));
+    const cssHref = html.match(/href="\/harness-atlas\/(_astro\/[^"]+\.css)"/)?.[1];
+    const css = cssHref ? read(join(dist, cssHref)) : "";
+
+    assert.match(html, /<section class="hero home-hero harness-hero"[\s\S]*?<h1 class="hero-equation"[\s\S]*?<div class="hero-main"[\s\S]*?<aside class="system-card harness-map"/, `${page} should render equation, copy, then runtime map`);
+    assert.match(css, /grid-template-rows:\s*auto\s+1fr/, `${page} hero should reserve the first row for the equation`);
+    assert.match(css, /flex-wrap:\s*nowrap/, `${page} equation should stay on one line`);
+  }
+});
+
 test("Built pages have complete local links and visible content", () => {
   for (const page of pages) {
     const html = read(join(dist, page));

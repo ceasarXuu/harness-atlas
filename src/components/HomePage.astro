@@ -18,18 +18,18 @@ const page = homePages[locale];
   footerRight={page.footerRight}
 >
   <section class="hero home-hero harness-hero">
-    <div class="hero-main">
-      <h1 class="hero-equation" aria-label={page.hero.titleAria}>
-        <span class="equation-group">{page.hero.equation.slice(0, 3).map((token) => (
+    <h1 class="hero-equation" aria-label={page.hero.titleAria}>
+      <span class="equation-group">{page.hero.equation.slice(0, 3).map((token) => (
+        <span class:list={["equation-token", token.role]}>{token.text}</span>
+      ))}</span>
+      <span class="equation-group equation-result">
+        {page.hero.equation.slice(3).map((token) => (
           <span class:list={["equation-token", token.role]}>{token.text}</span>
-        ))}</span>
-        <span class="equation-group equation-result">
-          {page.hero.equation.slice(3).map((token) => (
-            <span class:list={["equation-token", token.role]}>{token.text}</span>
-          ))}
-        </span>
-      </h1>
+        ))}
+      </span>
+    </h1>
 
+    <div class="hero-main">
       <p class="lead hero-thesis">{page.hero.lead}</p>
 
       <div class="formula-stack" aria-label={page.hero.formulaAria}>
@@ -95,9 +95,11 @@ const page = homePages[locale];
 <style>
   .harness-hero {
     min-height: clamp(560px, calc(100vh - 190px), 760px);
-    grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
-    gap: clamp(34px, 5vw, 64px);
-    padding: 56px 0 64px;
+    grid-template-columns: minmax(0, 1fr) minmax(430px, 0.82fr);
+    grid-template-rows: auto 1fr;
+    gap: 26px clamp(34px, 5vw, 64px);
+    align-items: start;
+    padding: 36px 0 64px;
   }
 
   .hero-main {
@@ -105,13 +107,16 @@ const page = homePages[locale];
   }
 
   .hero-equation {
+    grid-column: 1 / -1;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: baseline;
     gap: clamp(10px, 1.8vw, 20px);
-    max-width: 860px;
+    max-width: 100%;
     margin: 0;
-    font: 900 clamp(44px, 7vw, 88px) / 0.95 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    overflow: visible;
+    white-space: nowrap;
+    font: 900 76px / 0.94 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     letter-spacing: -0.08em;
     text-transform: uppercase;
   }
@@ -151,7 +156,7 @@ const page = homePages[locale];
 
   .hero-thesis {
     max-width: 760px;
-    margin-top: 28px;
+    margin-top: 0;
     font-size: clamp(16px, 1.8vw, 20px);
   }
 
@@ -223,7 +228,7 @@ const page = homePages[locale];
   }
 
   .harness-map {
-    align-self: stretch;
+    align-self: start;
     min-height: 510px;
     display: flex;
     flex-direction: column;
@@ -377,9 +382,19 @@ const page = homePages[locale];
     color: #777;
   }
 
+  @media (max-width: 1180px) {
+    .hero-equation {
+      font-size: 62px;
+    }
+  }
+
   @media (max-width: 900px) {
     .harness-hero {
       grid-template-columns: 1fr;
+    }
+
+    .hero-equation {
+      font-size: 48px;
     }
 
     .harness-map {
@@ -394,7 +409,7 @@ const page = homePages[locale];
 
     .hero-equation {
       gap: 8px 12px;
-      font-size: clamp(38px, 13vw, 56px);
+      font-size: 27px;
     }
 
     .equation-token.harness {
