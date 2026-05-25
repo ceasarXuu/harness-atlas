@@ -248,16 +248,16 @@ test("Homepage runtime map copy is localized without changing structure", () => 
   assert.match(chineseMap, /评估/);
   assert.match(chineseMap, /记忆/);
   assert.match(chineseMap, /计划 执行 观察 验证 修复/);
-  assert.match(chineseMap, /受控 Agent 工作/);
   assert.doesNotMatch(chineseMap, /task \/ goal \/ spec/i);
   assert.doesNotMatch(chineseMap, /base capability/i);
   assert.doesNotMatch(chineseMap, /controlled agent work/i);
+  assert.doesNotMatch(chineseMap, /受控 Agent 工作/i);
 
   assert.match(englishMap, /runtime\.map/);
   assert.match(englishMap, /task \/ goal \/ spec/);
   assert.match(englishMap, /base capability MODEL/i);
   assert.match(englishMap, /plan act observe verify repair/i);
-  assert.match(englishMap, /controlled agent work/i);
+  assert.doesNotMatch(englishMap, /controlled agent work/i);
   assert.equal(
     (readDocsFile("index.html").match(/class="ring-node/g) ?? []).length,
     (readDocsFile("en.html").match(/class="ring-node/g) ?? []).length,

@@ -45,7 +45,6 @@ export const homePages = {
       ],
       loopAria: "Agent 执行闭环",
       loop: ["计划", "执行", "观察", "验证", "修复"],
-      mapResult: "受控 Agent 工作",
     },
     sections: [
       {
@@ -128,7 +127,6 @@ export const homePages = {
       ],
       loopAria: "Agent execution loop",
       loop: ["plan", "act", "observe", "verify", "repair"],
-      mapResult: "controlled agent work",
     },
     sections: [
       {

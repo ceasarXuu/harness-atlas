@@ -76,8 +76,6 @@ const page = homePages[locale];
         <div class="loop-pipeline" aria-label={page.hero.loopAria}>
           {page.hero.loop.map((step) => <span>{step}</span>)}
         </div>
-
-        <div class="map-strip map-result">{page.hero.mapResult}</div>
       </div>
     </aside>
   </section>
@@ -251,7 +249,7 @@ const page = homePages[locale];
 
   .harness-map-body {
     display: grid;
-    grid-template-rows: auto 1fr auto auto;
+    grid-template-rows: auto 1fr auto;
     gap: 18px;
     height: 100%;
     padding: 18px;
@@ -395,12 +393,6 @@ const page = homePages[locale];
     position: absolute;
     right: -16px;
     color: #777;
-  }
-
-  .map-result {
-    color: #000;
-    background: #fff;
-    border-color: #fff;
   }
 
   .timeline-list {
