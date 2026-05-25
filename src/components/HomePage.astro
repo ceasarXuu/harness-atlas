@@ -19,9 +19,14 @@ const page = homePages[locale];
   <section class="hero home-hero harness-hero">
     <div class="hero-main">
       <h1 class="hero-equation" aria-label={page.hero.titleAria}>
-        {page.hero.equation.map((token) => (
+        <span class="equation-group">{page.hero.equation.slice(0, 3).map((token) => (
           <span class:list={["equation-token", token.role]}>{token.text}</span>
-        ))}
+        ))}</span>
+        <span class="equation-group equation-result">
+          {page.hero.equation.slice(3).map((token) => (
+            <span class:list={["equation-token", token.role]}>{token.text}</span>
+          ))}
+        </span>
       </h1>
 
       <p class="lead hero-thesis">{page.hero.lead}</p>
@@ -133,6 +138,13 @@ const page = homePages[locale];
 
   .equation-token {
     display: inline-block;
+  }
+
+  .equation-group {
+    display: inline-flex;
+    align-items: baseline;
+    gap: clamp(10px, 1.8vw, 20px);
+    white-space: nowrap;
   }
 
   .equation-token.model,
