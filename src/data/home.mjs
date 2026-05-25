@@ -6,7 +6,6 @@ export const homePages = {
     footerLeft: "HARNESS_ATLAS / CC BY 4.0 + MIT",
     footerRight: "维护者：ceasarXuu",
     hero: {
-      badge: "AGENT = MODEL × HARNESS",
       titleAria: "Agent 等于模型乘以 Harness",
       equation: [
         { text: "Model", role: "model" },
@@ -90,7 +89,6 @@ export const homePages = {
     footerLeft: "HARNESS_ATLAS / CC BY 4.0 + MIT",
     footerRight: "MAINTAINED BY ceasarXuu",
     hero: {
-      badge: "AGENT = MODEL × HARNESS",
       titleAria: "Agent equals model multiplied by harness",
       equation: [
         { text: "Model", role: "model" },

@@ -18,8 +18,6 @@ const page = homePages[locale];
 >
   <section class="hero home-hero harness-hero">
     <div class="hero-main">
-      <span class="badge">{page.hero.badge}</span>
-
       <h1 class="hero-equation" aria-label={page.hero.titleAria}>
         {page.hero.equation.map((token) => (
           <span class:list={["equation-token", token.role]}>{token.text}</span>
