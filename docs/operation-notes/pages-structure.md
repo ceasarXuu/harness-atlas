@@ -27,6 +27,12 @@ For browser verification, use bundled Playwright with the local Chrome executabl
 
 When updating the Chinese homepage, keep navigation labels, CTA buttons, section kickers, comparison headings, card titles, runtime panel labels, and footer labels in Chinese. Product names and technical terms such as `Harness Atlas`, `Agent Harness`, `MCP`, and `GitHub` can stay as-is when they are used as names rather than UI chrome.
 
+## Homepage Industry Feed
+
+- Keep industry updates in `homePages[locale].sections[].updates` as short records with `date`, `dateTime`, `title`, `tag`, `description`, `href`, and optional `external`.
+- Descriptions must stay under 200 characters, titles under 80 characters, and tags under 24 characters so the feed remains scannable on the homepage.
+- Render each update as one clickable row with date, title, tag, and description. Do not put the feed into heavy nested cards or long article previews.
+
 ## Multilingual Guardrails
 
 - Chinese pages should use `lang="zh-CN"`, Chinese navigation aria labels, Chinese card titles, and Chinese footer section names.

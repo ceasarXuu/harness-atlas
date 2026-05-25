@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, normalize } from "node:path";
 import test from "node:test";
+import { homePages } from "../src/data/home.mjs";
 import { getNav, githubStars, localeMessages, locales, navModel } from "../src/data/site.mjs";
 
 const root = new URL("..", import.meta.url).pathname;
@@ -258,6 +259,40 @@ test("Homepage runtime map copy is localized without changing structure", () => 
     (readDocsFile("en.html").match(/class="ring-node/g) ?? []).length,
     "localized runtime maps should keep the same node count",
   );
+});
+
+test("Homepage industry feed uses short linked update records", () => {
+  for (const locale of Object.keys(homePages)) {
+    const section = homePages[locale].sections.find((item) => item.id === "industry");
+    assert.ok(section, `${locale} should define an industry updates section`);
+    assert.ok(section.updates.length >= 3, `${locale} should keep a useful homepage feed`);
+
+    for (const update of section.updates) {
+      assert.ok(update.href, `${locale} update should have a link`);
+      assert.ok(update.date, `${locale} update should have a display date`);
+      assert.ok(update.dateTime, `${locale} update should have a machine-readable date`);
+      assert.ok(update.title, `${locale} update should have a title`);
+      assert.ok(update.tag, `${locale} update should have a tag`);
+      assert.ok(update.description, `${locale} update should have a description`);
+      assert.ok(update.title.length <= 80, `${locale} update title should stay short`);
+      assert.ok(update.tag.length <= 24, `${locale} update tag should stay short`);
+      assert.ok(update.description.length <= 200, `${locale} update description should stay under 200 characters`);
+    }
+  }
+
+  for (const page of ["index.html", "en.html"]) {
+    const html = readDocsFile(page);
+    const rows = [...html.matchAll(/<a class="update-row"[\s\S]*?<\/a>/g)].map((match) => match[0]);
+
+    assert.equal(rows.length, 3, `${page} should render three industry feed rows`);
+    for (const row of rows) {
+      assert.match(row, /href="[^"]+"/, `${page} update row should be linked`);
+      assert.match(row, /<time [^>]*datetime="[^"]+"[^>]*>[\s\S]*?<\/time>/, `${page} update row should render a date`);
+      assert.match(row, /<h3[^>]*>[\s\S]*?<\/h3>/, `${page} update row should render a title`);
+      assert.match(row, /class="update-tag"/, `${page} update row should render a tag`);
+      assert.match(row, /<p[^>]*>[\s\S]*?<\/p>/, `${page} update row should render a description`);
+    }
+  }
 });
 
 test("Astro pages, layouts, and components do not hard-code localized UI copy", () => {
