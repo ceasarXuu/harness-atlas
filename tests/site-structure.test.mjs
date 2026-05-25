@@ -65,11 +65,7 @@ function sourceFiles(dir) {
 
 test("Pages site exposes first-class sections beyond the homepage", () => {
   const index = readDocsFile("index.html");
-  const homepageEntryPages = [
-    "course.html",
-    "research.html",
-    "timeline.html",
-  ];
+  const homepageEntryPages = ["course.html", "products.html"];
 
   for (const page of requiredPages) {
     assert.ok(
@@ -271,12 +267,12 @@ test("Homepage industry feed uses short linked update records", () => {
   for (const locale of Object.keys(homePages)) {
     const section = homePages[locale].sections.find((item) => item.id === "industry");
     assert.ok(section, `${locale} should define an industry updates section`);
-    assert.ok(section.updates.length >= 6, `${locale} should keep enough records for incremental homepage loading`);
+    assert.ok(section.updates.length >= 10, `${locale} should keep a useful cold-start feed`);
     assert.equal(section.initialVisible, 3, `${locale} should show an initial page of three updates`);
     assert.equal(section.pageSize, 2, `${locale} should reveal later updates incrementally`);
 
     for (const update of section.updates) {
-      for (const field of ["href", "date", "dateTime", "title", "tag", "description"]) assert.ok(update[field], `${locale} update should have ${field}`);
+      for (const field of ["href", "date", "dateTime", "title", "tag", "description", "sourceName"]) assert.ok(update[field], `${locale} update should have ${field}`);
       assert.ok(update.title.length <= 80, `${locale} update title should stay short`);
       assert.ok(update.tag.length <= 24, `${locale} update tag should stay short`);
       assert.ok(update.description.length <= 200, `${locale} update description should stay under 200 characters`);
@@ -287,18 +283,18 @@ test("Homepage industry feed uses short linked update records", () => {
     const html = readDocsFile(page);
     const rows = [...html.matchAll(/<a class="update-row"[\s\S]*?<\/a>/g)].map((match) => match[0]);
 
-    assert.equal(rows.length, 6, `${page} should render the static feed records for incremental loading`);
-    assert.equal(rows.filter((row) => /\shidden\b/.test(row)).length, 3, `${page} should hide later feed rows until scroll`);
+    const section = homePages[page === "index.html" ? "zh-CN" : "en"].sections.find((item) => item.id === "industry");
+    assert.equal(rows.length, section.updates.length, `${page} should render the static feed records for incremental loading`);
+    assert.equal(rows.filter((row) => /\shidden\b/.test(row)).length, section.updates.length - section.initialVisible, `${page} should hide later feed rows until scroll`);
     rows.slice(0, 3).forEach((row) => assert.doesNotMatch(row, /\shidden\b/, `${page} first-page update rows should be visible`));
     for (const row of rows) {
       assert.match(row, /href="[^"]+"/, `${page} update row should be linked`);
       assert.match(row, /<time [^>]*datetime="[^"]+"[^>]*>[\s\S]*?<\/time>/, `${page} update row should render a date`);
       assert.match(row, /<h3[^>]*>[\s\S]*?<\/h3>/, `${page} update row should render a title`);
-      assert.match(row, /class="update-tag"/, `${page} update row should render a tag`);
+      assert.match(row, /class="update-meta"/, `${page} update row should render tag and source metadata`);
       assert.match(row, /<p[^>]*>[\s\S]*?<\/p>/, `${page} update row should render a description`);
     }
-    assert.match(html, /data-feed-sentinel/, `${page} should render a scroll sentinel for auto pagination`);
-    assert.match(html, /IntersectionObserver/, `${page} should auto-load later feed rows on scroll`);
+    assert.match(html, /data-feed-sentinel/, `${page} should render a scroll sentinel for auto pagination`); assert.match(html, /IntersectionObserver/, `${page} should auto-load later feed rows on scroll`);
     assert.doesNotMatch(html, /section-actions/, `${page} should not render a full-updates button`);
   }
 });
@@ -396,7 +392,7 @@ test("Chinese homepage merges industry updates into the first-scroll experience"
   assert.match(industry, /<h2[^>]*>行业动态<\/h2>/, "industry section should use one concise heading");
   assert.doesNotMatch(industry, /section-kicker/, "industry section should not render a kicker");
   assert.doesNotMatch(industry, /section-intro/, "industry section should not render an intro paragraph");
-  assert.doesNotMatch(industry, />查看全部动态</, "industry section should not render a manual full-updates button"); assert.match(html, /href="timeline\.html"/, "homepage should still link to the full updates page");
+  assert.doesNotMatch(industry, />查看全部动态</, "industry section should not render a manual full-updates button"); assert.match(industry, /target="_blank"/, "industry updates should link to source pages");
 });
 
 test("Learning page exposes a left-side directory navigation", () => {
