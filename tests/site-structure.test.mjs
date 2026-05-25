@@ -282,20 +282,18 @@ test("Homepage industry feed uses short linked update records", () => {
 
   for (const page of ["index.html", "en.html"]) {
     const html = readDocsFile(page);
-    const rows = [...html.matchAll(/<a class="update-row"[\s\S]*?<\/a>/g)].map((match) => match[0]);
+    const rows = [...html.matchAll(/<article class="update-row"[\s\S]*?<\/article>/g)].map((match) => match[0]);
 
     const section = homePages[page === "index.html" ? "zh-CN" : "en"].sections.find((item) => item.id === "industry");
     assert.equal(rows.length, section.updates.length, `${page} should render the static feed records for incremental loading`);
     assert.equal(rows.filter((row) => /\shidden\b/.test(row)).length, section.updates.length - section.initialVisible, `${page} should hide later feed rows until scroll`);
     rows.slice(0, 3).forEach((row) => assert.doesNotMatch(row, /\shidden\b/, `${page} first-page update rows should be visible`));
     for (const row of rows) {
-      assert.match(row, /href="[^"]+"/, `${page} update row should be linked`);
-      assert.match(row, /target="_blank"/, `${page} update row should open original sources in a new tab`);
-      assert.match(row, /rel="noopener noreferrer"/, `${page} update row should use safe external-link rel`);
+      assert.doesNotMatch(row, /<article class="update-row"[^>]*href=/, `${page} whole update row should not be linked`);
+      assert.match(row, /<a class="source-link-label" href="[^"]+" target="_blank" rel="noopener noreferrer"[\s\S]*?(查看原文|View Source)[\s\S]*?<\/a>/, `${page} source cue should be the only external link`);
       assert.match(row, /<time [^>]*datetime="[^"]+"[^>]*>[\s\S]*?<\/time>/, `${page} update row should render a date`);
       assert.match(row, /<h3[^>]*>[\s\S]*?<\/h3>/, `${page} update row should render a title`);
-      assert.match(row, /class="update-content"[\s\S]*class="update-copy"[\s\S]*class="update-meta"/, `${page} update row should render tag metadata below the copy`);
-      assert.match(row, /class="source-link-label"/, `${page} update row should show an explicit source link cue`);
+      assert.match(row, /class="update-copy"[\s\S]*class="update-meta"/, `${page} update row should render tag metadata after the copy`);
       assert.match(row, /<p[^>]*>[\s\S]*?<\/p>/, `${page} update row should render a description`);
     }
     assert.match(html, /data-feed-sentinel/, `${page} should render a scroll sentinel for auto pagination`); assert.match(html, /IntersectionObserver/, `${page} should auto-load later feed rows on scroll`);

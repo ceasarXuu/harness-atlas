@@ -50,7 +50,7 @@ export const homePages = {
         id: "industry",
         className: "section updates-flow",
         heading: "行业动态",
-        sourceLinkLabel: "原文",
+        sourceLinkLabel: "查看原文",
         updates: [
           {
             date: "2026.05.19",
@@ -209,7 +209,7 @@ export const homePages = {
         id: "industry",
         className: "section updates-flow",
         heading: "Industry Updates",
-        sourceLinkLabel: "Source",
+        sourceLinkLabel: "View Source",
         updates: [
           {
             date: "2026.05.19",
