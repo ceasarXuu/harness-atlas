@@ -15,7 +15,7 @@ const pageSize = section.pageSize ?? section.updates.length;
       class="update-row"
       href={item.href}
       target={item.external ? "_blank" : undefined}
-      rel={item.external ? "noreferrer" : undefined}
+      rel={item.external ? "noopener noreferrer" : undefined}
       data-feed-item
       hidden={index >= initialVisible}
     >
@@ -24,7 +24,11 @@ const pageSize = section.pageSize ?? section.updates.length;
         <h3>{item.title}</h3>
         <p>{item.description}</p>
       </div>
-      <span class="update-meta"><span>{item.tag}</span>{item.sourceName && <span>{item.sourceName}</span>}</span>
+      <span class="update-meta">
+        <span>{item.tag}</span>
+        {item.sourceName && <span>{item.sourceName}</span>}
+        {item.external && section.sourceLinkLabel && <span class="source-link-label">{section.sourceLinkLabel}</span>}
+      </span>
     </a>
   ))}
   {section.updates.length > initialVisible && (
@@ -104,7 +108,7 @@ const pageSize = section.pageSize ?? section.updates.length;
   }
 
   .update-row time,
-  .update-tag {
+  .update-meta span {
     color: var(--muted);
     font: 800 12px / 1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     letter-spacing: 0.08em;
@@ -121,6 +125,11 @@ const pageSize = section.pageSize ?? section.updates.length;
     padding: 5px 7px;
     border: 1px solid #444;
     text-transform: uppercase;
+  }
+
+  .update-meta .source-link-label {
+    color: var(--fg);
+    border-color: #777;
   }
 
   .update-copy h3 {

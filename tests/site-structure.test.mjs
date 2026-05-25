@@ -270,6 +270,7 @@ test("Homepage industry feed uses short linked update records", () => {
     assert.ok(section.updates.length >= 10, `${locale} should keep a useful cold-start feed`);
     assert.equal(section.initialVisible, 3, `${locale} should show an initial page of three updates`);
     assert.equal(section.pageSize, 2, `${locale} should reveal later updates incrementally`);
+    assert.ok(section.sourceLinkLabel, `${locale} should label original-source links`);
 
     for (const update of section.updates) {
       for (const field of ["href", "date", "dateTime", "title", "tag", "description", "sourceName"]) assert.ok(update[field], `${locale} update should have ${field}`);
@@ -289,9 +290,12 @@ test("Homepage industry feed uses short linked update records", () => {
     rows.slice(0, 3).forEach((row) => assert.doesNotMatch(row, /\shidden\b/, `${page} first-page update rows should be visible`));
     for (const row of rows) {
       assert.match(row, /href="[^"]+"/, `${page} update row should be linked`);
+      assert.match(row, /target="_blank"/, `${page} update row should open original sources in a new tab`);
+      assert.match(row, /rel="noopener noreferrer"/, `${page} update row should use safe external-link rel`);
       assert.match(row, /<time [^>]*datetime="[^"]+"[^>]*>[\s\S]*?<\/time>/, `${page} update row should render a date`);
       assert.match(row, /<h3[^>]*>[\s\S]*?<\/h3>/, `${page} update row should render a title`);
       assert.match(row, /class="update-meta"/, `${page} update row should render tag and source metadata`);
+      assert.match(row, /class="source-link-label"/, `${page} update row should show an explicit source link cue`);
       assert.match(row, /<p[^>]*>[\s\S]*?<\/p>/, `${page} update row should render a description`);
     }
     assert.match(html, /data-feed-sentinel/, `${page} should render a scroll sentinel for auto pagination`); assert.match(html, /IntersectionObserver/, `${page} should auto-load later feed rows on scroll`);
