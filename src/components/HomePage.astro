@@ -95,7 +95,7 @@ const page = homePages[locale];
 <style>
   .harness-hero {
     min-height: clamp(560px, calc(100vh - 190px), 760px);
-    grid-template-columns: minmax(0, 1fr) minmax(430px, 0.82fr);
+    grid-template-columns: minmax(430px, 0.82fr) minmax(0, 1fr);
     grid-template-rows: auto 1fr;
     gap: 26px clamp(34px, 5vw, 64px);
     align-items: start;
@@ -104,6 +104,8 @@ const page = homePages[locale];
 
   .hero-main {
     position: relative;
+    grid-column: 2;
+    grid-row: 2;
   }
 
   .hero-equation {
@@ -111,6 +113,7 @@ const page = homePages[locale];
     display: flex;
     flex-wrap: nowrap;
     align-items: baseline;
+    justify-content: center;
     gap: clamp(10px, 1.8vw, 20px);
     max-width: 100%;
     margin: 0;
@@ -228,6 +231,8 @@ const page = homePages[locale];
   }
 
   .harness-map {
+    grid-column: 1;
+    grid-row: 2;
     align-self: start;
     min-height: 510px;
     display: flex;
@@ -391,6 +396,12 @@ const page = homePages[locale];
   @media (max-width: 900px) {
     .harness-hero {
       grid-template-columns: 1fr;
+    }
+
+    .hero-main,
+    .harness-map {
+      grid-column: auto;
+      grid-row: auto;
     }
 
     .hero-equation {

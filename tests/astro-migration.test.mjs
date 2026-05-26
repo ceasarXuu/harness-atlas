@@ -123,7 +123,7 @@ test("Built pages keep page-specific loading boundaries", () => {
   }
 });
 
-test("Homepage hero keeps the equation above the runtime map", () => {
+test("Homepage hero keeps the centered equation above the swapped runtime map layout", () => {
   for (const page of ["index.html", "en.html"]) {
     const html = read(join(dist, page));
     const cssHref = html.match(/href="\/harness-atlas\/(_astro\/[^"]+\.css)"/)?.[1];
@@ -132,6 +132,11 @@ test("Homepage hero keeps the equation above the runtime map", () => {
     assert.match(html, /<section class="hero home-hero harness-hero"[\s\S]*?<h1 class="hero-equation"[\s\S]*?<div class="hero-main"[\s\S]*?<aside class="system-card harness-map"/, `${page} should render equation, copy, then runtime map`);
     assert.match(css, /grid-template-rows:\s*auto\s+1fr/, `${page} hero should reserve the first row for the equation`);
     assert.match(css, /flex-wrap:\s*nowrap/, `${page} equation should stay on one line`);
+    assert.match(css, /justify-content:\s*center/, `${page} equation should be centered`);
+    assert.match(css, /\.hero-main\[[^\]]+\]\{[^}]*grid-column:\s*2/, `${page} copy column should render on the right`);
+    assert.match(css, /\.hero-main\[[^\]]+\]\{[^}]*grid-row:\s*2/, `${page} copy column should stay on the second row`);
+    assert.match(css, /\.harness-map\[[^\]]+\]\{[^}]*grid-column:\s*1/, `${page} runtime map should render on the left`);
+    assert.match(css, /\.harness-map\[[^\]]+\]\{[^}]*grid-row:\s*2/, `${page} runtime map should align with the copy row`);
   }
 });
 
