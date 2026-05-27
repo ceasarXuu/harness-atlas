@@ -131,6 +131,7 @@ test("Homepage hero keeps the centered equation above the swapped runtime map la
 
     assert.match(html, /<section class="hero home-hero harness-hero"[\s\S]*?<h1 class="hero-equation"[\s\S]*?<div class="hero-main"[\s\S]*?<aside class="system-card harness-map"/, `${page} should render equation, copy, then runtime map`);
     assert.match(css, /grid-template-rows:\s*auto\s+1fr/, `${page} hero should reserve the first row for the equation`);
+    assert.match(css, /gap:\s*36px\s+clamp\(34px,5vw,64px\)/, `${page} hero should keep breathing room below the equation`);
     assert.match(css, /flex-wrap:\s*nowrap/, `${page} equation should stay on one line`);
     assert.match(css, /justify-content:\s*center/, `${page} equation should be centered`);
     assert.match(css, /\.hero-main\[[^\]]+\]\{[^}]*grid-column:\s*2/, `${page} copy column should render on the right`);
