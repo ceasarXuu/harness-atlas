@@ -136,8 +136,10 @@ test("Homepage hero keeps the centered equation above the swapped runtime map la
     assert.match(css, /\.hero-main\[[^\]]+\]\{[^}]*grid-column:\s*2/, `${page} copy column should render on the right`);
     assert.match(css, /\.hero-main\[[^\]]+\]\{[^}]*grid-row:\s*2/, `${page} copy column should stay on the second row`);
     assert.match(css, /\.hero-main\[[^\]]+\]\{[^}]*min-height:\s*510px/, `${page} copy column should match the runtime map height`);
+    assert.match(html, /<div class="actions"[\s\S]*?<p class="hero-audience"[\s\S]*?<a class="cta primary"/, `${page} audience note should share the action row`);
     assert.match(css, /\.hero-main\[[^\]]+\]\s+\.actions\[[^\]]+\]\{[^}]*justify-content:\s*flex-end/, `${page} hero action should align right`);
     assert.match(css, /\.hero-main\[[^\]]+\]\s+\.actions\[[^\]]+\]\{[^}]*margin-top:\s*auto/, `${page} hero action should sit at the bottom`);
+    assert.match(css, /\.hero-audience\[[^\]]+\]\{[^}]*flex:\s*1 1 260px/, `${page} audience note should occupy the left side of the action row`);
     assert.match(css, /\.harness-map\[[^\]]+\]\{[^}]*grid-column:\s*1/, `${page} runtime map should render on the left`);
     assert.match(css, /\.harness-map\[[^\]]+\]\{[^}]*grid-row:\s*2/, `${page} runtime map should align with the copy row`);
   }

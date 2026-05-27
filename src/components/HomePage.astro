@@ -50,9 +50,8 @@ const page = homePages[locale];
         ))}
       </div>
 
-      <p class="hero-audience">{page.hero.audience}</p>
-
       <div class="actions">
+        <p class="hero-audience">{page.hero.audience}</p>
         {page.hero.actions.map(([href, label, primary]) => (
           <a class:list={["cta", primary && "primary"]} href={href}>{label}</a>
         ))}
@@ -226,14 +225,16 @@ const page = homePages[locale];
   }
 
   .hero-audience {
+    flex: 1 1 260px;
     max-width: 780px;
-    margin: 16px 0 0;
+    margin: 0;
     color: var(--muted-2);
     font: 700 12px / 1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     text-transform: uppercase;
   }
 
   .hero-main .actions {
+    align-items: center;
     justify-content: flex-end;
     margin-top: auto;
   }
@@ -451,6 +452,10 @@ const page = homePages[locale];
 
     .hero-principles {
       grid-template-columns: 1fr;
+    }
+
+    .hero-main .actions {
+      align-items: flex-start;
     }
 
     .harness-map {
