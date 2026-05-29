@@ -53,6 +53,26 @@ export const homePages = {
         sourceLinkLabel: "查看原文",
         updates: [
           {
+            date: "2026.05.28",
+            dateTime: "2026-05-28",
+            title: "Anthropic 融资继续押注 Claude Code 与 Cowork",
+            tag: "资本与算力",
+            description: "Anthropic 宣布 650 亿美元 H 轮融资，估值 9650 亿美元，并称资金将用于安全、可解释性、算力与 Claude Code/Cowork 等产品扩展。Agent 平台竞争已进入资本和基础设施阶段。",
+            href: "https://www.anthropic.com/news/series-h",
+            external: true,
+            sourceName: "Anthropic",
+          },
+          {
+            date: "2026.05.28",
+            dateTime: "2026-05-28",
+            title: "Google I/O 汇总强调 Gemini 进入 Agent 平台",
+            tag: "平台演进",
+            description: "Google 汇总 I/O 2026，强调 Gemini 3.5 Flash 已通过 Antigravity、Gemini API、AI Studio、Android Studio 和 Gemini Enterprise Agent Platform 可用。模型发布正在直接进入 Agent 开发与企业运行平台。",
+            href: "https://blog.google/innovation-and-ai/technology/ai/io-2026-keynote-moment-videos/",
+            external: true,
+            sourceName: "Google Blog",
+          },
+          {
             date: "2026.05.26",
             dateTime: "2026-05-26",
             title: "Copilot Studio 推出 computer-using agents",
@@ -271,6 +291,26 @@ export const homePages = {
         heading: "Industry Updates",
         sourceLinkLabel: "View Source",
         updates: [
+          {
+            date: "2026.05.28",
+            dateTime: "2026-05-28",
+            title: "Anthropic funding points to Claude Code and Cowork scale",
+            tag: "Infrastructure",
+            description: "Anthropic announced a $65B Series H at a $965B post-money valuation, funding safety, interpretability, compute, and Claude Code/Cowork. Agent platforms are becoming infrastructure businesses.",
+            href: "https://www.anthropic.com/news/series-h",
+            external: true,
+            sourceName: "Anthropic",
+          },
+          {
+            date: "2026.05.28",
+            dateTime: "2026-05-28",
+            title: "Google I/O recap puts Gemini deeper into agent platforms",
+            tag: "Platform",
+            description: "Google's I/O recap says Gemini 3.5 Flash is available through Antigravity, Gemini API, AI Studio, Android Studio, and Gemini Enterprise Agent Platform. Model launches now land inside agent runtimes.",
+            href: "https://blog.google/innovation-and-ai/technology/ai/io-2026-keynote-moment-videos/",
+            external: true,
+            sourceName: "Google Blog",
+          },
           {
             date: "2026.05.26",
             dateTime: "2026-05-26",
