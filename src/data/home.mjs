@@ -53,6 +53,11 @@ export const homePages = {
         sourceLinkLabel: "查看原文",
         updates: [
           {
+            date: "2026.05.28", dateTime: "2026-05-28", title: "Claude Code 发布 Dynamic Workflows", tag: "多 Agent 编排",
+            description: "Anthropic 发布 Claude Code Dynamic Workflows，Claude 可动态编写编排脚本，在单次会话中并行运行数十到数百个 subagents，并在汇总前做检查。它把大型迁移、代码审计和对抗性复核推向平台级运行时。",
+            href: "https://claude.com/blog/introducing-dynamic-workflows-in-claude-code", external: true, sourceName: "Claude Blog",
+          },
+          {
             date: "2026.05.28",
             dateTime: "2026-05-28",
             title: "Anthropic 融资继续押注 Claude Code 与 Cowork",
@@ -291,6 +296,11 @@ export const homePages = {
         heading: "Industry Updates",
         sourceLinkLabel: "View Source",
         updates: [
+          {
+            date: "2026.05.28", dateTime: "2026-05-28", title: "Claude Code introduces Dynamic Workflows", tag: "Orchestration",
+            description: "Anthropic introduced Claude Code Dynamic Workflows, where Claude writes orchestration scripts and runs parallel subagents in one session. Migrations, audits, and review become managed runtime work.",
+            href: "https://claude.com/blog/introducing-dynamic-workflows-in-claude-code", external: true, sourceName: "Claude Blog",
+          },
           {
             date: "2026.05.28",
             dateTime: "2026-05-28",
