@@ -5,12 +5,41 @@ import { homePages } from "../src/data/home.mjs";
 test("localized industry feed records keep matching source identity", () => {
   const zhUpdates = homePages["zh-CN"].sections.find((item) => item.id === "industry").updates;
   const enUpdates = homePages.en.sections.find((item) => item.id === "industry").updates;
+  const sharedAnchors = [
+    "OpenAI",
+    "Codex",
+    "GitHub",
+    "Copilot",
+    "Claude",
+    "Anthropic",
+    "Google",
+    "Gemini",
+    "Stainless",
+    "MCP",
+    "REST API",
+    "Managed Agents",
+    "Dynamic Workflows",
+  ];
 
   assert.equal(zhUpdates.length, enUpdates.length, "localized feeds should keep the same record count");
   zhUpdates.forEach((update, index) => {
     const counterpart = enUpdates[index];
     for (const field of ["date", "dateTime", "href", "sourceName"]) {
       assert.equal(counterpart[field], update[field], `localized feed record ${index} should keep matching ${field}`);
+    }
+    for (const field of ["title", "tag", "description"]) {
+      assert.ok(update[field], `zh record ${index} should keep ${field}`);
+      assert.ok(counterpart[field], `en record ${index} should keep ${field}`);
+    }
+
+    const zhText = `${update.title} ${update.tag} ${update.description}`;
+    const enText = `${counterpart.title} ${counterpart.tag} ${counterpart.description}`;
+    const anchors = sharedAnchors.filter((anchor) => zhText.includes(anchor) || enText.includes(anchor));
+
+    assert.ok(anchors.length >= 1, `localized feed record ${index} should share at least one stable product anchor`);
+    for (const anchor of anchors) {
+      assert.ok(zhText.includes(anchor), `zh record ${index} should keep anchor ${anchor}`);
+      assert.ok(enText.includes(anchor), `en record ${index} should keep anchor ${anchor}`);
     }
   });
 });

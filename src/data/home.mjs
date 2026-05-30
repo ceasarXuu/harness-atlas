@@ -53,6 +53,26 @@ export const homePages = {
         sourceLinkLabel: "查看原文",
         updates: [
           {
+            date: "2026.05.29",
+            dateTime: "2026-05-29",
+            title: "Copilot 指标 API 增加 Agent 采用分层",
+            tag: "观测",
+            description: "GitHub 为 Copilot usage metrics API 新增 `ai_adoption_phase` 和 `totals_by_ai_adoption_phase`，按 code-first、agent-first、多 Agent 分层统计。Agent 使用正从活跃度计数转向 workflow 成熟度观测。",
+            href: "https://github.blog/changelog/2026-05-29-copilot-usage-metrics-api-adds-cohorts-for-ai-adoption/",
+            external: true,
+            sourceName: "GitHub Changelog",
+          },
+          {
+            date: "2026.05.29",
+            dateTime: "2026-05-29",
+            title: "OpenAI 强调评测要先校准 harness",
+            tag: "评测",
+            description: "OpenAI 发布第三方评测方法文章，强调前沿模型已不只是聊天接口，工具调用、跨步状态与工作流环境都会改变结果。评测需要把 harness 搭建方式、已知失真风险和有效性检查写清楚，而不是只对单轮回答打分。",
+            href: "https://openai.com/index/trustworthy-third-party-evaluations-foundations/",
+            external: true,
+            sourceName: "OpenAI",
+          },
+          {
             date: "2026.05.28", dateTime: "2026-05-28", title: "Claude Code 发布 Dynamic Workflows", tag: "多 Agent 编排",
             description: "Anthropic 发布 Claude Code Dynamic Workflows，Claude 可动态编写编排脚本，在单次会话中并行运行数十到数百个 subagents，并在汇总前做检查。它把大型迁移、代码审计和对抗性复核推向平台级运行时。",
             href: "https://claude.com/blog/introducing-dynamic-workflows-in-claude-code", external: true, sourceName: "Claude Blog",
@@ -226,6 +246,26 @@ export const homePages = {
         heading: "Industry Updates",
         sourceLinkLabel: "View Source",
         updates: [
+          {
+            date: "2026.05.29",
+            dateTime: "2026-05-29",
+            title: "Copilot metrics API adds agent adoption cohorts",
+            tag: "Observability",
+            description: "GitHub added `ai_adoption_phase` and `totals_by_ai_adoption_phase` to the Copilot usage metrics API. Teams can now track shifts from code-first usage into agent-first and multi-agent workflows.",
+            href: "https://github.blog/changelog/2026-05-29-copilot-usage-metrics-api-adds-cohorts-for-ai-adoption/",
+            external: true,
+            sourceName: "GitHub Changelog",
+          },
+          {
+            date: "2026.05.29",
+            dateTime: "2026-05-29",
+            title: "OpenAI says evals must calibrate the harness",
+            tag: "Evals",
+            description: "OpenAI's evaluation playbook says frontier models depend on tools, multi-step state, and workflow setup. Valid evals must describe the harness and check for distortions, not just score one reply.",
+            href: "https://openai.com/index/trustworthy-third-party-evaluations-foundations/",
+            external: true,
+            sourceName: "OpenAI",
+          },
           {
             date: "2026.05.28", dateTime: "2026-05-28", title: "Claude Code introduces Dynamic Workflows", tag: "Orchestration",
             description: "Anthropic introduced Claude Code Dynamic Workflows, where Claude writes orchestration scripts and runs parallel subagents in one session. Migrations, audits, and review become managed runtime work.",
