@@ -11,6 +11,11 @@ function read(path) {
   return readFileSync(path, "utf8");
 }
 
+function getExactFieldValues(block, field) {
+  const regex = new RegExp(`^- ${field}: (.+)$`, "gm");
+  return [...block.matchAll(regex)].map((match) => match[1]);
+}
+
 function decodeHtml(text) {
   return text
     .replace(/&#39;/g, "'")
@@ -77,16 +82,25 @@ test("latest industry update review report is closed before release", () => {
   assert.ok(reviewFile, "industry update release should keep a review report");
   const report = read(join(reviewDir, reviewFile));
   const reportRelativePath = `vs_review/${reviewFile}`;
+  const metadataEndIndex = report.indexOf("\n## Round ");
+  const metadataBlock = metadataEndIndex >= 0 ? report.slice(0, metadataEndIndex) : report;
   const finalConclusionIndex = report.lastIndexOf("\n## Final Conclusion");
   const lastRoundIndex = report.lastIndexOf("\n## Round ");
+  const lastClosureIndex = report.lastIndexOf("\n### Closure Status");
+  const terminalClosure = lastClosureIndex >= 0 && finalConclusionIndex > lastClosureIndex
+    ? report.slice(lastClosureIndex, finalConclusionIndex)
+    : "";
 
   assert.doesNotThrow(
     () => execFileSync("git", ["ls-files", "--error-unmatch", reportRelativePath], { cwd: root }),
     `latest industry update review report should be tracked in git: ${reportRelativePath}`,
   );
 
-  assert.match(report, /- Status: passed\b/, "latest industry update review report should be closed as passed");
-  assert.doesNotMatch(report, /- Status: open\b/, "latest industry update review report should not stay open");
+  assert.deepEqual(
+    getExactFieldValues(metadataBlock, "Status"),
+    ["passed"],
+    "latest industry update review report metadata should contain exactly one authoritative passed status",
+  );
   assert.doesNotMatch(
     report,
     /^\|[^\n]*\|\s*pending\s*\|\s*pending\s*\|\s*pending\s*\|\s*pending\s*\|?$/m,
@@ -94,11 +108,40 @@ test("latest industry update review report is closed before release", () => {
   );
   assert.doesNotMatch(report, /^- pending\b/m, "latest industry update review report should not keep pending list placeholders");
   assert.doesNotMatch(report, /^Pending review\.$/m, "latest industry update review report should not keep a pending conclusion");
-  assert.match(report, new RegExp(`- Feed latest date: ${latestDate}\\b`), "latest industry update review should bind to the current feed latest date");
+  assert.deepEqual(
+    getExactFieldValues(terminalClosure, "Feed latest date"),
+    [latestDate],
+    "latest industry update review should bind the terminal closure to the current feed latest date",
+  );
   for (const href of latestDateHrefs) {
-    assert.ok(report.includes(href), `latest industry update review should cover current latest-date href ${href}`);
+    assert.ok(terminalClosure.includes(href), `terminal closure should cover current latest-date href ${href}`);
   }
-  assert.match(report, /- Allowed to proceed: yes\b/, "latest industry update review report should explicitly allow release");
+  assert.ok(lastClosureIndex > lastRoundIndex, "latest industry update review report should include a terminal closure status after the latest round");
+  assert.deepEqual(
+    getExactFieldValues(terminalClosure, "Accepted blocking findings fixed"),
+    ["yes"],
+    "terminal closure should confirm accepted blocking findings are fixed exactly once",
+  );
+  assert.deepEqual(
+    getExactFieldValues(terminalClosure, "Blocking re-review completed"),
+    ["yes"],
+    "terminal closure should confirm blocking re-review completed exactly once",
+  );
+  assert.deepEqual(
+    getExactFieldValues(terminalClosure, "Blocking re-review passed"),
+    ["yes"],
+    "terminal closure should confirm blocking re-review passed exactly once",
+  );
+  assert.deepEqual(
+    getExactFieldValues(terminalClosure, "Validation result"),
+    ["passed"],
+    "terminal closure should record exactly one passing validation result",
+  );
+  assert.deepEqual(
+    getExactFieldValues(terminalClosure, "Allowed to proceed"),
+    ["yes"],
+    "latest industry update review report should explicitly allow release exactly once in the terminal closure status",
+  );
   assert.match(report, /^## Final Conclusion\b/m, "latest industry update review report should include a final conclusion heading");
   assert.ok(finalConclusionIndex > lastRoundIndex, "latest industry update review report should place final conclusion after the latest round");
 });
