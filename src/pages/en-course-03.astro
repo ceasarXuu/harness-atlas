@@ -1,0 +1,7 @@
+---
+import CourseLessonPage from "../components/CourseLessonPage.astro";
+import { getCourseLessonPage } from "../data/site.mjs";
+import { Content as ChapterContent } from "../generated/course/en/chapters/03-minimal-harness.md";
+---
+
+<CourseLessonPage page={getCourseLessonPage("course-03", "en")} content={ChapterContent} />

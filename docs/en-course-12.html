@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Evaluation, Testing and Benchmarking · Harness Atlas</title><meta name="description" content="Harness Atlas Evaluation, Testing and Benchmarking."><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preload" href="assets/css/style.css" as="style"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/learn.css"><link rel="prefetch" href="course-01.html"><link rel="prefetch" href="products.html"><link rel="prefetch" href="timeline.html"></head> <body> <div class="wrap"> <header class="top"> <a class="brand" href="./" aria-label="Harness Atlas Home"> <span class="brand-mark" aria-hidden="true"></span> <span>HARNESS_ATLAS</span> </a> <nav class="nav" aria-label="Main navigation"> <a href="./"> <span>HOME</span>  </a><a href="en-course-01.html"> <span>COURSE</span>  </a><a href="products.html"> <span>ATLAS</span>  </a><a href="course-12.html"> <span>中文</span>  </a><a href="https://github.com/ceasarXuu/harness-atlas" target="_blank" rel="noreferrer"> <span>GITHUB</span> <span class="nav-stat" aria-label="GitHub stars">
+★ 0 </span> </a> </nav> </header> <main>  <section class="section learn-shell"> <aside class="learn-sidebar" aria-label="Course directory"> <p class="section-kicker">Course directory</p> <nav class="learn-nav" aria-label="Course page navigation"> <a href="en-course-01.html"><span>01</span>Why Agent Harness</a><a href="en-course-02.html"><span>02</span>Task, Environment and Boundary</a><a href="en-course-03.html"><span>03</span>Minimal Harness</a><a href="en-course-04.html"><span>04</span>Context as Information Boundary</a><a href="en-course-05.html"><span>05</span>Tools and MCP as Action Boundary</a><a href="en-course-06.html"><span>06</span>State, Session and Memory</a><a href="en-course-07.html"><span>07</span>Runtime Control</a><a href="en-course-08.html"><span>08</span>Skills as Capability Packaging</a><a href="en-course-09.html"><span>09</span>Workflows as Deterministic Scaffolding</a><a href="en-course-10.html"><span>10</span>Multi-agent Orchestration</a><a href="en-course-11.html"><span>11</span>Observability and Debugging</a><a class="active" href="en-course-12.html"><span>12</span>Evaluation, Testing and Benchmarking</a><a href="en-course-13.html"><span>13</span>Security, Permissions and Governance</a><a href="en-course-14.html"><span>14</span>Production Architecture</a><a href="en-course-15.html"><span>15</span>Patterns, Anti-patterns and Future</a> <p class="learn-nav-group">Other</p> <a href="en-course-other-glossary.html"><span>Other</span>Bilingual Glossary</a> </nav> </aside> <div class="learn-content"> <nav class="learn-pager top" aria-label="Course page navigation"> <a href="en-course-11.html"><span>Previous</span><strong>Observability and Debugging</strong></a> <a href="en-course-13.html"><span>Next</span><strong>Security, Permissions and Governance</strong></a> </nav> <p class="section-kicker">Course / Evaluation, Testing and Benchmarking</p> <h1 class="content-title">Evaluation, Testing and Benchmarking</h1> <p class="section-intro">A feedback system from behavior to evidence</p>  <article class="chapter-content"> <h1 id="12-evaluation-testing-and-benchmarking">12. Evaluation, Testing and Benchmarking</h1>
+<blockquote>
+<p><strong>Subtitle</strong>
+A feedback system from behavior to evidence</p>
+</blockquote>
+<h2 id="1-chapter-thesis">1. Chapter Thesis</h2>
+<p>Evaluation is not about ranking models on leaderboards; it is about building a feedback loop for the harness. It answers whether the system completes tasks, whether it regressed, why it failed, and whether a change is ready to ship.</p>
+<h2 id="2-how-this-chapter-connects">2. How This Chapter Connects</h2>
+<p>The previous chapter made agent runs visible. This chapter turns visible runs into evidence for judging system quality. The next chapter covers how to limit the power of a system that can change the external world.</p>
+<p>Previous: <a href="en-course-11.html">11. Observability and Debugging</a> | Next: <a href="en-course-13.html">13. Security, Permissions and Governance</a></p>
+<h2 id="3-learning-outcomes">3. Learning Outcomes</h2>
+<ul>
+<li>Explain the engineering problem solved by <code>Evaluation, Testing and Benchmarking</code> inside an Agent Harness.</li>
+<li>Use this chapter’s mental model to review a real agent design.</li>
+<li>Produce the chapter artifact and connect it to the Course Builder Harness case study.</li>
+<li>Identify typical failure modes related to this chapter.</li>
+</ul>
+<h2 id="4-the-engineering-problem">4. The Engineering Problem</h2>
+<p>Many teams judge agent improvement by whether it “feels good.” This cannot support regression testing, version selection, cost control, or release decisions. Harness evaluation should cover tools, workflows, skills, tasks, risks, and production metrics.</p>
+<h2 id="5-mental-model">5. Mental Model</h2>
+<p>Think of evaluation as the system’s immune system and feedback system. It not only finds errors, but helps the team locate the layer responsible: task definition, context, tools, state, runtime, skill, workflow, safety policy, or model choice.</p>
+<h2 id="6-harness-abstraction">6. Harness Abstraction</h2>
+<h3 id="unit-test">Unit test</h3>
+<ul>
+<li>Tests deterministic components such as parsers, validators, tool wrappers, and schemas.</li>
+</ul>
+<h3 id="workflow-test">Workflow test</h3>
+<ul>
+<li>Tests workflow branches, approvals, fallbacks, and stop conditions.</li>
+</ul>
+<h3 id="golden-task-set">Golden task set</h3>
+<ul>
+<li>A fixed set of representative real tasks used for regression comparison.</li>
+</ul>
+<h3 id="rubric">Rubric</h3>
+<ul>
+<li>Breaks quality judgment into executable criteria such as accuracy, completeness, evidence, style, and consistency.</li>
+</ul>
+<h3 id="adversarial-eval">Adversarial eval</h3>
+<ul>
+<li>Tests risks such as prompt injection, tool abuse, permission bypass, and data leakage.</li>
+</ul>
+<h3 id="production-metrics">Production metrics</h3>
+<ul>
+<li>Success rate, human-intervention rate, cost, latency, failure type, and user-correction rate in real runs.</li>
+</ul>
+<h2 id="7-reference-diagram">7. Reference Diagram</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">flowchart TD</span></span>
+<span class="line"><span style="color:#E1E4E8">    Runs[Agent Runs] --> Traces[Traces]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Traces --> Eval[Evaluation Pipeline]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Eval --> Scores[Scores + Rubric]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Eval --> Failures[Failure Taxonomy]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Failures --> Improve[Improve Context]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Scores --> Gate{Release Gate}</span></span>
+<span class="line"><span style="color:#E1E4E8">    Gate -->|Pass| Ship[Ship]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Gate -->|Fail| Improve</span></span></code></pre>
+<h2 id="8-design-principles">8. Design Principles</h2>
+<ul>
+<li>Define success before optimizing the system.</li>
+<li>Evaluation should cover behavior, not only answer text.</li>
+<li>Every important skill should have a regression set.</li>
+<li>Evaluation results should localize the failing layer.</li>
+<li>Cost and latency are quality metrics too.</li>
+</ul>
+<h2 id="9-reference-implementation-direction">9. Reference Implementation Direction</h2>
+<p>This course emphasizes “thinking > specific solution.” A reference implementation exists to explain the abstraction; no framework, SDK, or protocol should be equated with the harness itself. In implementation, specify boundaries, state, and failure paths before choosing technologies.</p>
+<p>Recommended implementation notes</p>
+<ul>
+<li>Store design decisions in Markdown or YAML so they can be versioned and reviewed.</li>
+<li>Place this chapter artifact under <code>docs/design/</code> or <code>labs/</code> in the repository.</li>
+<li>Whenever an abstraction boundary changes, update the interface assumptions of adjacent chapters.</li>
+</ul>
+<h2 id="10-failure-modes">10. Failure Modes</h2>
+<h3 id="eval-by-vibes">Eval by vibes</h3>
+<ul>
+<li>Judges quality by feeling, making results non-repeatable and non-comparable.</li>
+</ul>
+<h3 id="answer-only-eval">Answer-only eval</h3>
+<ul>
+<li>Evaluates only final text, not tools, state, permissions, or process.</li>
+</ul>
+<h3 id="static-benchmark-obsession">Static benchmark obsession</h3>
+<ul>
+<li>Optimizes for generic benchmarks while ignoring the system’s own task distribution.</li>
+</ul>
+<h3 id="no-regression-gate">No regression gate</h3>
+<ul>
+<li>Prompt, skill, or tool changes ship without regression checks.</li>
+</ul>
+<h2 id="11-lab-course-builder-harness">11. Lab: Course Builder Harness</h2>
+<ol>
+<li>Design five golden tasks for the lesson_writer skill.</li>
+<li>Write a rubric: structure completeness, bilingual consistency, engineering philosophy, and concrete implementation not overpowering the main idea.</li>
+<li>Design an adversarial case where source material tries to make the agent ignore the course structure.</li>
+<li>Define release gates: pass rate, human-edit rate, build success rate, and cost ceiling.</li>
+</ol>
+<p><strong>Expected artifact</strong>: An Evaluation Matrix, Golden Task Set, and Rubric.</p>
+<h2 id="12-review-checklist">12. Review Checklist</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Define success before optimizing the system.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Evaluation should cover behavior, not only answer text.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Every important skill should have a regression set.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can identify and avoid <code>Eval by vibes</code>: Judges quality by feeling, making results non-repeatable and non-comparable.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can identify and avoid <code>Answer-only eval</code>: Evaluates only final text, not tools, state, permissions, or process.</li>
+</ul>
+<h2 id="13-image-descriptions">13. Image Descriptions</h2>
+<h3 id="image-prompt-1">Image Prompt 1</h3>
+<ul>
+<li>An evaluation pyramid with unit tests at the bottom, workflow/skill evals in the middle, and task success plus production metrics at the top.</li>
+</ul>
+<h3 id="image-prompt-2">Image Prompt 2</h3>
+<ul>
+<li>A feedback loop where trace data enters eval, eval produces failure categories, and categories drive improvements to context, tools, runtime, and skills.</li>
+</ul>
+<h2 id="rubric-example">Rubric Example</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">rubric</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  structure_completeness</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">0-5</span></span>
+<span class="line"><span style="color:#85E89D">  bilingual_consistency</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">0-5</span></span>
+<span class="line"><span style="color:#85E89D">  philosophy_alignment</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">0-5</span></span>
+<span class="line"><span style="color:#85E89D">  concrete_examples</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">0-5</span></span>
+<span class="line"><span style="color:#85E89D">  safety_awareness</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">0-5</span></span>
+<span class="line"><span style="color:#85E89D">release_gate</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  min_average_score</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">4.2</span></span>
+<span class="line"><span style="color:#85E89D">  max_critical_failures</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0</span></span>
+<span class="line"><span style="color:#85E89D">  max_cost_per_task_usd</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1.50</span></span></code></pre>
+<h2 id="14-key-takeaways">14. Key Takeaways</h2>
+<ul>
+<li><code>Evaluation, Testing and Benchmarking</code> is not an isolated module; it is one engineering boundary through which the Agent Harness handles uncertainty.</li>
+<li>Specific tools will change, but the chapter’s judgment questions should remain stable: what is the boundary, where is the evidence, and how does failure recover?</li>
+</ul> </article>  <nav class="learn-pager bottom" aria-label="Course page navigation"> <a href="en-course-11.html"><span>Previous</span><strong>Observability and Debugging</strong></a> <a href="en-course-13.html"><span>Next</span><strong>Security, Permissions and Governance</strong></a> </nav> </div> </section>  </main> <footer class="footer"><span>HARNESS_ATLAS / Course</span><span>CC BY 4.0 + MIT</span></footer> </div> </body></html>

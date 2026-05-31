@@ -1,0 +1,7 @@
+---
+import CourseLessonPage from "../components/CourseLessonPage.astro";
+import { getCourseLessonPage } from "../data/site.mjs";
+import { Content as ChapterContent } from "../generated/course/en/chapters/01-why-agent-harness.md";
+---
+
+<CourseLessonPage page={getCourseLessonPage("course-01", "en")} content={ChapterContent} />

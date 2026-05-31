@@ -4,7 +4,7 @@ import { getLearningPager } from "../data/site.mjs";
 
 const { page, content } = Astro.props;
 const ChapterContent = content;
-const pager = getLearningPager(page.key);
+const pager = getLearningPager(page.key, page.locale);
 ---
 
 <LearningLayout
@@ -16,6 +16,7 @@ const pager = getLearningPager(page.key);
   heading={page.heading}
   intro={page.intro}
   pager={pager}
+  localeHref={page.localeHref}
 >
   <article class="chapter-content">
     {ChapterContent && <ChapterContent />}

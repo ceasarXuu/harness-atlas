@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Observability and Debugging · Harness Atlas</title><meta name="description" content="Harness Atlas Observability and Debugging."><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preload" href="assets/css/style.css" as="style"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/learn.css"><link rel="prefetch" href="course-01.html"><link rel="prefetch" href="products.html"><link rel="prefetch" href="timeline.html"></head> <body> <div class="wrap"> <header class="top"> <a class="brand" href="./" aria-label="Harness Atlas Home"> <span class="brand-mark" aria-hidden="true"></span> <span>HARNESS_ATLAS</span> </a> <nav class="nav" aria-label="Main navigation"> <a href="./"> <span>HOME</span>  </a><a href="en-course-01.html"> <span>COURSE</span>  </a><a href="products.html"> <span>ATLAS</span>  </a><a href="course-11.html"> <span>中文</span>  </a><a href="https://github.com/ceasarXuu/harness-atlas" target="_blank" rel="noreferrer"> <span>GITHUB</span> <span class="nav-stat" aria-label="GitHub stars">
+★ 0 </span> </a> </nav> </header> <main>  <section class="section learn-shell"> <aside class="learn-sidebar" aria-label="Course directory"> <p class="section-kicker">Course directory</p> <nav class="learn-nav" aria-label="Course page navigation"> <a href="en-course-01.html"><span>01</span>Why Agent Harness</a><a href="en-course-02.html"><span>02</span>Task, Environment and Boundary</a><a href="en-course-03.html"><span>03</span>Minimal Harness</a><a href="en-course-04.html"><span>04</span>Context as Information Boundary</a><a href="en-course-05.html"><span>05</span>Tools and MCP as Action Boundary</a><a href="en-course-06.html"><span>06</span>State, Session and Memory</a><a href="en-course-07.html"><span>07</span>Runtime Control</a><a href="en-course-08.html"><span>08</span>Skills as Capability Packaging</a><a href="en-course-09.html"><span>09</span>Workflows as Deterministic Scaffolding</a><a href="en-course-10.html"><span>10</span>Multi-agent Orchestration</a><a class="active" href="en-course-11.html"><span>11</span>Observability and Debugging</a><a href="en-course-12.html"><span>12</span>Evaluation, Testing and Benchmarking</a><a href="en-course-13.html"><span>13</span>Security, Permissions and Governance</a><a href="en-course-14.html"><span>14</span>Production Architecture</a><a href="en-course-15.html"><span>15</span>Patterns, Anti-patterns and Future</a> <p class="learn-nav-group">Other</p> <a href="en-course-other-glossary.html"><span>Other</span>Bilingual Glossary</a> </nav> </aside> <div class="learn-content"> <nav class="learn-pager top" aria-label="Course page navigation"> <a href="en-course-10.html"><span>Previous</span><strong>Multi-agent Orchestration</strong></a> <a href="en-course-12.html"><span>Next</span><strong>Evaluation, Testing and Benchmarking</strong></a> </nav> <p class="section-kicker">Course / Observability and Debugging</p> <h1 class="content-title">Observability and Debugging</h1> <p class="section-intro">Make agent runs visible, replayable, and explainable</p>  <article class="chapter-content"> <h1 id="11-observability-and-debugging">11. Observability and Debugging</h1>
+<blockquote>
+<p><strong>Subtitle</strong>
+Make agent runs visible, replayable, and explainable</p>
+</blockquote>
+<h2 id="1-chapter-thesis">1. Chapter Thesis</h2>
+<p>An agent that cannot be observed cannot be debugged; an agent that cannot be debugged cannot be productionized. Observability turns an agent run into readable, replayable, and comparable engineering evidence.</p>
+<h2 id="2-how-this-chapter-connects">2. How This Chapter Connects</h2>
+<p>The previous chapters defined execution structure. This chapter enters the trust layer: system execution must leave evidence. The next chapter uses that evidence for evaluation, testing, and benchmarking.</p>
+<p>Previous: <a href="en-course-10.html">10. Multi-agent Orchestration</a> | Next: <a href="en-course-12.html">12. Evaluation, Testing and Benchmarking</a></p>
+<h2 id="3-learning-outcomes">3. Learning Outcomes</h2>
+<ul>
+<li>Explain the engineering problem solved by <code>Observability and Debugging</code> inside an Agent Harness.</li>
+<li>Use this chapter’s mental model to review a real agent design.</li>
+<li>Produce the chapter artifact and connect it to the Course Builder Harness case study.</li>
+<li>Identify typical failure modes related to this chapter.</li>
+</ul>
+<h2 id="4-the-engineering-problem">4. The Engineering Problem</h2>
+<p>When an agent fails, the final answer alone cannot tell whether the problem came from task definition, context, tools, state, model judgment, permissions, or runtime. Observability is not about collecting more logs; it is about locating causes of failure and comparing system changes.</p>
+<h2 id="5-mental-model">5. Mental Model</h2>
+<p>Think of observability as the agent’s black box and timeline. Every run should be reconstructable: what it saw, what it intended, what it did, what the external world returned, how state changed, and why it stopped.</p>
+<h2 id="6-harness-abstraction">6. Harness Abstraction</h2>
+<h3 id="trace">Trace</h3>
+<ul>
+<li>The top-level record of one complete agent run.</li>
+</ul>
+<h3 id="span">Span</h3>
+<ul>
+<li>A sub-operation such as context build, model call, tool call, validation, or approval.</li>
+</ul>
+<h3 id="event">Event</h3>
+<ul>
+<li>A discrete fact during execution, such as retry, error, user interruption, or policy denial.</li>
+</ul>
+<h3 id="context-snapshot">Context snapshot</h3>
+<ul>
+<li>A record of the exact context seen by the model call, used for replay and diffing.</li>
+</ul>
+<h3 id="state-diff">State diff</h3>
+<ul>
+<li>The state changes before and after each step, helping identify when an error entered the system.</li>
+</ul>
+<h3 id="replay">Replay</h3>
+<ul>
+<li>Reruns or inspects a run using the same input, state, and context.</li>
+</ul>
+<h2 id="7-reference-diagram">7. Reference Diagram</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">flowchart TD</span></span>
+<span class="line"><span style="color:#E1E4E8">    Run[Agent Run Trace] --> S1[Span: Context Build]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Run --> S2[Span: Model Call]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Run --> S3[Span: Tool Call]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Run --> S4[Span: Validation]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Run --> S5[Span: State Update]</span></span>
+<span class="line"><span style="color:#E1E4E8">    S1 --> CS[Context Snapshot]</span></span>
+<span class="line"><span style="color:#E1E4E8">    S2 --> MI[Model Input/Output]</span></span>
+<span class="line"><span style="color:#E1E4E8">    S3 --> TO[Tool Observation]</span></span>
+<span class="line"><span style="color:#E1E4E8">    S5 --> SD[State Diff]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Run --> Metrics[Cost]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Run --> Replay[Replay Bundle]</span></span></code></pre>
+<h2 id="8-design-principles">8. Design Principles</h2>
+<ul>
+<li>Record enough information for replay, not only the final answer.</li>
+<li>Logs should be structured so they can be searched, aggregated, and compared.</li>
+<li>Every model call should be associated with a context snapshot.</li>
+<li>Every tool call needs a correlation ID, arguments, result, error, and permission record.</li>
+<li>Privacy and observability must be designed together.</li>
+</ul>
+<h2 id="9-reference-implementation-direction">9. Reference Implementation Direction</h2>
+<p>This course emphasizes “thinking > specific solution.” A reference implementation exists to explain the abstraction; no framework, SDK, or protocol should be equated with the harness itself. In implementation, specify boundaries, state, and failure paths before choosing technologies.</p>
+<p>Recommended implementation notes</p>
+<ul>
+<li>Store design decisions in Markdown or YAML so they can be versioned and reviewed.</li>
+<li>Place this chapter artifact under <code>docs/design/</code> or <code>labs/</code> in the repository.</li>
+<li>Whenever an abstraction boundary changes, update the interface assumptions of adjacent chapters.</li>
+</ul>
+<h2 id="10-failure-modes">10. Failure Modes</h2>
+<h3 id="final-answer-only-logging">Final-answer-only logging</h3>
+<ul>
+<li>Only final answers are saved, making intermediate analysis impossible.</li>
+</ul>
+<h3 id="unstructured-logs">Unstructured logs</h3>
+<ul>
+<li>Logs are natural-language fragments, hard to aggregate or compare.</li>
+</ul>
+<h3 id="no-context-snapshot">No context snapshot</h3>
+<ul>
+<li>Cannot know what the model saw at the time.</li>
+</ul>
+<h3 id="no-correlation-ids">No correlation IDs</h3>
+<ul>
+<li>Cannot connect tool calls, state changes, and user requests.</li>
+</ul>
+<h2 id="11-lab-course-builder-harness">11. Lab: Course Builder Harness</h2>
+<ol>
+<li>Design trace_id, run_id, step_id, and tool_call_id for the Course Builder Harness.</li>
+<li>Define fields to store for each model_call span.</li>
+<li>Define context diff: how to compare two contexts when chapter quality regresses.</li>
+<li>Design a failure replay page or report.</li>
+</ol>
+<p><strong>Expected artifact</strong>: An Agent Run Trace Schema and Debugging Report template.</p>
+<h2 id="12-review-checklist">12. Review Checklist</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Record enough information for replay, not only the final answer.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Logs should be structured so they can be searched, aggregated, and compared.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Every model call should be associated with a context snapshot.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can identify and avoid <code>Final-answer-only logging</code>: Only final answers are saved, making intermediate analysis impossible.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can identify and avoid <code>Unstructured logs</code>: Logs are natural-language fragments, hard to aggregate or compare.</li>
+</ul>
+<h2 id="13-image-descriptions">13. Image Descriptions</h2>
+<h3 id="image-prompt-1">Image Prompt 1</h3>
+<ul>
+<li>A black-box recorder showing task, context, model output, tool call, state diff, and stop reason.</li>
+</ul>
+<h3 id="image-prompt-2">Image Prompt 2</h3>
+<ul>
+<li>A horizontal timeline showing duration, cost, input, output, and errors for each span.</li>
+</ul>
+<h2 id="trace-schema-example">Trace Schema Example</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "run_id"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"run_001"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "task_id"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"chapter_revision"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "spans"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#79B8FF">"type"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"context_build"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"context_hash"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"..."</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"sources"</span><span style="color:#E1E4E8">: []},</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#79B8FF">"type"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"model_call"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"input_hash"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"..."</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"output_hash"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"..."</span><span style="color:#E1E4E8">},</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#79B8FF">"type"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"tool_call"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"tool"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"write_draft"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"risk"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"draft"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">  ],</span></span>
+<span class="line"><span style="color:#79B8FF">  "stop_reason"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"success_criteria_met"</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="14-key-takeaways">14. Key Takeaways</h2>
+<ul>
+<li><code>Observability and Debugging</code> is not an isolated module; it is one engineering boundary through which the Agent Harness handles uncertainty.</li>
+<li>Specific tools will change, but the chapter’s judgment questions should remain stable: what is the boundary, where is the evidence, and how does failure recover?</li>
+</ul> </article>  <nav class="learn-pager bottom" aria-label="Course page navigation"> <a href="en-course-10.html"><span>Previous</span><strong>Multi-agent Orchestration</strong></a> <a href="en-course-12.html"><span>Next</span><strong>Evaluation, Testing and Benchmarking</strong></a> </nav> </div> </section>  </main> <footer class="footer"><span>HARNESS_ATLAS / Course</span><span>CC BY 4.0 + MIT</span></footer> </div> </body></html>

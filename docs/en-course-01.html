@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Why Agent Harness · Harness Atlas</title><meta name="description" content="Harness Atlas Why Agent Harness."><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preload" href="assets/css/style.css" as="style"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/learn.css"><link rel="prefetch" href="course-01.html"><link rel="prefetch" href="products.html"><link rel="prefetch" href="timeline.html"></head> <body> <div class="wrap"> <header class="top"> <a class="brand" href="./" aria-label="Harness Atlas Home"> <span class="brand-mark" aria-hidden="true"></span> <span>HARNESS_ATLAS</span> </a> <nav class="nav" aria-label="Main navigation"> <a href="./"> <span>HOME</span>  </a><a href="en-course-01.html"> <span>COURSE</span>  </a><a href="products.html"> <span>ATLAS</span>  </a><a href="course-01.html"> <span>中文</span>  </a><a href="https://github.com/ceasarXuu/harness-atlas" target="_blank" rel="noreferrer"> <span>GITHUB</span> <span class="nav-stat" aria-label="GitHub stars">
+★ 0 </span> </a> </nav> </header> <main>  <section class="section learn-shell"> <aside class="learn-sidebar" aria-label="Course directory"> <p class="section-kicker">Course directory</p> <nav class="learn-nav" aria-label="Course page navigation"> <a class="active" href="en-course-01.html"><span>01</span>Why Agent Harness</a><a href="en-course-02.html"><span>02</span>Task, Environment and Boundary</a><a href="en-course-03.html"><span>03</span>Minimal Harness</a><a href="en-course-04.html"><span>04</span>Context as Information Boundary</a><a href="en-course-05.html"><span>05</span>Tools and MCP as Action Boundary</a><a href="en-course-06.html"><span>06</span>State, Session and Memory</a><a href="en-course-07.html"><span>07</span>Runtime Control</a><a href="en-course-08.html"><span>08</span>Skills as Capability Packaging</a><a href="en-course-09.html"><span>09</span>Workflows as Deterministic Scaffolding</a><a href="en-course-10.html"><span>10</span>Multi-agent Orchestration</a><a href="en-course-11.html"><span>11</span>Observability and Debugging</a><a href="en-course-12.html"><span>12</span>Evaluation, Testing and Benchmarking</a><a href="en-course-13.html"><span>13</span>Security, Permissions and Governance</a><a href="en-course-14.html"><span>14</span>Production Architecture</a><a href="en-course-15.html"><span>15</span>Patterns, Anti-patterns and Future</a> <p class="learn-nav-group">Other</p> <a href="en-course-other-glossary.html"><span>Other</span>Bilingual Glossary</a> </nav> </aside> <div class="learn-content"> <nav class="learn-pager top" aria-label="Course page navigation">  <a href="en-course-02.html"><span>Next</span><strong>Task, Environment and Boundary</strong></a> </nav> <p class="section-kicker">Course / Why Agent Harness</p> <h1 class="content-title">Why Agent Harness</h1> <p class="section-intro">From prompting to engineering systems</p>  <article class="chapter-content"> <h1 id="01-why-agent-harness">01. Why Agent Harness</h1>
+<blockquote>
+<p><strong>Subtitle</strong>
+From prompting to engineering systems</p>
+</blockquote>
+<h2 id="1-chapter-thesis">1. Chapter Thesis</h2>
+<p>The core of an Agent Harness is not making the model smarter. It is placing open-ended, probabilistic model capability inside an engineering system that can control, observe, evaluate, and govern it.</p>
+<h2 id="2-how-this-chapter-connects">2. How This Chapter Connects</h2>
+<p>This chapter establishes the course question: why prompts, tool calling, and workflows alone are not enough for reliable agent systems. Later chapters decompose the harness into boundaries, runtime, capability packaging, trust mechanisms, and production architecture.</p>
+<p>Next: <a href="en-course-02.html">02. Task, Environment and Boundary</a></p>
+<h2 id="3-learning-outcomes">3. Learning Outcomes</h2>
+<ul>
+<li>Explain the engineering problem solved by <code>Why Agent Harness</code> inside an Agent Harness.</li>
+<li>Use this chapter’s mental model to review a real agent design.</li>
+<li>Produce the chapter artifact and connect it to the Course Builder Harness case study.</li>
+<li>Identify typical failure modes related to this chapter.</li>
+</ul>
+<h2 id="4-the-engineering-problem">4. The Engineering Problem</h2>
+<p>Many agent prototypes look like a strong model plus a system prompt plus a few tools. This often works in demos, but real tasks reveal unpredictability, poor reproducibility, weak auditability, and limited recovery. The harness does not solve the problem that a model cannot answer; it solves how the system can still complete tasks when the model may be wrong.</p>
+<h2 id="5-mental-model">5. Mental Model</h2>
+<p>Think of the LLM as a powerful reasoning core without stable engineering boundaries. The harness is the exoskeleton around that core: it defines inputs, constrains actions, records execution, detects failures, triggers recovery, controls permissions, and converts runs into evidence for continuous improvement.</p>
+<h2 id="6-harness-abstraction">6. Harness Abstraction</h2>
+<h3 id="llm">LLM</h3>
+<ul>
+<li>Responsible for generation, reasoning, explanation, and selection. It is the capability core, not the complete system.</li>
+</ul>
+<h3 id="agent">Agent</h3>
+<ul>
+<li>A runtime behavior that takes multi-step actions toward a goal. An agent is not a single class or function; it is a goal-directed execution mode.</li>
+</ul>
+<h3 id="harness">Harness</h3>
+<ul>
+<li>The engineering system around the agent that manages boundaries, tools, state, runtime, observation, evaluation, and governance.</li>
+</ul>
+<h3 id="reliability">Reliability</h3>
+<ul>
+<li>Reliability does not mean the model never fails; it means the system can detect, limit, recover from, and learn from failures.</li>
+</ul>
+<h2 id="7-reference-diagram">7. Reference Diagram</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">flowchart TD</span></span>
+<span class="line"><span style="color:#E1E4E8">    U[User] --> H[Agent Harness]</span></span>
+<span class="line"><span style="color:#E1E4E8">    H --> C[Context Boundary]</span></span>
+<span class="line"><span style="color:#E1E4E8">    H --> A[Action Boundary]</span></span>
+<span class="line"><span style="color:#E1E4E8">    H --> R[Runtime Control]</span></span>
+<span class="line"><span style="color:#E1E4E8">    H --> O[Observability]</span></span>
+<span class="line"><span style="color:#E1E4E8">    H --> E[Evaluation]</span></span>
+<span class="line"><span style="color:#E1E4E8">    H --> G[Governance]</span></span>
+<span class="line"><span style="color:#E1E4E8">    C --> M[Model]</span></span>
+<span class="line"><span style="color:#E1E4E8">    A --> T[Tools]</span></span>
+<span class="line"><span style="color:#E1E4E8">    R --> M</span></span>
+<span class="line"><span style="color:#E1E4E8">    M --> R</span></span>
+<span class="line"><span style="color:#E1E4E8">    O --> E</span></span>
+<span class="line"><span style="color:#E1E4E8">    E --> H</span></span>
+<span class="line"><span style="color:#E1E4E8">    G --> A</span></span></code></pre>
+<h2 id="8-design-principles">8. Design Principles</h2>
+<ul>
+<li>The model provides intelligence; the harness provides control.</li>
+<li>Do not place system reliability in a single system prompt.</li>
+<li>Every external side effect must pass through an explicit boundary.</li>
+<li>Every agent run should leave replayable evidence.</li>
+</ul>
+<h2 id="9-reference-implementation-direction">9. Reference Implementation Direction</h2>
+<p>This course emphasizes “thinking > specific solution.” A reference implementation exists to explain the abstraction; no framework, SDK, or protocol should be equated with the harness itself. In implementation, specify boundaries, state, and failure paths before choosing technologies.</p>
+<p>Recommended implementation notes</p>
+<ul>
+<li>Store design decisions in Markdown or YAML so they can be versioned and reviewed.</li>
+<li>Place this chapter artifact under <code>docs/design/</code> or <code>labs/</code> in the repository.</li>
+<li>Whenever an abstraction boundary changes, update the interface assumptions of adjacent chapters.</li>
+</ul>
+<h2 id="10-failure-modes">10. Failure Modes</h2>
+<h3 id="prompt-only-agent">Prompt-only agent</h3>
+<ul>
+<li>All logic is hidden in prompts, making it hard to test, version, or replay.</li>
+</ul>
+<h3 id="demo-reliability">Demo reliability</h3>
+<ul>
+<li>Works only on demo inputs and lacks failure paths and recovery mechanisms.</li>
+</ul>
+<h3 id="invisible-execution">Invisible execution</h3>
+<ul>
+<li>Tool calls, context construction, and model decisions are not visible.</li>
+</ul>
+<h3 id="security-by-instruction">Security by instruction</h3>
+<ul>
+<li>Uses instructions such as “do not do dangerous things” instead of real permission control.</li>
+</ul>
+<h2 id="11-lab-course-builder-harness">11. Lab: Course Builder Harness</h2>
+<ol>
+<li>Choose an agent you want to build, such as a course-maintenance assistant, code-review assistant, or research assistant.</li>
+<li>Write down what it can see, what it can do, and what external effects it can create.</li>
+<li>List at least three ways it might fail.</li>
+<li>State in one sentence why it needs a harness rather than only a prompt.</li>
+</ol>
+<p><strong>Expected artifact</strong>: A one-page motivation memo for the Agent Harness.</p>
+<h2 id="12-review-checklist">12. Review Checklist</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: The model provides intelligence; the harness provides control.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Do not place system reliability in a single system prompt.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Every external side effect must pass through an explicit boundary.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can identify and avoid <code>Prompt-only agent</code>: All logic is hidden in prompts, making it hard to test, version, or replay.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can identify and avoid <code>Demo reliability</code>: Works only on demo inputs and lacks failure paths and recovery mechanisms.</li>
+</ul>
+<h2 id="13-image-descriptions">13. Image Descriptions</h2>
+<h3 id="image-prompt-1">Image Prompt 1</h3>
+<ul>
+<li>A glowing model core enclosed by a transparent engineering shell labeled Context, Tools, Runtime, Eval, and Governance, emphasizing capability inside and control outside.</li>
+</ul>
+<h3 id="image-prompt-2">Image Prompt 2</h3>
+<ul>
+<li>A comparison diagram: a prompt-only demo as a single line on the left, and a closed-loop harness on the right, contrasting uncontrolled and controlled systems.</li>
+</ul>
+<h2 id="14-key-takeaways">14. Key Takeaways</h2>
+<ul>
+<li><code>Why Agent Harness</code> is not an isolated module; it is one engineering boundary through which the Agent Harness handles uncertainty.</li>
+<li>Specific tools will change, but the chapter’s judgment questions should remain stable: what is the boundary, where is the evidence, and how does failure recover?</li>
+</ul> </article>  <nav class="learn-pager bottom" aria-label="Course page navigation">  <a href="en-course-02.html"><span>Next</span><strong>Task, Environment and Boundary</strong></a> </nav> </div> </section>  </main> <footer class="footer"><span>HARNESS_ATLAS / Course</span><span>CC BY 4.0 + MIT</span></footer> </div> </body></html>

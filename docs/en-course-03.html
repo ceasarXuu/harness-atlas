@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Minimal Harness · Harness Atlas</title><meta name="description" content="Harness Atlas Minimal Harness."><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preload" href="assets/css/style.css" as="style"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/learn.css"><link rel="prefetch" href="course-01.html"><link rel="prefetch" href="products.html"><link rel="prefetch" href="timeline.html"></head> <body> <div class="wrap"> <header class="top"> <a class="brand" href="./" aria-label="Harness Atlas Home"> <span class="brand-mark" aria-hidden="true"></span> <span>HARNESS_ATLAS</span> </a> <nav class="nav" aria-label="Main navigation"> <a href="./"> <span>HOME</span>  </a><a href="en-course-01.html"> <span>COURSE</span>  </a><a href="products.html"> <span>ATLAS</span>  </a><a href="course-03.html"> <span>中文</span>  </a><a href="https://github.com/ceasarXuu/harness-atlas" target="_blank" rel="noreferrer"> <span>GITHUB</span> <span class="nav-stat" aria-label="GitHub stars">
+★ 0 </span> </a> </nav> </header> <main>  <section class="section learn-shell"> <aside class="learn-sidebar" aria-label="Course directory"> <p class="section-kicker">Course directory</p> <nav class="learn-nav" aria-label="Course page navigation"> <a href="en-course-01.html"><span>01</span>Why Agent Harness</a><a href="en-course-02.html"><span>02</span>Task, Environment and Boundary</a><a class="active" href="en-course-03.html"><span>03</span>Minimal Harness</a><a href="en-course-04.html"><span>04</span>Context as Information Boundary</a><a href="en-course-05.html"><span>05</span>Tools and MCP as Action Boundary</a><a href="en-course-06.html"><span>06</span>State, Session and Memory</a><a href="en-course-07.html"><span>07</span>Runtime Control</a><a href="en-course-08.html"><span>08</span>Skills as Capability Packaging</a><a href="en-course-09.html"><span>09</span>Workflows as Deterministic Scaffolding</a><a href="en-course-10.html"><span>10</span>Multi-agent Orchestration</a><a href="en-course-11.html"><span>11</span>Observability and Debugging</a><a href="en-course-12.html"><span>12</span>Evaluation, Testing and Benchmarking</a><a href="en-course-13.html"><span>13</span>Security, Permissions and Governance</a><a href="en-course-14.html"><span>14</span>Production Architecture</a><a href="en-course-15.html"><span>15</span>Patterns, Anti-patterns and Future</a> <p class="learn-nav-group">Other</p> <a href="en-course-other-glossary.html"><span>Other</span>Bilingual Glossary</a> </nav> </aside> <div class="learn-content"> <nav class="learn-pager top" aria-label="Course page navigation"> <a href="en-course-02.html"><span>Previous</span><strong>Task, Environment and Boundary</strong></a> <a href="en-course-04.html"><span>Next</span><strong>Context as Information Boundary</strong></a> </nav> <p class="section-kicker">Course / Minimal Harness</p> <h1 class="content-title">Minimal Harness</h1> <p class="section-intro">The minimal closed loop of an Agent Harness</p>  <article class="chapter-content"> <h1 id="03-minimal-harness">03. Minimal Harness</h1>
+<blockquote>
+<p><strong>Subtitle</strong>
+The minimal closed loop of an Agent Harness</p>
+</blockquote>
+<h2 id="1-chapter-thesis">1. Chapter Thesis</h2>
+<p>A minimal harness is not a collection of modules. It is a closed loop: build context, call the model, select an action, execute tools, observe results, update state, and decide whether to continue or stop.</p>
+<h2 id="2-how-this-chapter-connects">2. How This Chapter Connects</h2>
+<p>The previous chapter defined tasks and boundaries. This chapter turns those definitions into a minimal execution system. Later chapters expand context, tools, state, runtime, and evaluation.</p>
+<p>Previous: <a href="en-course-02.html">02. Task, Environment and Boundary</a> | Next: <a href="en-course-04.html">04. Context as Information Boundary</a></p>
+<h2 id="3-learning-outcomes">3. Learning Outcomes</h2>
+<ul>
+<li>Explain the engineering problem solved by <code>Minimal Harness</code> inside an Agent Harness.</li>
+<li>Use this chapter’s mental model to review a real agent design.</li>
+<li>Produce the chapter artifact and connect it to the Course Builder Harness case study.</li>
+<li>Identify typical failure modes related to this chapter.</li>
+</ul>
+<h2 id="4-the-engineering-problem">4. The Engineering Problem</h2>
+<p>Without a minimal loop, teams often treat an agent system as a single model call. Real agent tasks frequently require multi-step execution, and each step can introduce new information, new errors, and new risks. The minimal harness must explicitly manage these steps.</p>
+<h2 id="5-mental-model">5. Mental Model</h2>
+<p>Think of the harness as a small operating system. The model is not the operating system; it is a reasoning process inside it. The harness handles task scheduling, input construction, external calls, state persistence, error handling, and termination.</p>
+<h2 id="6-harness-abstraction">6. Harness Abstraction</h2>
+<h3 id="context-builder">Context Builder</h3>
+<ul>
+<li>Selects what the model should see in the current step based on task, state, environment, and policy.</li>
+</ul>
+<h3 id="model-step">Model Step</h3>
+<ul>
+<li>Generates the next decision from context: answer, tool call, clarification, or stop.</li>
+</ul>
+<h3 id="action-selector">Action Selector</h3>
+<ul>
+<li>Maps model intent to a controlled action and performs schema validation, permission checks, and risk classification.</li>
+</ul>
+<h3 id="tool-executor">Tool Executor</h3>
+<ul>
+<li>Executes external actions and returns structured observations.</li>
+</ul>
+<h3 id="state-update">State Update</h3>
+<ul>
+<li>Writes each step result into explicit state so the next step does not depend on hidden context.</li>
+</ul>
+<h3 id="stop-condition">Stop Condition</h3>
+<ul>
+<li>Determines whether the task is complete, failed, timed out, requires human intervention, or exceeded budget.</li>
+</ul>
+<h2 id="7-reference-diagram">7. Reference Diagram</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">flowchart TD</span></span>
+<span class="line"><span style="color:#E1E4E8">    Start[Task Contract] --> Build[Build Context]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Build --> Call[Call Model]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Call --> Decide{Next Action?}</span></span>
+<span class="line"><span style="color:#E1E4E8">    Decide -->|Answer| Final[Final Response]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Decide -->|Tool Call| Validate[Validate + Authorize]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Validate --> Execute[Execute Tool]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Execute --> Observe[Observation]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Observe --> Update[Update State]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Update --> Stop{Stop?}</span></span>
+<span class="line"><span style="color:#E1E4E8">    Stop -->|No| Build</span></span>
+<span class="line"><span style="color:#E1E4E8">    Stop -->|Yes| Final</span></span>
+<span class="line"><span style="color:#E1E4E8">    Validate -->|Denied / Unsafe| Human[Human Review or Failure]</span></span></code></pre>
+<h2 id="8-design-principles">8. Design Principles</h2>
+<ul>
+<li>Make every step explicit: input, decision, action, observation, and state.</li>
+<li>Model output is not the action itself; actions must be validated by the harness.</li>
+<li>Stop conditions are as important as continuation conditions.</li>
+<li>The minimal loop should be framework-independent; specific frameworks are implementation choices.</li>
+</ul>
+<h2 id="9-reference-implementation-direction">9. Reference Implementation Direction</h2>
+<p>This course emphasizes “thinking > specific solution.” A reference implementation exists to explain the abstraction; no framework, SDK, or protocol should be equated with the harness itself. In implementation, specify boundaries, state, and failure paths before choosing technologies.</p>
+<p>Recommended implementation notes</p>
+<ul>
+<li>Store design decisions in Markdown or YAML so they can be versioned and reviewed.</li>
+<li>Place this chapter artifact under <code>docs/design/</code> or <code>labs/</code> in the repository.</li>
+<li>Whenever an abstraction boundary changes, update the interface assumptions of adjacent chapters.</li>
+</ul>
+<h2 id="10-failure-modes">10. Failure Modes</h2>
+<h3 id="single-call-illusion">Single-call illusion</h3>
+<ul>
+<li>Compresses a multi-step task into one model call, making errors hard to isolate and recover.</li>
+</ul>
+<h3 id="implicit-state">Implicit state</h3>
+<ul>
+<li>State exists only in conversation text, making it hard to validate, migrate, or recover.</li>
+</ul>
+<h3 id="unvalidated-actions">Unvalidated actions</h3>
+<ul>
+<li>Tool arguments generated by the model are executed directly without schema, permission, or risk checks.</li>
+</ul>
+<h3 id="no-stop-guard">No stop guard</h3>
+<ul>
+<li>The loop cannot decide when to stop, causing infinite loops or uncontrolled cost.</li>
+</ul>
+<h2 id="11-lab-course-builder-harness">11. Lab: Course Builder Harness</h2>
+<ol>
+<li>Write minimal loop pseudocode.</li>
+<li>Define at least five fields in the state object, such as task_id, current_step, files_touched, observations, and risk_level.</li>
+<li>Define three next-action types: answer, tool_call, and request_approval.</li>
+<li>Define three stop conditions: success, failure, and human_required.</li>
+</ol>
+<p><strong>Expected artifact</strong>: Pseudocode and a state schema for a minimal harness loop.</p>
+<h2 id="12-review-checklist">12. Review Checklist</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Make every step explicit: input, decision, action, observation, and state.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Model output is not the action itself; actions must be validated by the harness.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Stop conditions are as important as continuation conditions.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can identify and avoid <code>Single-call illusion</code>: Compresses a multi-step task into one model call, making errors hard to isolate and recover.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can identify and avoid <code>Implicit state</code>: State exists only in conversation text, making it hard to validate, migrate, or recover.</li>
+</ul>
+<h2 id="13-image-descriptions">13. Image Descriptions</h2>
+<h3 id="image-prompt-1">Image Prompt 1</h3>
+<ul>
+<li>A closed-loop diagram showing Build Context, Model, Tool, Observation, State, and Stop Condition.</li>
+</ul>
+<h3 id="image-prompt-2">Image Prompt 2</h3>
+<ul>
+<li>A timeline with step 1, step 2, and step 3, each showing context, decision, tool call, observation, and state diff.</li>
+</ul>
+<h2 id="reference-pseudocode">Reference Pseudocode</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#E1E4E8">state </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> initialize_state(task_contract)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">while</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> state.done:</span></span>
+<span class="line"><span style="color:#E1E4E8">    context </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> build_context(task_contract, state)</span></span>
+<span class="line"><span style="color:#E1E4E8">    model_decision </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> call_model(context)</span></span>
+<span class="line"><span style="color:#E1E4E8">    action </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> parse_and_validate(model_decision)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> action.requires_approval:</span></span>
+<span class="line"><span style="color:#E1E4E8">        state </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> request_human_review(state, action)</span></span>
+<span class="line"><span style="color:#F97583">        continue</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> action.type </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "tool_call"</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        observation </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> execute_tool(action)</span></span>
+<span class="line"><span style="color:#E1E4E8">        state </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> update_state(state, observation)</span></span>
+<span class="line"><span style="color:#F97583">    elif</span><span style="color:#E1E4E8"> action.type </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "final_answer"</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        state.final_answer </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> action.content</span></span>
+<span class="line"><span style="color:#E1E4E8">        state.done </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> True</span></span>
+<span class="line"><span style="color:#F97583">    else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        state </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> mark_failure(state, </span><span style="color:#FFAB70">reason</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"unknown_action"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    state </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> apply_stop_guards(state)</span></span></code></pre>
+<h2 id="14-key-takeaways">14. Key Takeaways</h2>
+<ul>
+<li><code>Minimal Harness</code> is not an isolated module; it is one engineering boundary through which the Agent Harness handles uncertainty.</li>
+<li>Specific tools will change, but the chapter’s judgment questions should remain stable: what is the boundary, where is the evidence, and how does failure recover?</li>
+</ul> </article>  <nav class="learn-pager bottom" aria-label="Course page navigation"> <a href="en-course-02.html"><span>Previous</span><strong>Task, Environment and Boundary</strong></a> <a href="en-course-04.html"><span>Next</span><strong>Context as Information Boundary</strong></a> </nav> </div> </section>  </main> <footer class="footer"><span>HARNESS_ATLAS / Course</span><span>CC BY 4.0 + MIT</span></footer> </div> </body></html>

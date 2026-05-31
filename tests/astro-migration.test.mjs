@@ -15,12 +15,17 @@ const pagesBase = "/harness-atlas/";
 const courseLessonPages = Array.from({ length: 15 }, (_, index) => {
   return `course-${String(index + 1).padStart(2, "0")}.html`;
 });
+const englishCourseLessonPages = Array.from({ length: 15 }, (_, index) => {
+  return `en-course-${String(index + 1).padStart(2, "0")}.html`;
+});
 
 const pages = [
   "index.html",
   "en.html",
   ...courseLessonPages,
+  ...englishCourseLessonPages,
   "course-other-glossary.html",
+  "en-course-other-glossary.html",
   "products.html",
   "standards.html",
   "patterns.html",
@@ -148,7 +153,7 @@ test("Astro source uses shared layouts and data instead of raw HTML passthrough"
   assert.match(siteData, /export function getNav/, "navigation should be generated from schema and locale messages");
   assert.doesNotMatch(siteData, /export const (zhNav|enNav)/, "localized nav arrays should not be maintained by hand");
   assert.match(siteData, /export const sectionPages/, "section page metadata should be centralized");
-  assert.match(siteData, /export const courseLessons/, "course lessons should be centralized");
+  assert.match(siteData, /courseLessons/, "course lessons should be centralized or re-exported");
   assert.equal(courseLessons.length, 15, "official course should expose all 15 lessons");
 });
 
@@ -175,8 +180,28 @@ test("Astro build emits static Pages-compatible routes and assets", () => {
   assert.ok(existsSync(join(dist, "favicon.svg")), "missing favicon");
 });
 
+test("Course pages respect the active site language", () => {
+  const zh = read(join(dist, "course-01.html"));
+  const en = read(join(dist, "en-course-01.html"));
+
+  assert.match(zh, /<html lang="zh-CN"/, "Chinese course route should declare Chinese language");
+  assert.match(en, /<html lang="en"/, "English course route should declare English language");
+  assert.match(zh, /href="en-course-01\.html"[\s\S]*?>EN</, "Chinese lesson should switch to the matching English lesson");
+  assert.match(en, /href="course-01\.html"[\s\S]*?>中文</, "English lesson should switch to the matching Chinese lesson");
+
+  assert.match(zh, /<h1 class="content-title">为什么需要 Agent Harness<\/h1>/, "Chinese lesson should use the Chinese title only");
+  assert.match(en, /<h1 class="content-title">Why Agent Harness<\/h1>/, "English lesson should use the English title only");
+  assert.match(zh, /Agent Harness 的核心不是让模型更聪明/, "Chinese lesson should render Chinese chapter body");
+  assert.match(en, /The core of an Agent Harness is not making the model smarter/, "English lesson should render English chapter body");
+
+  assert.doesNotMatch(zh, /The core of an Agent Harness is not making the model smarter|English:/, "Chinese lesson should not render English body copy");
+  assert.doesNotMatch(en, /Agent Harness 的核心不是让模型更聪明|中文：|本章命题/, "English lesson should not render Chinese body copy");
+  assert.doesNotMatch(zh, /Why Agent Harness \/ 为什么需要 Agent Harness/, "Chinese lesson should not render bilingual titles");
+  assert.doesNotMatch(en, /Why Agent Harness \/ 为什么需要 Agent Harness/, "English lesson should not render bilingual titles");
+});
+
 test("Built pages keep page-specific loading boundaries", () => {
-  const learningPages = new Set([...courseLessonPages, "course-other-glossary.html"]);
+  const learningPages = new Set([...courseLessonPages, ...englishCourseLessonPages, "course-other-glossary.html", "en-course-other-glossary.html"]);
 
   for (const page of pages) {
     const html = read(join(dist, page));
@@ -283,17 +308,25 @@ test("Public HTML discovery covers docs and dist link checks", () => {
 test("Course route files select lessons by stable keys", () => {
   for (let index = 1; index <= 15; index += 1) {
     const route = `course-${String(index).padStart(2, "0")}`;
+    const englishRoute = `en-${route}`;
     const source = read(join(src, "pages", `${route}.astro`));
+    const englishSource = read(join(src, "pages", `${englishRoute}.astro`));
     const chapter = chapterFiles()[index - 1];
+    const localizedChapter = `generated/course/zh-CN/${chapter}`;
+    const localizedEnglishChapter = `generated/course/en/${chapter}`;
 
     assert.match(source, new RegExp(`getCourseLessonPage\\("${route}"\\)`), `${route}.astro should select by stable lesson key`);
-    assert.match(source, new RegExp(chapter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${route}.astro should import ${chapter}`);
+    assert.match(source, new RegExp(localizedChapter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${route}.astro should import localized ${chapter}`);
     assert.doesNotMatch(source, /courseLessonPages\[\d+\]/, `${route}.astro should not depend on lesson array indexes`);
+
+    assert.match(englishSource, new RegExp(`getCourseLessonPage\\("${route}", "en"\\)`), `${englishRoute}.astro should select by stable lesson key and English locale`);
+    assert.match(englishSource, new RegExp(localizedEnglishChapter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${englishRoute}.astro should import localized English ${chapter}`);
   }
 });
 
 test("Course lesson lookup rejects removed or unknown keys", () => {
-  assert.equal(getCourseLessonPage("course-01").heading, "Why Agent Harness / 为什么需要 Agent Harness");
+  assert.equal(getCourseLessonPage("course-01").heading, "为什么需要 Agent Harness");
+  assert.equal(getCourseLessonPage("course-01", "en").heading, "Why Agent Harness");
   assert.throws(() => getCourseLessonPage("course-00"), /Unknown course lesson: course-00/);
   assert.throws(() => getCourseLessonPage("course-missing"), /Unknown course lesson: course-missing/);
 });
@@ -308,11 +341,18 @@ test("Course routes render the lesson selected by their route number", () => {
       chapterSubtitle(markdown, "English"),
     ].join(" / ");
 
+    assert.equal(lesson.body, chapterSubtitle(markdown, "中文"), `${lesson.key} Chinese subtitle should match official chapter subtitle`);
     assert.match(html, new RegExp(`<h1 class="content-title">${lesson.title}</h1>`), `${lesson.href} should render ${lesson.title}`);
     assert.match(html, new RegExp(`学习 / ${lesson.title}`), `${lesson.href} should render its lesson kicker`);
-    assert.equal(lesson.body, subtitle, `${lesson.key} metadata subtitle should match official chapter subtitle`);
-    assert.match(html, new RegExp(heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${lesson.href} should render official chapter heading`);
-    assert.match(html, /Chapter Thesis \/ 本章命题/, `${lesson.href} should render official chapter body`);
+    assert.match(html, /本章命题/, `${lesson.href} should render localized official chapter body`);
+    assert.doesNotMatch(html, /Chapter Thesis \/ 本章命题|English:/, `${lesson.href} should not render bilingual chapter labels`);
+
+    const englishLesson = getCourseLessonPage(lesson.key, "en");
+    const englishHtml = read(join(dist, englishLesson.href));
+    assert.equal(englishLesson.body, chapterSubtitle(markdown, "English"), `${lesson.key} English subtitle should match official chapter subtitle`);
+    assert.match(englishHtml, new RegExp(`<h1 class="content-title">${englishLesson.heading}</h1>`), `${englishLesson.href} should render ${englishLesson.heading}`);
+    assert.match(englishHtml, /Chapter Thesis/, `${englishLesson.href} should render localized official chapter body`);
+    assert.doesNotMatch(englishHtml, /Chapter Thesis \/ 本章命题|中文：/, `${englishLesson.href} should not render bilingual chapter labels`);
   }
 });
 
@@ -320,15 +360,15 @@ test("Course pages render the official chapter markdown instead of placeholder c
   const first = read(join(dist, "course-01.html"));
   const final = read(join(dist, "course-15.html"));
 
-  assert.match(first, /Chapter Thesis \/ 本章命题/, "first lesson should render official markdown section headings");
-  assert.match(first, /From prompting to engineering systems/, "first lesson should render official subtitle");
+  assert.match(first, /本章命题/, "first lesson should render official markdown section headings");
+  assert.match(first, /从 Prompt 到工程系统/, "first lesson should render official subtitle");
   assert.match(first, /flowchart TD/, "first lesson should render official Mermaid source");
   assert.doesNotMatch(first, /<h3>本课目标<\/h3>/, "first lesson should not render placeholder objective card");
 
-  assert.match(final, /Patterns, Anti-patterns and Future \/ 模式、反模式与未来/, "final lesson should render the official final chapter");
-  assert.match(final, /Design principles, anti-patterns, and future directions/, "final lesson should render official final subtitle");
+  assert.match(final, /模式、反模式与未来/, "final lesson should render the official final chapter");
+  assert.match(final, /设计原则、反模式与未来方向/, "final lesson should render official final subtitle");
 
-  for (const page of courseLessonPages) {
+  for (const page of [...courseLessonPages, ...englishCourseLessonPages]) {
     const html = read(join(dist, page));
     assert.doesNotMatch(html, /<h3>本课目标<\/h3>|<h3>关键边界<\/h3>|<h3>学习产出<\/h3>/, `${page} should not render placeholder course cards`);
   }
@@ -377,30 +417,37 @@ test("Official course markdown uses public chapter routes", () => {
 
 test("Glossary content is nested under the learning page", () => {
   const course = read(join(dist, "course-other-glossary.html"));
+  const englishCourse = read(join(dist, "en-course-other-glossary.html"));
   const source = read(join(src, "pages", "course-other-glossary.astro"));
   const allBuiltHtml = pages.map((page) => read(join(dist, page))).join("\n");
 
-  assert.match(source, /glossary-bilingual\.md/, "glossary page should render the official glossary markdown resource");
-  assert.match(course, /学习 \/ Bilingual Glossary/, "glossary should render inside the learning shell");
-  assert.match(course, /Bilingual Glossary \/ 中英术语表/, "glossary subpage should contain official glossary content");
-  assert.match(course, /The engineering control system around an agent/, "glossary should render official English term definitions");
+  assert.match(source, /generated\/course\/zh-CN\/resources\/glossary-bilingual\.md/, "glossary page should render the localized official glossary markdown resource");
+  assert.match(course, /学习 \/ 中英术语表/, "glossary should render inside the learning shell");
+  assert.match(course, /中英术语表/, "glossary subpage should contain official glossary content");
   assert.match(course, /最小自主权/, "glossary should render official Chinese term definitions");
+  assert.doesNotMatch(course, /The engineering control system around an agent|English:/, "Chinese glossary should not render English definitions");
+  assert.match(englishCourse, /Course \/ Bilingual Glossary/, "English glossary should render inside the learning shell");
+  assert.match(englishCourse, /The engineering control system around an agent/, "English glossary should render official English term definitions");
+  assert.doesNotMatch(englishCourse, /围绕 Agent 建立的工程控制系统|中文：/, "English glossary should not render Chinese definitions");
   assert.match(course, /<aside class="learn-sidebar"/, "glossary subpage should keep the learning sidebar");
   assert.doesNotMatch(allBuiltHtml, /href="glossary\.html"/, "built pages should not link a standalone glossary page");
 });
 
 test("Learning directory entries are subpages, not scroll anchors", () => {
-  const learningPages = [...courseLessonPages, "course-other-glossary.html"];
-  const expectedLinks = learningPages.map((page) => `href="${page}"`);
+  const learningPages = [...courseLessonPages, ...englishCourseLessonPages, "course-other-glossary.html", "en-course-other-glossary.html"];
 
   for (const page of learningPages) {
     const html = read(join(dist, page));
+    const expectedPrefix = page.startsWith("en-") ? "en-course-" : "course-";
+    const expectedGlossary = page.startsWith("en-") ? "en-course-other-glossary.html" : "course-other-glossary.html";
     assert.match(html, /<aside class="learn-sidebar"/, `${page} should keep the learning sidebar`);
     assert.match(html, /<nav class="learn-nav"/, `${page} should keep the learning directory`);
 
-    for (const link of expectedLinks) {
+    for (let index = 1; index <= 15; index += 1) {
+      const link = `href="${expectedPrefix}${String(index).padStart(2, "0")}.html"`;
       assert.match(html, new RegExp(link), `${page} should link ${link}`);
     }
+    assert.match(html, new RegExp(`href="${expectedGlossary}"`), `${page} should link localized glossary`);
 
     const sidebar = html.match(/<aside class="learn-sidebar"[\s\S]*?<\/aside>/)?.[0] ?? "";
     assert.doesNotMatch(sidebar, /href="#/, `${page} sidebar should not use in-page anchors`);
@@ -408,6 +455,6 @@ test("Learning directory entries are subpages, not scroll anchors", () => {
     assert.doesNotMatch(sidebar, />学习路线</, `${page} sidebar should not expose the removed roadmap item`);
     assert.doesNotMatch(sidebar, /href="patterns\.html"/, `${page} sidebar should not jump outside the learning shell`);
     assert.doesNotMatch(sidebar, /href="course-practice\.html"/, `${page} sidebar should not expose practice checklist`);
-    assert.match(sidebar, />其他</, `${page} sidebar should group glossary under Other`);
+    assert.match(sidebar, page.startsWith("en-") ? />Other</ : />其他</, `${page} sidebar should group glossary under Other`);
   }
 });

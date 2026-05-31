@@ -4,7 +4,7 @@ export const githubStars = 0;
 
 export const navModel = [
   { key: "home", href: { "zh-CN": "./", en: "./" } },
-  { key: "course", href: { "zh-CN": "course-01.html", en: "course-01.html" } },
+  { key: "course", href: { "zh-CN": "course-01.html", en: "en-course-01.html" } },
   { key: "atlas", href: { "zh-CN": "products.html", en: "products.html" } },
   { key: "locale", href: { "zh-CN": "en.html", en: "index.html" } },
   {
@@ -71,6 +71,12 @@ export function getNav(locale) {
   }));
 }
 
+export function getNavForPage(locale, localeHref) {
+  return getNav(locale).map((item) => {
+    return item.key === "locale" && localeHref ? { ...item, href: localeHref } : item;
+  });
+}
+
 export const navByLocale = Object.fromEntries(
   locales.map((locale) => [locale, getNav(locale)]),
 );
@@ -81,153 +87,18 @@ export const prefetchRoutes = [
   "timeline.html",
 ];
 
-export const courseLessons = [
-  {
-    key: "course-01",
-    num: "01",
-    title: "Why Agent Harness / 为什么需要 Agent Harness",
-    href: "course-01.html",
-    body: "从 Prompt 到工程系统 / From prompting to engineering systems",
-  },
-  {
-    key: "course-02",
-    num: "02",
-    title: "Task, Environment and Boundary / 任务、环境与边界",
-    href: "course-02.html",
-    body: "先设计问题，再设计 Agent / Design the problem before designing the agent",
-  },
-  {
-    key: "course-03",
-    num: "03",
-    title: "Minimal Harness / 最小 Agent Harness",
-    href: "course-03.html",
-    body: "一个 Agent Harness 的最小闭环 / The minimal closed loop of an Agent Harness",
-  },
-  {
-    key: "course-04",
-    num: "04",
-    title: "Context as Information Boundary / 上下文作为信息边界",
-    href: "course-04.html",
-    body: "Context Engineering 不只是 Prompt Engineering / Context engineering is more than prompt engineering",
-  },
-  {
-    key: "course-05",
-    num: "05",
-    title: "Tools and MCP as Action Boundary / 工具与 MCP 作为动作边界",
-    href: "course-05.html",
-    body: "工具不是插件，而是受控副作用 / Tools are not plugins; they are controlled side effects",
-  },
-  {
-    key: "course-06",
-    num: "06",
-    title: "State, Session and Memory / 状态、会话与记忆",
-    href: "course-06.html",
-    body: "连续性不是记住更多，而是管理状态 / Continuity is state management, not remembering more",
-  },
-  {
-    key: "course-07",
-    num: "07",
-    title: "Runtime Control / 运行时控制",
-    href: "course-07.html",
-    body: "规划、执行与恢复 / Planning, execution, and recovery",
-  },
-  {
-    key: "course-08",
-    num: "08",
-    title: "Skills as Capability Packaging / 技能作为能力封装",
-    href: "course-08.html",
-    body: "从一次性动作到可复用能力单元 / From one-off action to reusable capability unit",
-  },
-  {
-    key: "course-09",
-    num: "09",
-    title: "Workflows as Deterministic Scaffolding / 工作流作为确定性支架",
-    href: "course-09.html",
-    body: "把确定性留给代码，把不确定性留给模型 / Leave determinism to code and uncertainty to the model",
-  },
-  {
-    key: "course-10",
-    num: "10",
-    title: "Multi-agent Orchestration / 多 Agent 编排",
-    href: "course-10.html",
-    body: "多 Agent 是组织设计，不是堆更多 Agent / Multi-agent design is organizational design, not more agents",
-  },
-  {
-    key: "course-11",
-    num: "11",
-    title: "Observability and Debugging / 可观测性与调试",
-    href: "course-11.html",
-    body: "让 Agent Run 可见、可回放、可解释 / Make agent runs visible, replayable, and explainable",
-  },
-  {
-    key: "course-12",
-    num: "12",
-    title: "Evaluation, Testing and Benchmarking / 评测、测试与基准",
-    href: "course-12.html",
-    body: "从行为到证据的反馈系统 / A feedback system from behavior to evidence",
-  },
-  {
-    key: "course-13",
-    num: "13",
-    title: "Security, Permissions and Governance / 安全、权限与治理",
-    href: "course-13.html",
-    body: "限制 Agent 的权力 / Limit the agent’s power",
-  },
-  {
-    key: "course-14",
-    num: "14",
-    title: "Production Architecture / 生产架构",
-    href: "course-14.html",
-    body: "从 Demo 到可交付系统 / From demo to deliverable system",
-  },
-  {
-    key: "course-15",
-    num: "15",
-    title: "Patterns, Anti-patterns and Future / 模式、反模式与未来",
-    href: "course-15.html",
-    body: "设计原则、反模式与未来方向 / Design principles, anti-patterns, and future directions",
-  },
-];
-
-export const learningOther = [
-  { key: "glossary", eyebrow: "其他", label: "Bilingual Glossary / 中英术语表", href: "course-other-glossary.html" },
-];
-
-export const learningChrome = {
-  "zh-CN": {
-    footerLeft: "HARNESS_ATLAS / 学习",
-    footerRight: "CC BY 4.0 + MIT",
-    sidebarAria: "学习目录",
-    sidebarKicker: "学习目录",
-    directoryAria: "学习页目录导航",
-    otherGroup: "其他",
-    previousLabel: "上一节",
-    nextLabel: "下一节",
-  },
-};
-
-export function getLearningPager(activeKey) {
-  const sequence = [
-    ...courseLessons.map((lesson) => ({
-      key: lesson.key,
-      href: lesson.href,
-      title: lesson.title,
-    })),
-    ...learningOther.map((item) => ({
-      key: item.key,
-      href: item.href,
-      title: item.label,
-    })),
-  ];
-  const index = sequence.findIndex((item) => item.key === activeKey);
-  if (index === -1) return {};
-
-  return {
-    previous: sequence[index - 1],
-    next: sequence[index + 1],
-  };
-}
-
+export {
+  courseLessonPages,
+  courseLessons,
+  englishGlossaryPage,
+  getCourseLessonPage,
+  getCourseLessons,
+  getLearningOther,
+  getLearningPager,
+  glossaryPage,
+  learningChrome,
+  learningOther,
+} from "./course.mjs";
 export const updates = [
   {
     year: "2026",
@@ -267,35 +138,6 @@ export const homeSections = {
     ["research.html", "研究", "研究资料", "收集论文、实验、理论和研究卡片。"],
     ["references.html", "参考", "参考资料", "维护官方文档、论文、博客和 Changelog 原始索引。"],
   ],
-};
-
-export const courseLessonPages = courseLessons.map((lesson) => {
-  return {
-    key: lesson.key,
-    locale: "zh-CN",
-    title: `${lesson.title} · Harness Atlas`,
-    description: `Harness Atlas ${lesson.title}。`,
-    kicker: `学习 / ${lesson.title}`,
-    heading: lesson.title,
-    intro: lesson.body,
-    compact: true,
-  };
-});
-
-export function getCourseLessonPage(key) {
-  const page = courseLessonPages.find((lesson) => lesson.key === key);
-  if (!page) throw new Error(`Unknown course lesson: ${key}`);
-  return page;
-}
-
-export const glossaryPage = {
-  active: "glossary",
-  locale: "zh-CN",
-  title: "术语表 · Harness Atlas",
-  description: "Agent Harness 双语术语解释。",
-  kicker: "学习 / Bilingual Glossary",
-  heading: "Bilingual Glossary / 中英术语表",
-  intro: "术语表来自正式课程资源，用于统一 Agent Harness、上下文边界、动作边界、运行时控制、工具网关、技能、工作流、跟踪、评测和最小自主权等核心概念。",
 };
 
 export const sectionPages = {

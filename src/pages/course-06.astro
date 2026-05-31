@@ -1,7 +1,7 @@
 ---
 import CourseLessonPage from "../components/CourseLessonPage.astro";
 import { getCourseLessonPage } from "../data/site.mjs";
-import { Content as ChapterContent } from "../../course/chapters/06-state-session-and-memory.md";
+import { Content as ChapterContent } from "../generated/course/zh-CN/chapters/06-state-session-and-memory.md";
 ---
 
 <CourseLessonPage page={getCourseLessonPage("course-06")} content={ChapterContent} />

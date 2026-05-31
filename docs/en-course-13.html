@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Security, Permissions and Governance · Harness Atlas</title><meta name="description" content="Harness Atlas Security, Permissions and Governance."><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preload" href="assets/css/style.css" as="style"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/learn.css"><link rel="prefetch" href="course-01.html"><link rel="prefetch" href="products.html"><link rel="prefetch" href="timeline.html"></head> <body> <div class="wrap"> <header class="top"> <a class="brand" href="./" aria-label="Harness Atlas Home"> <span class="brand-mark" aria-hidden="true"></span> <span>HARNESS_ATLAS</span> </a> <nav class="nav" aria-label="Main navigation"> <a href="./"> <span>HOME</span>  </a><a href="en-course-01.html"> <span>COURSE</span>  </a><a href="products.html"> <span>ATLAS</span>  </a><a href="course-13.html"> <span>中文</span>  </a><a href="https://github.com/ceasarXuu/harness-atlas" target="_blank" rel="noreferrer"> <span>GITHUB</span> <span class="nav-stat" aria-label="GitHub stars">
+★ 0 </span> </a> </nav> </header> <main>  <section class="section learn-shell"> <aside class="learn-sidebar" aria-label="Course directory"> <p class="section-kicker">Course directory</p> <nav class="learn-nav" aria-label="Course page navigation"> <a href="en-course-01.html"><span>01</span>Why Agent Harness</a><a href="en-course-02.html"><span>02</span>Task, Environment and Boundary</a><a href="en-course-03.html"><span>03</span>Minimal Harness</a><a href="en-course-04.html"><span>04</span>Context as Information Boundary</a><a href="en-course-05.html"><span>05</span>Tools and MCP as Action Boundary</a><a href="en-course-06.html"><span>06</span>State, Session and Memory</a><a href="en-course-07.html"><span>07</span>Runtime Control</a><a href="en-course-08.html"><span>08</span>Skills as Capability Packaging</a><a href="en-course-09.html"><span>09</span>Workflows as Deterministic Scaffolding</a><a href="en-course-10.html"><span>10</span>Multi-agent Orchestration</a><a href="en-course-11.html"><span>11</span>Observability and Debugging</a><a href="en-course-12.html"><span>12</span>Evaluation, Testing and Benchmarking</a><a class="active" href="en-course-13.html"><span>13</span>Security, Permissions and Governance</a><a href="en-course-14.html"><span>14</span>Production Architecture</a><a href="en-course-15.html"><span>15</span>Patterns, Anti-patterns and Future</a> <p class="learn-nav-group">Other</p> <a href="en-course-other-glossary.html"><span>Other</span>Bilingual Glossary</a> </nav> </aside> <div class="learn-content"> <nav class="learn-pager top" aria-label="Course page navigation"> <a href="en-course-12.html"><span>Previous</span><strong>Evaluation, Testing and Benchmarking</strong></a> <a href="en-course-14.html"><span>Next</span><strong>Production Architecture</strong></a> </nav> <p class="section-kicker">Course / Security, Permissions and Governance</p> <h1 class="content-title">Security, Permissions and Governance</h1> <p class="section-intro">Limit the agent’s power</p>  <article class="chapter-content"> <h1 id="13-security-permissions-and-governance">13. Security, Permissions and Governance</h1>
+<blockquote>
+<p><strong>Subtitle</strong>
+Limit the agent’s power</p>
+</blockquote>
+<h2 id="1-chapter-thesis">1. Chapter Thesis</h2>
+<p>Agent security is not about making the model more obedient; it is about keeping the system safe even when the model is unreliable. Permissions, approval, sandboxing, audit, and policy engines should be part of the harness architecture.</p>
+<h2 id="2-how-this-chapter-connects">2. How This Chapter Connects</h2>
+<p>The previous chapter covered judging whether the system works. This chapter asks whether the system is safe, compliant, and controllable. The next chapter organizes all components into production architecture.</p>
+<p>Previous: <a href="en-course-12.html">12. Evaluation, Testing and Benchmarking</a> | Next: <a href="en-course-14.html">14. Production Architecture</a></p>
+<h2 id="3-learning-outcomes">3. Learning Outcomes</h2>
+<ul>
+<li>Explain the engineering problem solved by <code>Security, Permissions and Governance</code> inside an Agent Harness.</li>
+<li>Use this chapter’s mental model to review a real agent design.</li>
+<li>Produce the chapter artifact and connect it to the Course Builder Harness case study.</li>
+<li>Identify typical failure modes related to this chapter.</li>
+</ul>
+<h2 id="4-the-engineering-problem">4. The Engineering Problem</h2>
+<p>An agent that can read data, call tools, modify files, send messages, or publish content has real power. Prompts cannot replace permission systems. Assume the model may be induced, misunderstand context, or choose the wrong action, then use architecture to limit damage.</p>
+<h2 id="5-mental-model">5. Mental Model</h2>
+<p>Think of security as power design. Every capability must answer: who authorizes it, what scope is allowed, when approval is required, how it is recorded, how to recover, and how the user can revoke it.</p>
+<h2 id="6-harness-abstraction">6. Harness Abstraction</h2>
+<h3 id="prompt-injection">Prompt injection</h3>
+<ul>
+<li>Untrusted content attempts to alter instructions, leak data, or execute unauthorized actions.</li>
+</ul>
+<h3 id="least-privilege">Least privilege</h3>
+<ul>
+<li>The agent receives only the minimum capability needed for the current task.</li>
+</ul>
+<h3 id="permission-scope">Permission scope</h3>
+<ul>
+<li>Permissions should be scoped by resource, action, time, risk, and user intent.</li>
+</ul>
+<h3 id="approval-gate">Approval gate</h3>
+<ul>
+<li>Human confirmation before high-risk or irreversible actions.</li>
+</ul>
+<h3 id="policy-engine">Policy engine</h3>
+<ul>
+<li>Uses auditable rules to decide whether an action is allowed.</li>
+</ul>
+<h3 id="audit-log">Audit log</h3>
+<ul>
+<li>Records who requested and executed what action, when, and for which task.</li>
+</ul>
+<h2 id="7-reference-diagram">7. Reference Diagram</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">flowchart TD</span></span>
+<span class="line"><span style="color:#E1E4E8">    Action[Proposed Action] --> Trust[Trust Classification]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Trust --> Scope[Scope Check]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Scope --> Policy[Policy Engine]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Policy --> Risk{Risk Level}</span></span>
+<span class="line"><span style="color:#E1E4E8">    Risk -->|Low| Execute[Execute]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Risk -->|High| Approval[Human Approval]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Approval --> Execute</span></span>
+<span class="line"><span style="color:#E1E4E8">    Policy -->|Denied| Denied[Denied]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Execute --> Audit[Audit Log]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Denied --> Audit</span></span>
+<span class="line"><span style="color:#E1E4E8">    Execute --> Sandbox[Sandbox]</span></span></code></pre>
+<h2 id="8-design-principles">8. Design Principles</h2>
+<ul>
+<li>Security is architecture, not instruction.</li>
+<li>Deny high-risk actions by default and execute only after explicit authorization.</li>
+<li>Untrusted content must never be promoted to system instruction.</li>
+<li>Permissions should expire when the task ends.</li>
+<li>Audit logs should cover denied actions, not only successful ones.</li>
+</ul>
+<h2 id="9-reference-implementation-direction">9. Reference Implementation Direction</h2>
+<p>This course emphasizes “thinking > specific solution.” A reference implementation exists to explain the abstraction; no framework, SDK, or protocol should be equated with the harness itself. In implementation, specify boundaries, state, and failure paths before choosing technologies.</p>
+<p>Recommended implementation notes</p>
+<ul>
+<li>Store design decisions in Markdown or YAML so they can be versioned and reviewed.</li>
+<li>Place this chapter artifact under <code>docs/design/</code> or <code>labs/</code> in the repository.</li>
+<li>Whenever an abstraction boundary changes, update the interface assumptions of adjacent chapters.</li>
+</ul>
+<h2 id="10-failure-modes">10. Failure Modes</h2>
+<h3 id="security-as-prompt">Security as prompt</h3>
+<ul>
+<li>Uses “do not leak information” instead of data-access control.</li>
+</ul>
+<h3 id="permanent-broad-token">Permanent broad token</h3>
+<ul>
+<li>Gives the agent a long-lived, broad, high-privilege token.</li>
+</ul>
+<h3 id="no-trust-separation">No trust separation</h3>
+<ul>
+<li>Mixes web content, user input, and system policy in the same instruction layer.</li>
+</ul>
+<h3 id="no-approval-trail">No approval trail</h3>
+<ul>
+<li>After high-risk actions, there is no proof that the user approved them.</li>
+</ul>
+<h2 id="11-lab-course-builder-harness">11. Lab: Course Builder Harness</h2>
+<ol>
+<li>Design a permission matrix for Course Builder Harness: read_repo, write_draft, open_pr, publish_pages, delete_file.</li>
+<li>Mark which actions require approval and which are denied by default.</li>
+<li>Design prompt-injection defense: untrusted material can be evidence, not instruction.</li>
+<li>Write an audit-log record format.</li>
+</ol>
+<p><strong>Expected artifact</strong>: A Permission Matrix, Approval Policy, and Audit Log Schema.</p>
+<h2 id="12-review-checklist">12. Review Checklist</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Security is architecture, not instruction.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Deny high-risk actions by default and execute only after explicit authorization.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Untrusted content must never be promoted to system instruction.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can identify and avoid <code>Security as prompt</code>: Uses “do not leak information” instead of data-access control.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can identify and avoid <code>Permanent broad token</code>: Gives the agent a long-lived, broad, high-privilege token.</li>
+</ul>
+<h2 id="13-image-descriptions">13. Image Descriptions</h2>
+<h3 id="image-prompt-1">Image Prompt 1</h3>
+<ul>
+<li>Permission concentric circles: read-only at the center, then draft, write, publish, delete, with stricter approval outward.</li>
+</ul>
+<h3 id="image-prompt-2">Image Prompt 2</h3>
+<ul>
+<li>A security gateway diagram where all tool calls pass through policy engine, scope check, approval, sandbox, and audit.</li>
+</ul>
+<h2 id="permission-matrix-example">Permission Matrix Example</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Action</th><th align="right">Default</th><th align="right">Approval</th><th>Notes</th></tr></thead><tbody><tr><td>read_repo</td><td align="right">allow</td><td align="right">no</td><td>Read-only.</td></tr><tr><td>write_draft</td><td align="right">allow</td><td align="right">no</td><td>Draft branch only.</td></tr><tr><td>open_pr</td><td align="right">deny</td><td align="right">yes</td><td>Requires summary and diff.</td></tr><tr><td>publish_pages</td><td align="right">deny</td><td align="right">yes</td><td>Requires build pass.</td></tr><tr><td>delete_file</td><td align="right">deny</td><td align="right">yes</td><td>Requires explicit file path and rollback plan.</td></tr></tbody></table>
+<h2 id="14-key-takeaways">14. Key Takeaways</h2>
+<ul>
+<li><code>Security, Permissions and Governance</code> is not an isolated module; it is one engineering boundary through which the Agent Harness handles uncertainty.</li>
+<li>Specific tools will change, but the chapter’s judgment questions should remain stable: what is the boundary, where is the evidence, and how does failure recover?</li>
+</ul> </article>  <nav class="learn-pager bottom" aria-label="Course page navigation"> <a href="en-course-12.html"><span>Previous</span><strong>Evaluation, Testing and Benchmarking</strong></a> <a href="en-course-14.html"><span>Next</span><strong>Production Architecture</strong></a> </nav> </div> </section>  </main> <footer class="footer"><span>HARNESS_ATLAS / Course</span><span>CC BY 4.0 + MIT</span></footer> </div> </body></html>

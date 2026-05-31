@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Patterns, Anti-patterns and Future · Harness Atlas</title><meta name="description" content="Harness Atlas Patterns, Anti-patterns and Future."><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preload" href="assets/css/style.css" as="style"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/learn.css"><link rel="prefetch" href="course-01.html"><link rel="prefetch" href="products.html"><link rel="prefetch" href="timeline.html"></head> <body> <div class="wrap"> <header class="top"> <a class="brand" href="./" aria-label="Harness Atlas Home"> <span class="brand-mark" aria-hidden="true"></span> <span>HARNESS_ATLAS</span> </a> <nav class="nav" aria-label="Main navigation"> <a href="./"> <span>HOME</span>  </a><a href="en-course-01.html"> <span>COURSE</span>  </a><a href="products.html"> <span>ATLAS</span>  </a><a href="course-15.html"> <span>中文</span>  </a><a href="https://github.com/ceasarXuu/harness-atlas" target="_blank" rel="noreferrer"> <span>GITHUB</span> <span class="nav-stat" aria-label="GitHub stars">
+★ 0 </span> </a> </nav> </header> <main>  <section class="section learn-shell"> <aside class="learn-sidebar" aria-label="Course directory"> <p class="section-kicker">Course directory</p> <nav class="learn-nav" aria-label="Course page navigation"> <a href="en-course-01.html"><span>01</span>Why Agent Harness</a><a href="en-course-02.html"><span>02</span>Task, Environment and Boundary</a><a href="en-course-03.html"><span>03</span>Minimal Harness</a><a href="en-course-04.html"><span>04</span>Context as Information Boundary</a><a href="en-course-05.html"><span>05</span>Tools and MCP as Action Boundary</a><a href="en-course-06.html"><span>06</span>State, Session and Memory</a><a href="en-course-07.html"><span>07</span>Runtime Control</a><a href="en-course-08.html"><span>08</span>Skills as Capability Packaging</a><a href="en-course-09.html"><span>09</span>Workflows as Deterministic Scaffolding</a><a href="en-course-10.html"><span>10</span>Multi-agent Orchestration</a><a href="en-course-11.html"><span>11</span>Observability and Debugging</a><a href="en-course-12.html"><span>12</span>Evaluation, Testing and Benchmarking</a><a href="en-course-13.html"><span>13</span>Security, Permissions and Governance</a><a href="en-course-14.html"><span>14</span>Production Architecture</a><a class="active" href="en-course-15.html"><span>15</span>Patterns, Anti-patterns and Future</a> <p class="learn-nav-group">Other</p> <a href="en-course-other-glossary.html"><span>Other</span>Bilingual Glossary</a> </nav> </aside> <div class="learn-content"> <nav class="learn-pager top" aria-label="Course page navigation"> <a href="en-course-14.html"><span>Previous</span><strong>Production Architecture</strong></a> <a href="en-course-other-glossary.html"><span>Next</span><strong>Bilingual Glossary</strong></a> </nav> <p class="section-kicker">Course / Patterns, Anti-patterns and Future</p> <h1 class="content-title">Patterns, Anti-patterns and Future</h1> <p class="section-intro">Design principles, anti-patterns, and future directions</p>  <article class="chapter-content"> <h1 id="15-patterns-anti-patterns-and-future">15. Patterns, Anti-patterns and Future</h1>
+<blockquote>
+<p><strong>Subtitle</strong>
+Design principles, anti-patterns, and future directions</p>
+</blockquote>
+<h2 id="1-chapter-thesis">1. Chapter Thesis</h2>
+<p>The future of the harness is not “larger agents,” but better control layers. This chapter abstracts the entire course into reusable design patterns, common anti-patterns, and future directions.</p>
+<h2 id="2-how-this-chapter-connects">2. How This Chapter Connects</h2>
+<p>The previous chapter completed production architecture. This chapter consolidates the course: how to judge whether a harness design is good, and how to extend toward the future without losing boundaries, control, and evidence.</p>
+<p>Previous: <a href="en-course-14.html">14. Production Architecture</a></p>
+<h2 id="3-learning-outcomes">3. Learning Outcomes</h2>
+<ul>
+<li>Explain the engineering problem solved by <code>Patterns, Anti-patterns and Future</code> inside an Agent Harness.</li>
+<li>Use this chapter’s mental model to review a real agent design.</li>
+<li>Produce the chapter artifact and connect it to the Course Builder Harness case study.</li>
+<li>Identify typical failure modes related to this chapter.</li>
+</ul>
+<h2 id="4-the-engineering-problem">4. The Engineering Problem</h2>
+<p>Agent technology will change quickly, but the engineering philosophy should not expire with frameworks. A useful ending should not only list trends; it should form judgment criteria: which designs become more reliable, and which designs amplify uncertainty.</p>
+<h2 id="5-mental-model">5. Mental Model</h2>
+<p>Think of this chapter as a harness design review manual. For any new framework, protocol, model, or agent product, ask the same questions: Are boundaries clear? Is state explicit? Are actions controlled? Is execution observable? Is quality evidenced? Is power limited?</p>
+<h2 id="6-harness-abstraction">6. Harness Abstraction</h2>
+<h3 id="context-boundary-pattern">Context Boundary pattern</h3>
+<ul>
+<li>Explicitly defines what the agent can and cannot see, and the trust level of information sources.</li>
+</ul>
+<h3 id="tool-gateway-pattern">Tool Gateway pattern</h3>
+<ul>
+<li>All external side effects pass through one gateway to support permission, audit, and recovery.</li>
+</ul>
+<h3 id="explicit-state-pattern">Explicit State pattern</h3>
+<ul>
+<li>Extracts task state from conversation text into validatable and recoverable data.</li>
+</ul>
+<h3 id="least-agency-pattern">Least Agency pattern</h3>
+<ul>
+<li>Gives the agent only the minimum autonomy needed for the current task.</li>
+</ul>
+<h3 id="trace-everything-pattern">Trace Everything pattern</h3>
+<ul>
+<li>Every run records input, decision, action, observation, state, and stop reason.</li>
+</ul>
+<h3 id="eval-before-scale-pattern">Eval Before Scale pattern</h3>
+<ul>
+<li>Before expanding autonomy, tool permissions, or user scale, establish evaluation evidence.</li>
+</ul>
+<h2 id="7-reference-diagram">7. Reference Diagram</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">mindmap</span></span>
+<span class="line"><span style="color:#E1E4E8">  root((Harness Patterns))</span></span>
+<span class="line"><span style="color:#E1E4E8">    Boundaries</span></span>
+<span class="line"><span style="color:#E1E4E8">      Context Boundary</span></span>
+<span class="line"><span style="color:#E1E4E8">      Action Boundary</span></span>
+<span class="line"><span style="color:#E1E4E8">      Trust Boundary</span></span>
+<span class="line"><span style="color:#E1E4E8">    Control</span></span>
+<span class="line"><span style="color:#E1E4E8">      Runtime Guards</span></span>
+<span class="line"><span style="color:#E1E4E8">      Human Approval</span></span>
+<span class="line"><span style="color:#E1E4E8">      Least Agency</span></span>
+<span class="line"><span style="color:#E1E4E8">    Evidence</span></span>
+<span class="line"><span style="color:#E1E4E8">      Trace Everything</span></span>
+<span class="line"><span style="color:#E1E4E8">      Evaluation Loop</span></span>
+<span class="line"><span style="color:#E1E4E8">      Replay</span></span>
+<span class="line"><span style="color:#E1E4E8">    Composition</span></span>
+<span class="line"><span style="color:#E1E4E8">      Skills</span></span>
+<span class="line"><span style="color:#E1E4E8">      Workflows</span></span>
+<span class="line"><span style="color:#E1E4E8">      Multi-agent Roles</span></span>
+<span class="line"><span style="color:#E1E4E8">    Production</span></span>
+<span class="line"><span style="color:#E1E4E8">      Tool Gateway</span></span>
+<span class="line"><span style="color:#E1E4E8">      Policy Engine</span></span>
+<span class="line"><span style="color:#E1E4E8">      Release Gate</span></span></code></pre>
+<h2 id="8-design-principles">8. Design Principles</h2>
+<ul>
+<li>Design judgment should prioritize boundaries over model strength.</li>
+<li>Anti-patterns usually lack control, not features.</li>
+<li>Future frameworks can be replaced, but engineering boundaries must not disappear.</li>
+<li>The more autonomous the system, the more observable, evaluable, and revocable it must be.</li>
+<li>The best harness makes complexity explicit instead of hiding it in prompts.</li>
+</ul>
+<h2 id="9-reference-implementation-direction">9. Reference Implementation Direction</h2>
+<p>This course emphasizes “thinking > specific solution.” A reference implementation exists to explain the abstraction; no framework, SDK, or protocol should be equated with the harness itself. In implementation, specify boundaries, state, and failure paths before choosing technologies.</p>
+<p>Recommended implementation notes</p>
+<ul>
+<li>Store design decisions in Markdown or YAML so they can be versioned and reviewed.</li>
+<li>Place this chapter artifact under <code>docs/design/</code> or <code>labs/</code> in the repository.</li>
+<li>Whenever an abstraction boundary changes, update the interface assumptions of adjacent chapters.</li>
+</ul>
+<h2 id="10-failure-modes">10. Failure Modes</h2>
+<h3 id="prompt-only-agent">Prompt-only Agent</h3>
+<ul>
+<li>Uncontrolled, untestable, and unmaintainable.</li>
+</ul>
+<h3 id="tool-soup">Tool Soup</h3>
+<ul>
+<li>Many tools exist without boundaries, permissions, or naming discipline.</li>
+</ul>
+<h3 id="memory-dump">Memory Dump</h3>
+<ul>
+<li>Everything is remembered, causing pollution, privacy risk, and fossilized errors.</li>
+</ul>
+<h3 id="agent-does-everything">Agent Does Everything</h3>
+<ul>
+<li>Deterministic processes are delegated to the model, amplifying uncertainty.</li>
+</ul>
+<h3 id="multi-agent-theater">Multi-agent Theater</h3>
+<ul>
+<li>Multiple agents add complexity without independent boundaries and responsibility.</li>
+</ul>
+<h3 id="eval-by-vibes">Eval by Vibes</h3>
+<ul>
+<li>Ships by feeling, without regression comparison.</li>
+</ul>
+<h3 id="security-as-prompt">Security as Prompt</h3>
+<ul>
+<li>Uses prompts instead of permission systems.</li>
+</ul>
+<h2 id="11-lab-course-builder-harness">11. Lab: Course Builder Harness</h2>
+<ol>
+<li>Use this chapter’s checklist to review the complete Course Builder Harness design.</li>
+<li>Identify the three most likely anti-pattern risks and write repair plans.</li>
+<li>Choose one future direction—browser agent, personal agent, enterprise agent, or multimodal harness—and analyze which new boundaries it needs.</li>
+<li>Write a final design reflection: how the harness handles uncertainty.</li>
+</ol>
+<p><strong>Expected artifact</strong>: A Harness Design Review Checklist and Final Reflection.</p>
+<h2 id="12-review-checklist">12. Review Checklist</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Design judgment should prioritize boundaries over model strength.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Anti-patterns usually lack control, not features.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: Future frameworks can be replaced, but engineering boundaries must not disappear.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can identify and avoid <code>Prompt-only Agent</code>: Uncontrolled, untestable, and unmaintainable.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can identify and avoid <code>Tool Soup</code>: Many tools exist without boundaries, permissions, or naming discipline.</li>
+</ul>
+<h2 id="13-image-descriptions">13. Image Descriptions</h2>
+<h3 id="image-prompt-1">Image Prompt 1</h3>
+<ul>
+<li>A pattern map with Harness at the center, surrounded by Context Boundary, Tool Gateway, Explicit State, Trace Everything, Eval Before Scale, and Least Agency.</li>
+</ul>
+<h3 id="image-prompt-2">Image Prompt 2</h3>
+<ul>
+<li>A future control-layer diagram where browser agents, personal agents, enterprise agents, and multimodal agents connect to the same control layer.</li>
+</ul>
+<h2 id="final-design-review">Final Design Review</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Question</th><th>Good Signal</th><th>Warning Signal</th></tr></thead><tbody><tr><td>Boundary</td><td>Explicit context/action/trust limits</td><td>“The model will know what to do”</td></tr><tr><td>State</td><td>Structured and recoverable</td><td>Hidden in chat history</td></tr><tr><td>Tooling</td><td>Gateway, audit, approval</td><td>Direct execution</td></tr><tr><td>Runtime</td><td>Guards and recovery</td><td>Infinite or blind loops</td></tr><tr><td>Evaluation</td><td>Golden tasks and regressions</td><td>Vibes-based release</td></tr><tr><td>Security</td><td>Least privilege and policy</td><td>Security by prompt</td></tr></tbody></table>
+<h2 id="14-key-takeaways">14. Key Takeaways</h2>
+<ul>
+<li><code>Patterns, Anti-patterns and Future</code> is not an isolated module; it is one engineering boundary through which the Agent Harness handles uncertainty.</li>
+<li>Specific tools will change, but the chapter’s judgment questions should remain stable: what is the boundary, where is the evidence, and how does failure recover?</li>
+</ul> </article>  <nav class="learn-pager bottom" aria-label="Course page navigation"> <a href="en-course-14.html"><span>Previous</span><strong>Production Architecture</strong></a> <a href="en-course-other-glossary.html"><span>Next</span><strong>Bilingual Glossary</strong></a> </nav> </div> </section>  </main> <footer class="footer"><span>HARNESS_ATLAS / Course</span><span>CC BY 4.0 + MIT</span></footer> </div> </body></html>

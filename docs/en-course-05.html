@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tools and MCP as Action Boundary · Harness Atlas</title><meta name="description" content="Harness Atlas Tools and MCP as Action Boundary."><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preload" href="assets/css/style.css" as="style"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/learn.css"><link rel="prefetch" href="course-01.html"><link rel="prefetch" href="products.html"><link rel="prefetch" href="timeline.html"></head> <body> <div class="wrap"> <header class="top"> <a class="brand" href="./" aria-label="Harness Atlas Home"> <span class="brand-mark" aria-hidden="true"></span> <span>HARNESS_ATLAS</span> </a> <nav class="nav" aria-label="Main navigation"> <a href="./"> <span>HOME</span>  </a><a href="en-course-01.html"> <span>COURSE</span>  </a><a href="products.html"> <span>ATLAS</span>  </a><a href="course-05.html"> <span>中文</span>  </a><a href="https://github.com/ceasarXuu/harness-atlas" target="_blank" rel="noreferrer"> <span>GITHUB</span> <span class="nav-stat" aria-label="GitHub stars">
+★ 0 </span> </a> </nav> </header> <main>  <section class="section learn-shell"> <aside class="learn-sidebar" aria-label="Course directory"> <p class="section-kicker">Course directory</p> <nav class="learn-nav" aria-label="Course page navigation"> <a href="en-course-01.html"><span>01</span>Why Agent Harness</a><a href="en-course-02.html"><span>02</span>Task, Environment and Boundary</a><a href="en-course-03.html"><span>03</span>Minimal Harness</a><a href="en-course-04.html"><span>04</span>Context as Information Boundary</a><a class="active" href="en-course-05.html"><span>05</span>Tools and MCP as Action Boundary</a><a href="en-course-06.html"><span>06</span>State, Session and Memory</a><a href="en-course-07.html"><span>07</span>Runtime Control</a><a href="en-course-08.html"><span>08</span>Skills as Capability Packaging</a><a href="en-course-09.html"><span>09</span>Workflows as Deterministic Scaffolding</a><a href="en-course-10.html"><span>10</span>Multi-agent Orchestration</a><a href="en-course-11.html"><span>11</span>Observability and Debugging</a><a href="en-course-12.html"><span>12</span>Evaluation, Testing and Benchmarking</a><a href="en-course-13.html"><span>13</span>Security, Permissions and Governance</a><a href="en-course-14.html"><span>14</span>Production Architecture</a><a href="en-course-15.html"><span>15</span>Patterns, Anti-patterns and Future</a> <p class="learn-nav-group">Other</p> <a href="en-course-other-glossary.html"><span>Other</span>Bilingual Glossary</a> </nav> </aside> <div class="learn-content"> <nav class="learn-pager top" aria-label="Course page navigation"> <a href="en-course-04.html"><span>Previous</span><strong>Context as Information Boundary</strong></a> <a href="en-course-06.html"><span>Next</span><strong>State, Session and Memory</strong></a> </nav> <p class="section-kicker">Course / Tools and MCP as Action Boundary</p> <h1 class="content-title">Tools and MCP as Action Boundary</h1> <p class="section-intro">Tools are not plugins; they are controlled side effects</p>  <article class="chapter-content"> <h1 id="05-tools-and-mcp-as-action-boundary">05. Tools and MCP as Action Boundary</h1>
+<blockquote>
+<p><strong>Subtitle</strong>
+Tools are not plugins; they are controlled side effects</p>
+</blockquote>
+<h2 id="1-chapter-thesis">1. Chapter Thesis</h2>
+<p>Tools turn an agent from something that can speak into something that can act. Once an agent can act, tools must be treated as action boundaries: every action needs a contract, permission, audit, isolation, and recovery strategy.</p>
+<h2 id="2-how-this-chapter-connects">2. How This Chapter Connects</h2>
+<p>The previous chapter covered what the agent can see. This chapter covers what the agent can change. The next chapter explains how action results enter state, sessions, and memory.</p>
+<p>Previous: <a href="en-course-04.html">04. Context as Information Boundary</a> | Next: <a href="en-course-06.html">06. State, Session and Memory</a></p>
+<h2 id="3-learning-outcomes">3. Learning Outcomes</h2>
+<ul>
+<li>Explain the engineering problem solved by <code>Tools and MCP as Action Boundary</code> inside an Agent Harness.</li>
+<li>Use this chapter’s mental model to review a real agent design.</li>
+<li>Produce the chapter artifact and connect it to the Course Builder Harness case study.</li>
+<li>Identify typical failure modes related to this chapter.</li>
+</ul>
+<h2 id="4-the-engineering-problem">4. The Engineering Problem</h2>
+<p>Many systems treat tool calling as adding features to the model. But tools connect to the real external world: files can be modified, emails sent, data leaked, and services called. Tools create side effects, so they must be engineered and controlled.</p>
+<h2 id="5-mental-model">5. Mental Model</h2>
+<p>Think of tools as the agent’s robotic arms. The model may propose an action, but the arm should not obey the model directly. It must pass through action parsing, argument validation, permission checks, risk classification, possible human approval, and then execution.</p>
+<h2 id="6-harness-abstraction">6. Harness Abstraction</h2>
+<h3 id="tool-schema">Tool schema</h3>
+<ul>
+<li>Defines tool name, arguments, types, constraints, return values, and errors. It is the contract between model intent and external action.</li>
+</ul>
+<h3 id="tool-gateway">Tool gateway</h3>
+<ul>
+<li>A unified control layer through which all tool calls pass for permission, logging, rate limiting, isolation, and audit.</li>
+</ul>
+<h3 id="mcp">MCP</h3>
+<ul>
+<li>A protocol approach for standardizing connections between model applications and external tools, resources, and context. Treat it as a protocol idea, not the only solution.</li>
+</ul>
+<h3 id="side-effect">Side effect</h3>
+<ul>
+<li>A change made to the external world after tool execution, such as writing files, opening PRs, sending messages, or publishing pages.</li>
+</ul>
+<h3 id="idempotency">Idempotency</h3>
+<ul>
+<li>Whether repeating the same action is safe. It determines retry strategy.</li>
+</ul>
+<h3 id="approval-gate">Approval gate</h3>
+<ul>
+<li>A control point where high-risk actions require human approval before execution.</li>
+</ul>
+<h2 id="7-reference-diagram">7. Reference Diagram</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">flowchart TD</span></span>
+<span class="line"><span style="color:#E1E4E8">    Model[Model Intent] --> Parse[Parse Tool Call]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Parse --> Schema[Schema Validation]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Schema --> Risk[Risk Classification]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Risk --> Perm[Permission Check]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Perm -->|Low Risk| Exec[Execute Tool]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Perm -->|High Risk| Approve[Human Approval]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Approve --> Exec</span></span>
+<span class="line"><span style="color:#E1E4E8">    Exec --> Result[Structured Observation]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Result --> Log[Audit Log]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Result --> State[State Update]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Schema -->|Invalid| Reject[Reject + Ask Repair]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Perm -->|Denied| Deny[Denied Observation]</span></span></code></pre>
+<h2 id="8-design-principles">8. Design Principles</h2>
+<ul>
+<li>The model may propose actions; the harness decides whether to execute.</li>
+<li>All tool calls should be structured, validated, and recorded.</li>
+<li>High-risk actions require human approval by default.</li>
+<li>The more powerful the tool, the finer the permissions should be.</li>
+<li>Check idempotency before retrying.</li>
+</ul>
+<h2 id="9-reference-implementation-direction">9. Reference Implementation Direction</h2>
+<p>This course emphasizes “thinking > specific solution.” A reference implementation exists to explain the abstraction; no framework, SDK, or protocol should be equated with the harness itself. In implementation, specify boundaries, state, and failure paths before choosing technologies.</p>
+<p>Recommended implementation notes</p>
+<ul>
+<li>Store design decisions in Markdown or YAML so they can be versioned and reviewed.</li>
+<li>Place this chapter artifact under <code>docs/design/</code> or <code>labs/</code> in the repository.</li>
+<li>Whenever an abstraction boundary changes, update the interface assumptions of adjacent chapters.</li>
+</ul>
+<h2 id="10-failure-modes">10. Failure Modes</h2>
+<h3 id="tool-soup">Tool soup</h3>
+<ul>
+<li>Many tools exist without a unified gateway, naming convention, or risk classification.</li>
+</ul>
+<h3 id="direct-execution">Direct execution</h3>
+<ul>
+<li>Model-generated arguments are executed without validation, causing wrong writes, deletions, or sends.</li>
+</ul>
+<h3 id="over-broad-permissions">Over-broad permissions</h3>
+<ul>
+<li>The agent receives permissions far broader than the task requires.</li>
+</ul>
+<h3 id="unlogged-side-effects">Unlogged side effects</h3>
+<ul>
+<li>External systems change without audit records.</li>
+</ul>
+<h2 id="11-lab-course-builder-harness">11. Lab: Course Builder Harness</h2>
+<ol>
+<li>Design six tools for Course Builder Harness: read_file, search_repo, write_draft, run_build, open_pull_request, and publish_pages.</li>
+<li>Assign a risk level to each tool: read, draft, write, or publish.</li>
+<li>Design approval gates for open_pull_request and publish_pages.</li>
+<li>Write a structured observation format for a failed tool call.</li>
+</ol>
+<p><strong>Expected artifact</strong>: A Tool Registry and Permission Matrix.</p>
+<h2 id="12-review-checklist">12. Review Checklist</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: The model may propose actions; the harness decides whether to execute.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: All tool calls should be structured, validated, and recorded.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can apply this principle in my own design: High-risk actions require human approval by default.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can identify and avoid <code>Tool soup</code>: Many tools exist without a unified gateway, naming convention, or risk classification.</li>
+<li class="task-list-item"><input type="checkbox" disabled> I can identify and avoid <code>Direct execution</code>: Model-generated arguments are executed without validation, causing wrong writes, deletions, or sends.</li>
+</ul>
+<h2 id="13-image-descriptions">13. Image Descriptions</h2>
+<h3 id="image-prompt-1">Image Prompt 1</h3>
+<ul>
+<li>A tool gateway diagram where model intent passes through schema validation, permission check, approval gate, executor, and audit log like an airport security process.</li>
+</ul>
+<h3 id="image-prompt-2">Image Prompt 2</h3>
+<ul>
+<li>A side-effect risk ladder from read to draft to write to publish, with different permissions and approval requirements at each level.</li>
+</ul>
+<h2 id="14-key-takeaways">14. Key Takeaways</h2>
+<ul>
+<li><code>Tools and MCP as Action Boundary</code> is not an isolated module; it is one engineering boundary through which the Agent Harness handles uncertainty.</li>
+<li>Specific tools will change, but the chapter’s judgment questions should remain stable: what is the boundary, where is the evidence, and how does failure recover?</li>
+</ul> </article>  <nav class="learn-pager bottom" aria-label="Course page navigation"> <a href="en-course-04.html"><span>Previous</span><strong>Context as Information Boundary</strong></a> <a href="en-course-06.html"><span>Next</span><strong>State, Session and Memory</strong></a> </nav> </div> </section>  </main> <footer class="footer"><span>HARNESS_ATLAS / Course</span><span>CC BY 4.0 + MIT</span></footer> </div> </body></html>

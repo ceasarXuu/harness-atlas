@@ -48,6 +48,7 @@ When updating the Chinese homepage, keep navigation labels, CTA buttons, section
 ## Learning Shell
 
 - Learning directory entries should be static course subpages under the same learning shell: `course-01.html` through `course-15.html`, plus `course-other-glossary.html`.
+- The English learning shell mirrors those routes as `en-course-01.html` through `en-course-15.html`, plus `en-course-other-glossary.html`; language switches on a lesson must point to the matching lesson, not to the homepage.
 - Do not reintroduce `course.html` as `00 学习路线`; the course entry point is `course-01.html`, and stale generated `docs/course.html` should be moved to Trash before release if it exists.
 - The left learning sidebar must stay visible on every learning subpage and should not use in-page hash links or jump to a non-learning page.
 - The body should render the active lesson content, not duplicate the full course outline that already lives in the sidebar.
@@ -55,10 +56,12 @@ When updating the Chinese homepage, keep navigation labels, CTA buttons, section
 ## Official Course Content Import
 
 - The formal course package is 15 Markdown chapters under `course/chapters/`, plus resource files under `course/resources/`.
-- Render chapter Markdown through Astro Markdown imports in `src/pages/course-*.astro`; keep `src/data/site.mjs` limited to route metadata, titles, subtitles, and pager/sidebar order.
+- Keep the formal package bilingual and immutable under `course/`; generate localized Markdown with `node scripts/generate-localized-course.mjs` into `src/generated/course/{zh-CN,en}/` before wiring Astro routes.
+- Render localized chapter Markdown through Astro Markdown imports in `src/pages/course-*.astro` and `src/pages/en-course-*.astro`; keep route metadata, titles, subtitles, and pager/sidebar order in `src/data/course.mjs`.
+- Do not render bilingual course bodies inside one page. Chinese pages should show Chinese titles/body only; English pages should show English titles/body only.
 - Rewrite intra-chapter Markdown links from source-file paths such as `./02-task-environment-and-boundary.md` to public routes such as `course-02.html`, otherwise generated Pages output will contain broken local links.
 - After importing course content, run `npm run build`, copy `dist/.` into `docs/`, then run `npm test`. The tests compare generated `dist` artifacts byte-for-byte with checked-in `docs`, so a skipped copy is caught.
-- Browser smoke should cover at least `course-01.html` and `course-15.html` on desktop and mobile widths. If Playwright's bundled browser is missing, use the local Chrome executable with Playwright instead of installing browsers during a normal content update.
+- Browser smoke should cover at least `course-01.html`, `en-course-01.html`, `course-15.html`, `en-course-15.html`, and both glossary routes on desktop and mobile widths. If Playwright's bundled browser is missing, use the local Chrome executable with Playwright instead of installing browsers during a normal content update.
 
 ## Local Browser Smoke
 

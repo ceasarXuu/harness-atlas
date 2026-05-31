@@ -351,7 +351,7 @@ test("Chinese and English top navigation have matching structure", () => {
   );
   assert.deepEqual(
     navByPage["en.html"].map((item) => item.href),
-    ["./", "course-01.html", "products.html", "index.html", "https://github.com/ceasarXuu/harness-atlas"],
+    ["./", "en-course-01.html", "products.html", "index.html", "https://github.com/ceasarXuu/harness-atlas"],
   );
   for (const page of ["index.html", "en.html"]) {
     const github = navByPage[page].at(-1);
