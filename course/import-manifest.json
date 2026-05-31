@@ -1,9 +1,10 @@
 {
   "schema": "course-import-v1",
   "sourcePackage": "/Users/xuzhang/Downloads/agent-harness-atlas-course",
-  "importedAt": "2026-06-01T01:36:56+0800",
+  "importedAt": "2026-06-01T03:31:17+0800",
   "transformations": [
-    "Rewrite intra-course Markdown links from ./<chapter>.md or ./chapters/<chapter>.md to course-NN.html public routes."
+    "Rewrite intra-course Markdown links from ./<chapter>.md or ./chapters/<chapter>.md to course-NN.html public routes.",
+    "Editorially rewrite chapter bodies into full per-language article blocks with sustained explanatory prose."
   ],
   "files": [
     {
@@ -21,92 +22,107 @@
     {
       "path": "chapters/01-why-agent-harness.md",
       "sourceSha256": "1463aff720662aa48557c27522fe62547dff3c9f4154218883916d0e5ee21ad4",
-      "importedSha256": "d5ae65c9b346433d5356ab8a5ab6533e3f1ea08d59bfcb13d7b9f493909a192b",
-      "transformed": true
+      "importedSha256": "bb411c14660149f089ce723c1b45ad6bdd7b1bb2700dfeee902d19a18c955ad9",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "chapters/02-task-environment-and-boundary.md",
       "sourceSha256": "a86cefb3afab22bb5613be0223a1815b1370ab142e18eaf70b73ad7079da168e",
-      "importedSha256": "6c374024c960fc4765a35f50f9185e7a0bd18ff59280558bbcb17bd851d24c25",
-      "transformed": true
+      "importedSha256": "fb3e1806690e5242649cb4b555d0f4d357d45860bec7a72aecf847b5dc0d690c",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "chapters/03-minimal-harness.md",
       "sourceSha256": "5cb579b388277d32530ffc765769028541df78d16f0a18c2ebc5ba8535cc2ee0",
-      "importedSha256": "ba931437816a9637615bd48678cb191ef30b88c26d66a52429f9c970463b2da1",
-      "transformed": true
+      "importedSha256": "2b7662856bac52cfddbe454185bb0eab8fc41957b5b7f36d34451ec616aae8ad",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "chapters/04-context-as-information-boundary.md",
       "sourceSha256": "cdb757fc3aa3aaa149c9e64568db85fa538f62dea9ca78fdd5e0d19074722723",
-      "importedSha256": "7470a0ed8f5bce8e364da3f1f0f83333c806196c308091ba34707b2f4a63c2dd",
-      "transformed": true
+      "importedSha256": "0386db5a26c77d591140fd80fcd6e502fc069d7ab02b57f3d02977a331201242",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "chapters/05-tools-and-mcp-as-action-boundary.md",
       "sourceSha256": "e48303bf762dc9025254b1895abe8a681a73c72f6218877fa486c1604bc1f1d7",
-      "importedSha256": "2cc8bfa11ecc230b3685b199a9ee0d5a577ecd777308a5cf18cb97bff4e7e39d",
-      "transformed": true
+      "importedSha256": "ef2e42441a6c66acbeb184837475a21f47217fe51449d4037c8e5aa10a06114e",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "chapters/06-state-session-and-memory.md",
       "sourceSha256": "d9046c87465c35b2c10f8bf934a5d5cc02fe8ed23800ef25fb48bd3a5018d355",
-      "importedSha256": "0634d1ec2f12c0dd0621fed257279f60c026989c245bc5c2c4ae5efbe01da0da",
-      "transformed": true
+      "importedSha256": "4abf453894c84b9ecea80361b40b865ffb1f21de2bf749d1aa5f7ed1af2e3246",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "chapters/07-runtime-control.md",
       "sourceSha256": "a24908c9f931316b8c86702d3f2a55d35153134b6ea04a6a9b00e5b7e7114141",
-      "importedSha256": "30903bcdfe432f64aeac2ec183b62745f7248300df601550eacca77f9e9c8f14",
-      "transformed": true
+      "importedSha256": "35ada079429714e6a2861f07c053e159945fc4338da437641e5271e07d734288",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "chapters/08-skills-as-capability-packaging.md",
       "sourceSha256": "3aae1e10f8c01194a5b9677ac93af13ebadf00548fb1d50f255786b135ad6801",
-      "importedSha256": "67d1545d28a4ed193e7a2db74088e55d3ef7cccee1a747f39a8349d9ff961e85",
-      "transformed": true
+      "importedSha256": "5b74a53915cbe6c332f7e69cacbff90f9de56f7ab3f526c57633291745b7165b",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "chapters/09-workflows-as-deterministic-scaffolding.md",
       "sourceSha256": "5b5d6fc2a9472f661606d9526a9df97417f88085479d6d182fd7b6fb29a500ae",
-      "importedSha256": "670ff90161fb2289adfd59096129c91f7ea53c32f253b091742648a2d06a5fcf",
-      "transformed": true
+      "importedSha256": "e5e9cb782c3f86a90d51cd914c58de8da76c304ed03223d4bbab21ccfa09adbd",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "chapters/10-multi-agent-orchestration.md",
       "sourceSha256": "a554b7ff8616bbfa61aabed39f700ed9b2014862f9cf2fee8108fb93e4539c6c",
-      "importedSha256": "9ebe46a4c8dad4fae92e06594d268a98e621066c49d77b3f4a17721a2a557420",
-      "transformed": true
+      "importedSha256": "09f73fb949666fdc5dfd598946631e01eb61c2667a21ed5ba75518a69376ca57",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "chapters/11-observability-and-debugging.md",
       "sourceSha256": "44ea5cc49ffac32ff8b9bb71377cf524c6fd706e6715ad82882c429c26f7ec7a",
-      "importedSha256": "b86dd47839d231ef186cceafbf3a1f516630ba49caa3a800bfb4e282fbbb0f43",
-      "transformed": true
+      "importedSha256": "cbdf3b317e77e731602ba4643a5d4c3361233fedc209d86b938c2b5f105548a7",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "chapters/12-evaluation-testing-and-benchmarking.md",
       "sourceSha256": "2ec02989997bfb13223a44aed6eea210f80af6888a778ecf350b764a04ac9ac9",
-      "importedSha256": "e79f95dfd5a6894ff2f95c9fb5d98aa649d31bfb315bd02e5f0ef50b759407cf",
-      "transformed": true
+      "importedSha256": "139e5394504f31b7efc4a9bc64ba2d89743d526342ba8ae56e687331327d8f42",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "chapters/13-security-permissions-and-governance.md",
       "sourceSha256": "05f6bbe484a3540a3c7233f7730e000d730afd84334e1735a0b54846c8f3cb97",
-      "importedSha256": "250ff782304695a0e1197c900d13d69c8c01e01a4d8811237338a60e0582a31c",
-      "transformed": true
+      "importedSha256": "8db72eef29053bcd7e528f21d465d7578a358ac9d161b50d0a8c177cea04f1be",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "chapters/14-production-architecture.md",
       "sourceSha256": "8134c59b3984ae4ce38c1681353c68bda7d2f3ad6f8ec5f93f1b75575a0542e8",
-      "importedSha256": "294bb09a08fa6b53922b2eff041cc441c6a8d3778b424f32b7dfd481aa5ca375",
-      "transformed": true
+      "importedSha256": "7c165abe3865509a383bed463d555cb33bb69b1014d5f9c023b1fc71e1014cf9",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "chapters/15-patterns-anti-patterns-and-future.md",
       "sourceSha256": "4d4376fefbf380c03869cf9068776f93a3509510692a1f073f9e4af7661ef028",
-      "importedSha256": "d4cf81e743a507a9b8c63d2dc6712a6249c224861f7ebd7ae5c714028a6bc40e",
-      "transformed": true
+      "importedSha256": "2a3a9b5b0fe9379d4b884895aeff644b188a42f7e74d5f3be73c63dc95fafb2a",
+      "transformed": true,
+      "editorialRewrite": true
     },
     {
       "path": "resources/glossary-bilingual.md",

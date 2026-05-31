@@ -1,148 +1,17 @@
-# 08. Skills as Capability Packaging
+## Skills Preserve Repeatable Capability
 
-## 1. Chapter Thesis
+The value of a skill is not storing a longer prompt. It is preserving the stable method behind a class of tasks as reusable capability. A successful agent run may depend on the right background, suitable tools, implicit steps, and experienced error handling. If those elements remain only in human memory or a one-off conversation, the system cannot accumulate capability.
 
-A skill is not a single prompt and not a single tool. A skill packages context, tools, steps, constraints, examples, and evaluation criteria around a class of task goals.
+Capability packaging means keeping task scope, input and output shape, tool dependencies, permission boundaries, execution strategy, exception handling, and quality evidence inside one semantic unit. When the agent faces a similar task, it does not have to invent the path again, and the system can judge where the capability applies, where it should refuse, and where it should degrade.
 
-## 2. How This Chapter Connects
+## Reuse Needs Boundaries
 
-The previous chapter established runtime control. This chapter moves into composition: how to package repeated successful behavior into reusable capability. The next chapter covers workflows as deterministic scaffolding.
+The more reusable a skill becomes, the more clearly its boundary must be stated. Overgeneralization makes one capability cover too many tasks until it becomes a vague instruction bundle. Excessive narrowness prevents the system from transferring experience. Good packaging holds the tension between the two by fixing the stable parts and leaving the judgment-sensitive parts to runtime.
 
-Previous: [07. Runtime Control](en-course-07.html) | Next: [09. Workflows as Deterministic Scaffolding](en-course-09.html)
+Reuse risk also comes from changes in authority and environment. A skill that behaves well in a low-risk setting should not automatically move into a high-risk setting because the name looks familiar. A capability built around local files should not naturally migrate to a production database. The harness should treat a skill as a constrained capability package, not as an unconditional shortcut.
 
-## 3. Learning Outcomes
+## Packaged Capability Must Be Evaluated
 
-- Explain the engineering problem solved by `Skills as Capability Packaging` inside an Agent Harness.
-- Use this chapter's mental model to review a real agent design.
-- Produce the chapter artifact and connect it to the Course Builder Harness case study.
-- Identify typical failure modes related to this chapter.
+A skill that cannot be evaluated is only another hidden prompt. The system should observe its success rate, failure shape, permission use, context dependency, and output quality on its target task family, while preserving version relationships as the capability evolves. Without that evidence, changes to a skill become untraceable behavior drift.
 
-## 4. The Engineering Problem
-
-If every task rewrites prompts, reselects tools, and re-explains the process, the system cannot accumulate capability. A skill captures a successful path for a class of tasks so the agent can reuse it reliably instead of exploring from scratch every time.
-
-## 5. Mental Model
-
-Think of a skill as a standard operating capability package. It tells the agent what information, tools, steps, constraints, and quality criteria to use for this class of task.
-
-## 6. Harness Abstraction
-
-### Skill manifest
-- Describes skill name, goal, inputs, outputs, required tools, permissions, runtime policy, and version.
-
-### Instruction bundle
-- The skill’s operating principles, style, constraints, and error-handling guidance.
-
-### Examples
-- High-quality input-output examples that help the model understand task distribution and quality criteria.
-
-### Evals
-- Tests and rubrics used to judge whether the skill remains effective.
-
-### Skill registry
-- A central registry that manages available skills, versions, dependencies, and authorization scope.
-
-## 7. Reference Diagram
-
-```mermaid
-flowchart TD
-    Goal[Task Class] --> Skill[Skill Package]
-    Skill --> Manifest[Manifest]
-    Skill --> Instructions[Instructions]
-    Skill --> Tools[Tool Dependencies]
-    Skill --> Examples[Examples]
-    Skill --> Evals[Evals]
-    Skill --> Policy[Safety + Permissions]
-    Skill --> Runtime[Runtime Hints]
-    Skill --> Agent[Agent Runtime]
-```
-
-## 8. Design Principles
-
-- A skill packages how to complete a task, not only how to call tools.
-- Every skill should define where it applies and where it does not.
-- Reusable capability must be evaluable.
-- Skills need versioning because capability packages evolve.
-- Do not hide high-risk permissions inside a skill.
-
-## 9. Reference Implementation Direction
-
-This course emphasizes “thinking > specific solution.” A reference implementation exists to explain the abstraction; no framework, SDK, or protocol should be equated with the harness itself. In implementation, specify boundaries, state, and failure paths before choosing technologies.
-
-Recommended implementation notes
-- Store design decisions in Markdown or YAML so they can be versioned and reviewed.
-- Place this chapter artifact under `docs/design/` or `labs/` in the repository.
-- Whenever an abstraction boundary changes, update the interface assumptions of adjacent chapters.
-
-## 10. Failure Modes
-
-### Prompt fragment as skill
-- Stores only a prompt fragment without inputs, outputs, tools, permissions, or evaluation.
-
-### Over-general skill
-- One skill tries to cover too many tasks, causing unstable behavior.
-
-### Unversioned skill
-- After modifying a skill, the team cannot know which version caused regression.
-
-### Unsafe reuse
-- A skill designed for low-risk scenarios is reused in high-risk scenarios.
-
-## 11. Lab: Course Builder Harness
-
-1. Define a lesson_writer skill for the Course Builder Harness.
-2. Write an input_schema: topic, audience, chapter_position, source_materials, and style_guide.
-3. Write an output_schema: markdown, summary, image_descriptions, and self_check.
-4. Design three eval cases to judge whether the skill is stable.
-
-**Expected artifact**: A complete Skill Manifest.
-
-## 12. Review Checklist
-
-- [ ] I can apply this principle in my own design: A skill packages how to complete a task, not only how to call tools.
-- [ ] I can apply this principle in my own design: Every skill should define where it applies and where it does not.
-- [ ] I can apply this principle in my own design: Reusable capability must be evaluable.
-- [ ] I can identify and avoid `Prompt fragment as skill`: Stores only a prompt fragment without inputs, outputs, tools, permissions, or evaluation.
-- [ ] I can identify and avoid `Over-general skill`: One skill tries to cover too many tasks, causing unstable behavior.
-
-## 13. Image Descriptions
-
-### Image Prompt 1
-- An exploded view of a skill package showing manifest, instructions, tools, examples, evals, policy, and runtime hints.
-
-### Image Prompt 2
-- A comparison: a single wrench icon for a tool on the left, and a toolbox for a skill on the right, emphasizing that a skill is a higher-level capability package.
-
-## Skill Manifest Template
-
-```yaml
-name: lesson_writer
-version: 0.1.0
-goal: Generate a bilingual course lesson in Markdown.
-inputs:
-  - topic
-  - audience
-  - chapter_position
-  - source_materials
-  - style_guide
-outputs:
-  - markdown
-  - summary
-  - image_descriptions
-  - self_check
-tools:
-  - read_file
-  - search_repo
-  - write_draft
-permissions:
-  default: draft_only
-evals:
-  - structure_completeness
-  - bilingual_consistency
-  - philosophy_alignment
-```
-
-## 14. Key Takeaways
-
-- `Skills as Capability Packaging` is not an isolated module; it is one engineering boundary through which the Agent Harness handles uncertainty.
-- Specific tools will change, but the chapter’s judgment questions should remain stable: what is the boundary, where is the evidence, and how does failure recover?
+Placing skills inside the harness turns capability accumulation into an engineering process. A skill converts one-time experience into a reusable unit, while boundaries, permissions, and evaluation prevent reuse from becoming uncontrolled. The model still performs reasoning, but the system starts to own capability assets that can be governed and evolved.

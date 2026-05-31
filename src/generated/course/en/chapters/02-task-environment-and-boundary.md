@@ -1,116 +1,17 @@
-# 02. Task, Environment and Boundary
+## A Task Is Not a Sentence
 
-## 1. Chapter Thesis
+Agent design often begins with a natural-language request, but engineering design cannot stop at that sentence. A task has to be understood as a combination of goal, constraints, inputs, outputs, failure conditions, and acceptable action range. If the request is simply handed to the model, the model fills in missing structure with hidden assumptions. When the task is written as an engineering object, the system has to state what completion means, what counts as overreach, what information may be used, and when action must stop.
 
-The first step in agent design is not choosing tools, frameworks, or models. It is defining the task, environment, and boundaries. Boundaries determine what the agent may know, what it may do, how success is judged, and where it must stop.
+The more ambiguous the task is, the freer the agent appears and the riskier it becomes. The model will use linguistic plausibility to fill boundary gaps, expand its action range when environment constraints are absent, and chase surface completeness when completion criteria are unclear. A good harness does not start by increasing model power. It first narrows the task so that model openness serves a defined objective instead of replacing the objective.
 
-## 2. How This Chapter Connects
+## Environment Defines What Action Means
 
-The previous chapter explained why a harness is needed. This chapter moves the starting point to task definition. The next chapter turns these boundaries into a minimal executable loop.
+The environment is not background scenery. It is the operating field that the agent can perceive and change. File systems, repositories, browsers, databases, messaging systems, ticketing tools, and user sessions all change the meaning of a task. The same request to fix a problem means diagnosis in a read-only document environment, modification in a writable code environment, and approval, rollback, and audit in a production environment.
 
-Previous: [01. Why Agent Harness](en-course-01.html) | Next: [03. Minimal Harness](en-course-03.html)
+Environment modeling therefore has to precede action design. The system must know which objects are visible, which objects are writable, which interfaces create external effects, which information represents fact, and which information is only model inference. The more complex the environment becomes, the less boundaries can rely on conversational understanding. The harness has to make the observable range and action range explicit, or the agent will cross product and safety boundaries while following reasoning that appears locally reasonable.
 
-## 3. Learning Outcomes
+## Boundaries Turn Openness Into Engineering
 
-- Explain the engineering problem solved by `Task, Environment and Boundary` inside an Agent Harness.
-- Use this chapter's mental model to review a real agent design.
-- Produce the chapter artifact and connect it to the Course Builder Harness case study.
-- Identify typical failure modes related to this chapter.
+Boundaries do not weaken an agent. They make the agent usable under trust. Information boundaries define what the model may see, action boundaries define what the system may change, time boundaries define how long a run may continue, permission boundaries define which side effects require confirmation, and quality boundaries define what result can be delivered. When boundaries are clear, the model can reason deeply inside them. When boundaries are vague, even strong reasoning becomes uncontrolled exploration.
 
-## 4. The Engineering Problem
-
-Many agent projects fail not because the model is too weak, but because the task has not been engineered. Teams say “let the agent handle email,” “let the agent write code,” or “let the agent do research” without defining input sources, allowed actions, completion criteria, risk levels, and failure handling. Vague goals create vague systems.
-
-## 5. Mental Model
-
-Think of agent design as deploying a constrained actor inside an environment. The task is the goal it pursues, the environment is the world it operates in, boundaries are the walls it cannot cross, and success criteria determine when it should stop.
-
-## 6. Harness Abstraction
-
-### Task contract
-- An explicit statement of goal, inputs, outputs, completion criteria, failure conditions, and permission scope.
-
-### Environment
-- The external systems the agent can see and affect, such as files, browsers, databases, APIs, email, calendars, or GitHub repositories.
-
-### Information boundary
-- The information the agent is allowed to see, including current task, history, user preferences, retrieved material, and system policy.
-
-### Action boundary
-- The set of actions the agent may perform, spanning read-only actions, drafts, modifications, commits, sending, purchases, and other risk levels.
-
-### Success criteria
-- Evidence used to determine whether the task is complete; it should not rely only on the agent’s own assertion.
-
-## 7. Reference Diagram
-
-```mermaid
-flowchart LR
-    Goal[Task Goal] --> Spec[Task Contract]
-    Env[Environment] --> Spec
-    Inputs[Inputs] --> Spec
-    Actions[Allowed Actions] --> Spec
-    Risks[Risk Boundaries] --> Spec
-    Criteria[Success Criteria] --> Spec
-    Spec --> Harness[Harness Design]
-```
-
-## 8. Design Principles
-
-- Define boundaries before expanding capability.
-- Success criteria must be observable.
-- The higher the risk, the less autonomy the agent should have.
-- Do not outsource requirement ambiguity to the model.
-
-## 9. Reference Implementation Direction
-
-This course emphasizes “thinking > specific solution.” A reference implementation exists to explain the abstraction; no framework, SDK, or protocol should be equated with the harness itself. In implementation, specify boundaries, state, and failure paths before choosing technologies.
-
-Recommended implementation notes
-- Store design decisions in Markdown or YAML so they can be versioned and reviewed.
-- Place this chapter artifact under `docs/design/` or `labs/` in the repository.
-- Whenever an abstraction boundary changes, update the interface assumptions of adjacent chapters.
-
-## 10. Failure Modes
-
-### Undefined environment
-- The agent does not know which systems are authoritative, causing wrong citations or omissions.
-
-### Unbounded action space
-- The agent receives too many action capabilities, so any mistake can create external consequences.
-
-### Subjective completion
-- Completion is judged only by the agent itself, without external verification.
-
-### Hidden risk
-- Read, write, send, delete, and payment actions are not separated by risk level.
-
-## 11. Lab: Course Builder Harness
-
-1. Use the Course Builder Harness as the case study and define its main task: maintaining and expanding the Agent Harness course repository.
-2. List the environment: GitHub repo, course Markdown, image assets, build logs, and references.
-3. Divide actions into read-only, low-risk writes, and high-risk publishing.
-4. Write three success criteria, such as successful build, complete chapter structure, and no regression in evaluation cases.
-
-**Expected artifact**: A Task Contract template covering goal, environment, inputs, actions, success criteria, failure modes, and approval rules.
-
-## 12. Review Checklist
-
-- [ ] I can apply this principle in my own design: Define boundaries before expanding capability.
-- [ ] I can apply this principle in my own design: Success criteria must be observable.
-- [ ] I can apply this principle in my own design: The higher the risk, the less autonomy the agent should have.
-- [ ] I can identify and avoid `Undefined environment`: The agent does not know which systems are authoritative, causing wrong citations or omissions.
-- [ ] I can identify and avoid `Unbounded action space`: The agent receives too many action capabilities, so any mistake can create external consequences.
-
-## 13. Image Descriptions
-
-### Image Prompt 1
-- A boundary map with the agent at the center, surrounded by information, action, time, and trust boundaries.
-
-### Image Prompt 2
-- An engineering specification card containing goal, environment, inputs, allowed actions, success criteria, and risks.
-
-## 14. Key Takeaways
-
-- `Task, Environment and Boundary` is not an isolated module; it is one engineering boundary through which the Agent Harness handles uncertainty.
-- Specific tools will change, but the chapter’s judgment questions should remain stable: what is the boundary, where is the evidence, and how does failure recover?
+The first question for an Agent Harness is not whether the model can do something. The first question is where, how, and under what authority the system permits the model to act. That order changes the architecture. Defining task, environment, and boundary first makes it possible to decide what context, tools, runtime controls, and evaluation evidence are needed. Starting with capability alone produces automation that is difficult to explain.

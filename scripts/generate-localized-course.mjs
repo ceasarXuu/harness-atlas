@@ -116,6 +116,9 @@ function localizeMermaid(line, locale) {
 }
 
 function localizeMarkdown(markdown, locale, currentNum = "01") {
+  const markedSection = localizedMarkedSection(markdown, locale);
+  if (markedSection) return `${localizeLinks(markedSection, locale).trim()}\n`;
+
   const lines = stripFrontmatter(markdown).split("\n");
   const output = [];
   let pending = null;
@@ -209,6 +212,17 @@ function localizeMarkdown(markdown, locale, currentNum = "01") {
   }
 
   return `${output.join("\n").replace(/\n{3,}/g, "\n\n").trim()}\n`;
+}
+
+function localizedMarkedSection(markdown, locale) {
+  const body = stripFrontmatter(markdown);
+  const marker = `<!-- ${locale} -->`;
+  const start = body.indexOf(marker);
+  if (start === -1) return null;
+
+  const afterMarker = body.slice(start + marker.length);
+  const next = afterMarker.search(/\n<!-- (?:zh-CN|en) -->/);
+  return next === -1 ? afterMarker : afterMarker.slice(0, next);
 }
 
 for (const locale of locales) {

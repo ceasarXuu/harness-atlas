@@ -3,192 +3,46 @@ chapter: 12
 part: "Part IV — Trust"
 title_en: "Evaluation, Testing and Benchmarking"
 title_zh: "评测、测试与基准"
+subtitle_zh: "从行为到证据的反馈系统"
+subtitle_en: "A feedback system from behavior to evidence"
 language: zh-CN + en
-status: draft-v1
+status: article-v2
 ---
 
-# 12. Evaluation, Testing and Benchmarking / 评测、测试与基准
+<!-- zh-CN -->
+## 评测定义系统要变好什么
 
-> **本章副标题 / Subtitle**  
-> 中文：从行为到证据的反馈系统  
-> English: A feedback system from behavior to evidence
+Agent 系统如果没有评测，就只能依赖主观感觉判断进步。模型输出更流畅不等于系统更可靠，任务完成更快也不等于风险更低。评测的作用是把“变好”拆成可观察证据，使团队知道准确性、完整性、安全性、成本、时延、可解释性和恢复能力分别发生了什么变化。
 
-## 1. Chapter Thesis / 本章命题
+评测对象也不能只看最终答案。Agent 的行为由上下文选择、工具调用、状态推进、权限判断和模型推理共同构成。只评价最终文本，会漏掉过程中的危险路径；只评价单步工具调用，又会忽略整体任务是否完成。Harness 需要把行为链条纳入证据系统。
 
-**中文**：评测不是给模型打排行榜分数，而是给 Harness 建立反馈回路。它回答：系统是否完成任务、是否退化、为何失败、改动是否值得上线。
+## 测试保护工程边界
 
-**English**: Evaluation is not about ranking models on leaderboards; it is about building a feedback loop for the harness. It answers whether the system completes tasks, whether it regressed, why it failed, and whether a change is ready to ship.
+测试关注的是系统边界是否按预期工作。上下文过滤是否排除了无权限材料，工具调用是否拒绝非法参数，运行时是否在失败后停止或恢复，页面和接口是否保持语言边界，这些都属于可自动验证的工程事实。测试不能替代评测，但它能保护评测之前的基础结构。
 
-## 2. How This Chapter Connects / 前后关联
+Agent 系统尤其需要回归测试，因为模型和周边依赖都会变化。一次 prompt 调整、一个检索策略变化、一个工具升级，都可能改变行为。把关键边界写成测试，可以让团队在能力演化时及时发现破坏，而不是等用户遇到失败后再解释。
 
-**中文**：上一章让 Agent run 可见。本章把可见的 run 转化为判断系统好坏的证据。下一章会讨论当系统有能力改变外部世界时，如何限制它的权力。
+## 基准提供外部参照
 
-**English**: The previous chapter made agent runs visible. This chapter turns visible runs into evidence for judging system quality. The next chapter covers how to limit the power of a system that can change the external world.
+基准让系统表现可以和外部任务集、历史版本或替代方案比较。它不能代表全部真实场景，却能提供稳定参照，避免团队只在最近几个样例上判断趋势。好的基准应当覆盖典型任务、困难任务和高风险任务，并清楚说明它不能覆盖什么。
 
-Previous / 上一章：[11. Observability and Debugging](course-11.html) | Next / 下一章：[13. Security, Permissions and Governance](course-13.html)
+评测、测试和基准共同构成反馈系统。评测回答目标是否变好，测试回答边界是否仍然成立，基准回答变化是否具有可比较意义。Agent Harness 需要这三类证据同时存在，才能把模型行为从偶然表现转化为可管理的系统质量。
 
-## 3. Learning Outcomes / 学习目标
+<!-- en -->
+## Evaluation Defines What Improvement Means
 
-- 中文：解释 `Evaluation, Testing and Benchmarking` 在 Agent Harness 中解决的工程问题。  
-  English: Explain the engineering problem solved by `Evaluation, Testing and Benchmarking` inside an Agent Harness.
-- 中文：用本章思维模型审查一个真实 Agent 设计。  
-  English: Use this chapter's mental model to review a real agent design.
-- 中文：产出本章对应的设计 artifact，并把它接入 Course Builder Harness 贯穿案例。  
-  English: Produce the chapter artifact and connect it to the Course Builder Harness case study.
-- 中文：识别本章相关的典型失败模式。  
-  English: Identify typical failure modes related to this chapter.
+An agent system without evaluation can only judge progress by impression. More fluent model output does not necessarily mean the system is more reliable, and faster completion does not necessarily mean lower risk. Evaluation turns improvement into observable evidence so the team can see what changed in accuracy, completeness, safety, cost, latency, explainability, and recovery.
 
-## 4. The Engineering Problem / 工程问题
+The target of evaluation cannot be the final answer alone. Agent behavior is jointly produced by context selection, tool calls, state advancement, permission decisions, and model reasoning. Judging only the final text misses dangerous process paths. Judging only a single tool call misses whether the whole task was completed. The harness needs to bring the behavior chain into the evidence system.
 
-**中文**：很多团队通过“感觉不错”判断 Agent 是否进步。这种方式无法支持回归测试、版本选择、成本控制或上线决策。Harness 的 evaluation 应覆盖工具、workflow、skill、任务、风险和生产指标。
+## Testing Protects Engineering Boundaries
 
-**English**: Many teams judge agent improvement by whether it “feels good.” This cannot support regression testing, version selection, cost control, or release decisions. Harness evaluation should cover tools, workflows, skills, tasks, risks, and production metrics.
+Testing asks whether system boundaries behave as expected. Context filtering should exclude unauthorized material, tool invocation should reject illegal parameters, runtime should stop or recover after failure, and pages or APIs should preserve language boundaries. These are engineering facts that can be automatically verified. Testing does not replace evaluation, but it protects the structure that evaluation depends on.
 
-## 5. Mental Model / 思维模型
+Agent systems especially need regression testing because models and surrounding dependencies change. A prompt adjustment, a retrieval strategy change, or a tool upgrade can alter behavior. Encoding key boundaries as tests lets the team notice damage while capability evolves, rather than waiting until users encounter failures and asking for an explanation afterward.
 
-**中文**：把 evaluation 看成系统的免疫系统和反馈系统。它不仅发现错误，还帮助团队知道错误属于哪一层：任务定义、上下文、工具、状态、运行时、skill、workflow、安全策略或模型选择。
+## Benchmarks Provide External Reference
 
-**English**: Think of evaluation as the system’s immune system and feedback system. It not only finds errors, but helps the team locate the layer responsible: task definition, context, tools, state, runtime, skill, workflow, safety policy, or model choice.
+Benchmarks make system behavior comparable against external task sets, historical versions, or alternative designs. They cannot represent every real scenario, but they provide a stable reference point that prevents teams from judging trends only from the most recent examples. Good benchmarks include common tasks, difficult tasks, and high-risk tasks, while stating clearly what they do not cover.
 
-## 6. Harness Abstraction / Harness 抽象
-
-### Unit test / 单元测试
-- 中文：测试 parser、validator、tool wrapper、schema 等确定性部件。
-- English: Tests deterministic components such as parsers, validators, tool wrappers, and schemas.
-
-### Workflow test / 工作流测试
-- 中文：测试流程分支、审批、fallback 和停止条件。
-- English: Tests workflow branches, approvals, fallbacks, and stop conditions.
-
-### Golden task set / 黄金任务集
-- 中文：代表真实任务分布的固定样例集，用于回归比较。
-- English: A fixed set of representative real tasks used for regression comparison.
-
-### Rubric / 评分规约
-- 中文：把质量判断拆成可执行标准，例如准确性、完整性、证据、风格、一致性。
-- English: Breaks quality judgment into executable criteria such as accuracy, completeness, evidence, style, and consistency.
-
-### Adversarial eval / 对抗评测
-- 中文：测试 prompt injection、工具滥用、权限绕过、数据泄露等风险。
-- English: Tests risks such as prompt injection, tool abuse, permission bypass, and data leakage.
-
-### Production metrics / 生产指标
-- 中文：真实运行中的成功率、人工介入率、成本、延迟、失败类型和用户修正率。
-- English: Success rate, human-intervention rate, cost, latency, failure type, and user-correction rate in real runs.
-
-## 7. Reference Diagram / 参考图
-
-```mermaid
-flowchart TD
-    Runs[Agent Runs] --> Traces[Traces]
-    Traces --> Eval[Evaluation Pipeline]
-    Eval --> Scores[Scores + Rubric]
-    Eval --> Failures[Failure Taxonomy]
-    Failures --> Improve[Improve Context / Tools / Runtime / Skills]
-    Scores --> Gate{Release Gate}
-    Gate -->|Pass| Ship[Ship]
-    Gate -->|Fail| Improve
-```
-
-## 8. Design Principles / 设计原则
-
-- **中文**：先定义成功，再优化系统。  
-  **English**: Define success before optimizing the system.
-- **中文**：评测应覆盖行为，而不只是回答文本。  
-  **English**: Evaluation should cover behavior, not only answer text.
-- **中文**：每个重要 skill 都应有回归集。  
-  **English**: Every important skill should have a regression set.
-- **中文**：评测结果要能反向定位失败层。  
-  **English**: Evaluation results should localize the failing layer.
-- **中文**：成本和延迟也是质量指标。  
-  **English**: Cost and latency are quality metrics too.
-
-## 9. Reference Implementation Direction / 参考实现方向
-
-**中文**：本课程强调“思维 > 具体方案”。参考实现的作用是帮助理解抽象，不应把某个框架、SDK 或协议等同于 Harness 本身。实现时建议先写清楚边界、状态和失败路径，再选择具体技术。
-
-**English**: This course emphasizes “thinking > specific solution.” A reference implementation exists to explain the abstraction; no framework, SDK, or protocol should be equated with the harness itself. In implementation, specify boundaries, state, and failure paths before choosing technologies.
-
-Recommended implementation notes / 推荐实现备注：
-- 中文：用 Markdown 或 YAML 保存设计决策，便于版本化和评审。  
-  English: Store design decisions in Markdown or YAML so they can be versioned and reviewed.
-- 中文：把本章 artifact 放入仓库的 `docs/design/` 或 `labs/` 目录。  
-  English: Place this chapter artifact under `docs/design/` or `labs/` in the repository.
-- 中文：每次修改抽象边界后，都要更新相邻章节的接口假设。  
-  English: Whenever an abstraction boundary changes, update the interface assumptions of adjacent chapters.
-
-## 10. Failure Modes / 失效模式
-
-### Eval by vibes
-- 中文：凭感觉判断质量，无法重复和比较。
-- English: Judges quality by feeling, making results non-repeatable and non-comparable.
-
-### Answer-only eval
-- 中文：只评估最终文本，不评估工具、状态、权限和过程。
-- English: Evaluates only final text, not tools, state, permissions, or process.
-
-### Static benchmark obsession
-- 中文：只追求通用 benchmark，而不评估自己的任务分布。
-- English: Optimizes for generic benchmarks while ignoring the system’s own task distribution.
-
-### No regression gate
-- 中文：修改 prompt、skill 或工具后没有上线前回归检查。
-- English: Prompt, skill, or tool changes ship without regression checks.
-
-## 11. Lab: Course Builder Harness / 实验：课程构建 Harness
-
-1. 中文：为 lesson_writer skill 设计 5 条 golden tasks。  
-   English: Design five golden tasks for the lesson_writer skill.
-2. 中文：写一个 rubric：结构完整、双语一致、工程哲学贯穿、具体方案不过度抢主线。  
-   English: Write a rubric: structure completeness, bilingual consistency, engineering philosophy, and concrete implementation not overpowering the main idea.
-3. 中文：设计一个 adversarial case：资料中包含诱导 Agent 忽略课程结构的内容。  
-   English: Design an adversarial case where source material tries to make the agent ignore the course structure.
-4. 中文：定义上线门槛：通过率、人工修改率、构建成功率、成本上限。  
-   English: Define release gates: pass rate, human-edit rate, build success rate, and cost ceiling.
-
-**Expected artifact / 预期产物**：Evaluation Matrix、Golden Task Set 与 Rubric。 / An Evaluation Matrix, Golden Task Set, and Rubric.
-
-## 12. Review Checklist / 复盘清单
-
-- [ ] 中文：我能在自己的设计中落实：先定义成功，再优化系统。  
-      English: I can apply this principle in my own design: Define success before optimizing the system.
-- [ ] 中文：我能在自己的设计中落实：评测应覆盖行为，而不只是回答文本。  
-      English: I can apply this principle in my own design: Evaluation should cover behavior, not only answer text.
-- [ ] 中文：我能在自己的设计中落实：每个重要 skill 都应有回归集。  
-      English: I can apply this principle in my own design: Every important skill should have a regression set.
-- [ ] 中文：我能识别并避免 `Eval by vibes`：凭感觉判断质量，无法重复和比较。  
-      English: I can identify and avoid `Eval by vibes`: Judges quality by feeling, making results non-repeatable and non-comparable.
-- [ ] 中文：我能识别并避免 `Answer-only eval`：只评估最终文本，不评估工具、状态、权限和过程。  
-      English: I can identify and avoid `Answer-only eval`: Evaluates only final text, not tools, state, permissions, or process.
-
-## 13. Image Descriptions / 图片描述
-
-### 评测金字塔
-- 中文图像描述：底层 unit tests，中层 workflow/skill evals，上层 task success 和 production metrics。
-- English image prompt: An evaluation pyramid with unit tests at the bottom, workflow/skill evals in the middle, and task success plus production metrics at the top.
-
-### 反馈回路图
-- 中文图像描述：Trace 数据进入 eval，eval 产生失败分类，失败分类驱动 context、tool、runtime、skill 的改进。
-- English image prompt: A feedback loop where trace data enters eval, eval produces failure categories, and categories drive improvements to context, tools, runtime, and skills.
-
-## Rubric Example / 评分规约示例
-
-```yaml
-rubric:
-  structure_completeness: 0-5
-  bilingual_consistency: 0-5
-  philosophy_alignment: 0-5
-  concrete_examples: 0-5
-  safety_awareness: 0-5
-release_gate:
-  min_average_score: 4.2
-  max_critical_failures: 0
-  max_cost_per_task_usd: 1.50
-```
-
-## 14. Key Takeaways / 关键总结
-
-- 中文：`Evaluation, Testing and Benchmarking` 不是孤立模块，而是 Agent Harness 处理不确定性的一层工程边界。
-- English: `Evaluation, Testing and Benchmarking` is not an isolated module; it is one engineering boundary through which the Agent Harness handles uncertainty.
-- 中文：具体工具会变化，但本章的判断问题应保持稳定：边界是什么，证据在哪里，失败如何恢复。
-- English: Specific tools will change, but the chapter’s judgment questions should remain stable: what is the boundary, where is the evidence, and how does failure recover?
+Evaluation, testing, and benchmarking form a feedback system together. Evaluation asks whether the target quality improved, testing asks whether boundaries still hold, and benchmarking asks whether the change has comparable meaning. An Agent Harness needs all three kinds of evidence to turn model behavior from occasional performance into manageable system quality.

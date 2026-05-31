@@ -1,125 +1,17 @@
-# 04. Context as Information Boundary
+## Context Decides What the Model Can See
 
-## 1. Chapter Thesis
+Context is not the act of filling a window with as much information as possible. It decides what the model is allowed to see during a run. It is both information supply and information boundary. The quality of an agent decision depends on model capability, but it also depends on whether the system provides evidence that is relevant, timely, sourced, and filtered by permission. Without context engineering, the model is left to guess between noise and gaps.
 
-Context is not about stuffing more text into a window. It is the decision about what the agent should know at a step, what it should not know, in what order it should know it, and why it should trust that information.
+The information boundary changes behavior directly. The same model will fill in assumptions when it only sees a user request. It will reason more steadily when it sees relevant files, prior decisions, and failure records. It can also drift when it sees too much unrelated material. The harness should not expand context without limit. It should organize available information into an evidence environment that can support action.
 
-## 2. How This Chapter Connects
+## Prompts Cannot Replace Information Governance
 
-The previous chapter’s minimal loop begins with Build Context. This chapter expands that stage: context is the harness’s information boundary. The next chapter covers the action boundary: Tools and MCP.
+Prompt engineering focuses on how to express tasks and constraints. Context engineering focuses on where information comes from, how it is selected, how it is structured, when it expires, and how it can be traced. The former affects how the model understands instruction. The latter determines what world the model believes it is reasoning about. For agent systems, the latter is often closer to the root of reliability.
 
-Previous: [03. Minimal Harness](en-course-03.html) | Next: [05. Tools and MCP as Action Boundary](en-course-05.html)
+When context governance is absent, prompts are forced to carry responsibilities that do not belong there. Developers keep adding instructions such as referring to the latest file, avoiding outdated information, or trusting repository content first, while the system still does not control the information entrance. A stronger design lets the system layer manage retrieval, trimming, ranking, deduplication, citation, and permission so the prompt does not have to cover architectural gaps through language.
 
-## 3. Learning Outcomes
+## Compression Needs Traceability
 
-- Explain the engineering problem solved by `Context as Information Boundary` inside an Agent Harness.
-- Use this chapter's mental model to review a real agent design.
-- Produce the chapter artifact and connect it to the Course Builder Harness case study.
-- Identify typical failure modes related to this chapter.
+Even a large context window is not infinite, so selection is unavoidable. The goal is not to give the model every piece of material, but to preserve the evidence chain needed for judgment. Compression should preserve source and uncertainty. Summaries should state absence and conflict. Retrieved material should remain connected to the original. Once the evidence chain breaks, the model can mistake a system-provided fragment for the complete fact.
 
-## 4. The Engineering Problem
-
-Models often fail not because they lack capability, but because they see information that is wrong, excessive, stale, irrelevant, or polluted. Context engineering is not about maximizing information volume; it is about constructing a sufficient, relevant, trustworthy, low-noise information boundary.
-
-## 5. Mental Model
-
-Think of context as the agent’s workbench. The workbench should contain task-relevant materials, tool instructions, constraints, state, and evidence—not the entire repository, all past chats, and every search result.
-
-## 6. Harness Abstraction
-
-### Task context
-- The current goal, constraints, inputs, output format, and success criteria.
-
-### Environment context
-- Current facts from files, web pages, databases, APIs, or repositories.
-
-### Historical context
-- Past steps, sessions, decisions, and user preferences. It must be selected, not injected wholesale.
-
-### Policy context
-- Safety, permission, approval, and output rules. It tells the model not only facts but boundaries.
-
-### Context budget
-- The allocation strategy for a finite window, including token, attention, ordering, and noise budgets.
-
-### Provenance
-- Important information should retain source, time, confidence, and reason for use.
-
-## 7. Reference Diagram
-
-```mermaid
-flowchart TD
-    Task[Task Contract] --> Select[Select]
-    State[State] --> Select
-    Memory[Memory] --> Select
-    Files[Files] --> Retrieve[Retrieve]
-    Web[Web] --> Retrieve
-    Retrieve --> Rank[Rank + Filter]
-    Select --> Assemble[Assemble Context]
-    Rank --> Assemble
-    Policy[Policy] --> Assemble
-    Assemble --> Model[Model Step]
-    Model --> Obs[Observation]
-    Obs --> State
-```
-
-## 8. Design Principles
-
-- Relevance over volume.
-- Freshness, provenance, and confidence should be part of context.
-- Context should be layered: task, state, evidence, and policy should not be mixed together.
-- Avoid injecting long-term memory as facts without validation.
-- Context construction must be replayable.
-
-## 9. Reference Implementation Direction
-
-This course emphasizes “thinking > specific solution.” A reference implementation exists to explain the abstraction; no framework, SDK, or protocol should be equated with the harness itself. In implementation, specify boundaries, state, and failure paths before choosing technologies.
-
-Recommended implementation notes
-- Store design decisions in Markdown or YAML so they can be versioned and reviewed.
-- Place this chapter artifact under `docs/design/` or `labs/` in the repository.
-- Whenever an abstraction boundary changes, update the interface assumptions of adjacent chapters.
-
-## 10. Failure Modes
-
-### Context overload
-- Injects large amounts of irrelevant material and dilutes model attention.
-
-### Context poisoning
-- Untrusted sources or prompt injection enter the context.
-
-### Stale context
-- Uses stale information, causing the agent to act on old facts.
-
-### Hidden context dependency
-- System behavior depends on context that is not recorded or reproducible.
-
-## 11. Lab: Course Builder Harness
-
-1. Design context layers for the course-maintenance case: task, repo snapshot, style guide, chapter state, and policy.
-2. Define source, refresh frequency, max token budget, and trust level for each layer.
-3. Write a context assembly order and explain which information goes first or later.
-4. Design one rule to defend against context pollution.
-
-**Expected artifact**: A Context Pipeline design document.
-
-## 12. Review Checklist
-
-- [ ] I can apply this principle in my own design: Relevance over volume.
-- [ ] I can apply this principle in my own design: Freshness, provenance, and confidence should be part of context.
-- [ ] I can apply this principle in my own design: Context should be layered: task, state, evidence, and policy should not be mixed together.
-- [ ] I can identify and avoid `Context overload`: Injects large amounts of irrelevant material and dilutes model attention.
-- [ ] I can identify and avoid `Context poisoning`: Untrusted sources or prompt injection enter the context.
-
-## 13. Image Descriptions
-
-### Image Prompt 1
-- An onion-layer diagram showing system policy, task contract, state, retrieved evidence, and tool observations with different trust levels.
-
-### Image Prompt 2
-- A workbench with task cards, evidence cards, state board, and policy manual, while unused materials remain outside the desk.
-
-## 14. Key Takeaways
-
-- `Context as Information Boundary` is not an isolated module; it is one engineering boundary through which the Agent Harness handles uncertainty.
-- Specific tools will change, but the chapter’s judgment questions should remain stable: what is the boundary, where is the evidence, and how does failure recover?
+A good information boundary makes agent conclusions more auditable. An observer can see not only what the model finally said, but also which materials it used, which materials it ignored, when those materials entered context, and whether they were filtered. This kind of context design turns reasoning from one-off text generation into an inspectable system process.

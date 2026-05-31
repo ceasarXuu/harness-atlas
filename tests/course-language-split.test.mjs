@@ -8,6 +8,7 @@ import test from "node:test";
 const root = new URL("..", import.meta.url).pathname;
 const dist = join(root, "dist");
 const docs = join(root, "docs");
+const sourceChapters = join(root, "course", "chapters");
 const localizedCourse = join(root, "src", "generated", "course");
 const englishCoursePages = [
   ...Array.from({ length: 15 }, (_, index) => `en-course-${String(index + 1).padStart(2, "0")}.html`),
@@ -61,6 +62,21 @@ function chapterContentText(html) {
   return match ? visibleText(match[1]) : "";
 }
 
+function articleHtml(html) {
+  return html.match(/<article class="chapter-content">([\s\S]*?)<\/article>/)?.[1] ?? "";
+}
+
+function articleParagraphs(html) {
+  return [...articleHtml(html).matchAll(/<p>([\s\S]*?)<\/p>/g)]
+    .map((match) => visibleText(match[1]))
+    .filter(Boolean);
+}
+
+function articleHeadings(html) {
+  return [...articleHtml(html).matchAll(/<h[2-3][^>]*>([\s\S]*?)<\/h[2-3]>/g)]
+    .map((match) => visibleText(match[1]));
+}
+
 test("English learning pages do not leak Chinese course content", () => {
   for (const page of englishCoursePages) {
     const text = visibleText(withoutLanguageSwitch(read(join(dist, page))));
@@ -97,6 +113,76 @@ test("Course chapter bodies do not repeat subtitles already shown in the page in
     assert.ok(intro, `${page} should expose a page intro subtitle`);
     assert.doesNotMatch(body, /本章副标题|Subtitle/, `${page} should not render the source subtitle label in the chapter body`);
     assert.ok(!body.includes(intro), `${page} should not repeat the page intro subtitle in the chapter body`);
+  }
+});
+
+test("Course chapter bodies avoid draft, coursework, and self-check framing", () => {
+  const chapterPages = [...chineseCoursePages, ...englishCoursePages].filter((page) => /course-\d{2}\.html$/.test(page));
+  const forbidden = /本章|本课程|本节|学习目标|前后关联|本章命题|参考实现方向|复盘|自查|作业|实验|预期产物|Chapter Thesis|How This Chapter Connects|Learning Outcomes|Reference Implementation Direction|Review Checklist|Self[- ]check|Assignment|Homework|Exercise|Lab:|Expected artifact|This chapter|This course/i;
+
+  for (const page of chapterPages) {
+    assert.doesNotMatch(
+      chapterContentText(read(join(dist, page))),
+      forbidden,
+      `${page} should read like explanatory published content, not course draft scaffolding`,
+    );
+  }
+});
+
+test("Chinese course article headings are localized", () => {
+  for (const page of chineseCoursePages.filter((page) => /course-\d{2}\.html$/.test(page))) {
+    for (const heading of articleHeadings(read(join(dist, page)))) {
+      assert.match(heading, /[\u3400-\u9fff]/, `${page} article heading should be localized: ${heading}`);
+    }
+  }
+});
+
+test("Course article bodies rely on prose more than lists", () => {
+  const chapterPages = [...chineseCoursePages, ...englishCoursePages].filter((page) => /course-\d{2}\.html$/.test(page));
+
+  for (const page of chapterPages) {
+    const html = articleHtml(read(join(dist, page)));
+    const paragraphs = (html.match(/<p>/g) ?? []).length;
+    const listItems = (html.match(/<li>/g) ?? []).length;
+
+    assert.ok(paragraphs > listItems, `${page} should read as article prose instead of list notes`);
+  }
+});
+
+test("Course article bodies avoid excessive section scaffolding", () => {
+  const chapterPages = [...chineseCoursePages, ...englishCoursePages].filter((page) => /course-\d{2}\.html$/.test(page));
+
+  for (const page of chapterPages) {
+    assert.ok(articleHeadings(read(join(dist, page))).length <= 4, `${page} should not read like a fixed-heading lesson outline`);
+    assert.doesNotMatch(articleHtml(read(join(dist, page))), /<h3\b/, `${page} should not rely on nested note headings`);
+  }
+});
+
+test("Canonical course chapters keep complete per-language articles", () => {
+  for (const file of markdownFiles(sourceChapters)) {
+    const markdown = read(join(sourceChapters, file));
+
+    assert.match(markdown, /^<!-- zh-CN -->$/m, `${file} should contain a complete Chinese article block`);
+    assert.match(markdown, /^<!-- en -->$/m, `${file} should contain a complete English article block`);
+    assert.doesNotMatch(markdown, /\*\*(中文|English)\*\*[:：]|本章副标题 \/ Subtitle|中文：|English:/, `${file} should not use line-by-line bilingual scaffolding`);
+    assert.doesNotMatch(markdown, /lesson|self_check|image_descriptions|homework|assignment|exercise|lab:|作业|实验|自查|复盘/i, `${file} should not carry coursework or draft vocabulary`);
+  }
+});
+
+test("Course articles avoid paragraph-tagged lists and template fragments", () => {
+  const chapterPages = [...chineseCoursePages, ...englishCoursePages].filter((page) => /course-\d{2}\.html$/.test(page));
+  const templateTerms = /self_check|image_descriptions|rubric|checklist|template|catalog|清单|模板|自查/i;
+
+  for (const page of chapterPages) {
+    const paragraphs = articleParagraphs(read(join(dist, page)));
+    const shortLimit = page.startsWith("en-") ? 140 : 70;
+    const shortParagraphs = paragraphs.filter((paragraph) => paragraph.length < shortLimit);
+    const colonLeadParagraphs = paragraphs.filter((paragraph) => /^.{1,36}[:：]/.test(paragraph));
+
+    assert.ok(paragraphs.length >= 6, `${page} should have enough sustained prose paragraphs`);
+    assert.ok(shortParagraphs.length <= 1, `${page} should not hide notes as short standalone paragraphs: ${shortParagraphs.join(" | ")}`);
+    assert.equal(colonLeadParagraphs.length, 0, `${page} should not render catalog-style colon entries: ${colonLeadParagraphs.join(" | ")}`);
+    assert.doesNotMatch(paragraphs.join("\n"), templateTerms, `${page} should not expose template or checklist fragments`);
   }
 });
 

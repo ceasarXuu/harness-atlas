@@ -93,7 +93,26 @@ function chapterHeading(markdown) {
 }
 
 function chapterSubtitle(markdown, label) {
-  return markdown.match(new RegExp(`${label}[:：]\\s*(.+)`))?.[1].trim() ?? "";
+  const key = label === "English" ? "subtitle_en" : "subtitle_zh";
+  return markdown.match(new RegExp(`^${key}:\\s*"([^"]+)"`, "m"))?.[1].trim()
+    ?? markdown.match(new RegExp(`${label}[:：]\\s*(.+)`))?.[1].trim()
+    ?? "";
+}
+
+function localizedArticle(markdown, locale) {
+  const marker = `<!-- ${locale} -->`;
+  const start = markdown.indexOf(marker);
+  if (start === -1) return markdown;
+  const afterMarker = markdown.slice(start + marker.length);
+  const next = afterMarker.search(/\n<!-- (?:zh-CN|en) -->/);
+  return next === -1 ? afterMarker : afterMarker.slice(0, next);
+}
+
+function firstArticleHeading(markdown, locale = "zh-CN") {
+  const heading = localizedArticle(markdown, locale).match(/^## (.+)$/m)?.[1] ?? "";
+  const parts = heading.split(/\s+\/\s+/);
+  if (locale === "en") return parts[0].trim();
+  return [...parts].reverse().find((part) => /[\u3400-\u9fff]/.test(part))?.trim() ?? parts.at(-1).trim();
 }
 
 function escapeRegex(value) {
@@ -344,15 +363,15 @@ test("Course routes render the lesson selected by their route number", () => {
     assert.equal(lesson.body, chapterSubtitle(markdown, "中文"), `${lesson.key} Chinese subtitle should match official chapter subtitle`);
     assert.match(html, new RegExp(`<h1 class="content-title">${lesson.title}</h1>`), `${lesson.href} should render ${lesson.title}`);
     assert.match(html, new RegExp(`学习 / ${lesson.title}`), `${lesson.href} should render its lesson kicker`);
-    assert.match(html, /本章命题/, `${lesson.href} should render localized official chapter body`);
-    assert.doesNotMatch(html, /Chapter Thesis \/ 本章命题|English:/, `${lesson.href} should not render bilingual chapter labels`);
+    assert.match(html, new RegExp(escapeRegex(firstArticleHeading(markdown))), `${lesson.href} should render localized article body`);
+    assert.doesNotMatch(html, /Chapter Thesis \/ 本章命题|本章命题|English:/, `${lesson.href} should not render bilingual or draft chapter labels`);
 
     const englishLesson = getCourseLessonPage(lesson.key, "en");
     const englishHtml = read(join(dist, englishLesson.href));
     assert.equal(englishLesson.body, chapterSubtitle(markdown, "English"), `${lesson.key} English subtitle should match official chapter subtitle`);
     assert.match(englishHtml, new RegExp(`<h1 class="content-title">${englishLesson.heading}</h1>`), `${englishLesson.href} should render ${englishLesson.heading}`);
-    assert.match(englishHtml, /Chapter Thesis/, `${englishLesson.href} should render localized official chapter body`);
-    assert.doesNotMatch(englishHtml, /Chapter Thesis \/ 本章命题|中文：/, `${englishLesson.href} should not render bilingual chapter labels`);
+    assert.match(englishHtml, new RegExp(escapeRegex(firstArticleHeading(markdown, "en"))), `${englishLesson.href} should render localized article body`);
+    assert.doesNotMatch(englishHtml, /Chapter Thesis \/ 本章命题|Chapter Thesis|中文：/, `${englishLesson.href} should not render bilingual or draft chapter labels`);
   }
 });
 
@@ -360,9 +379,9 @@ test("Course pages render the official chapter markdown instead of placeholder c
   const first = read(join(dist, "course-01.html"));
   const final = read(join(dist, "course-15.html"));
 
-  assert.match(first, /本章命题/, "first lesson should render official markdown section headings");
+  assert.match(first, /不确定性需要工程边界/, "first lesson should render article-form markdown section headings");
   assert.match(first, /从 Prompt 到工程系统/, "first lesson should render official subtitle");
-  assert.match(first, /flowchart TD/, "first lesson should render official Mermaid source");
+  assert.match(first, /模型能力进入真实系统/, "first lesson should render sustained article prose");
   assert.doesNotMatch(first, /<h3>本课目标<\/h3>/, "first lesson should not render placeholder objective card");
 
   assert.match(final, /模式、反模式与未来/, "final lesson should render the official final chapter");
@@ -401,7 +420,11 @@ test("Official course import manifest pins imported markdown files", () => {
     const source = read(sourcePath);
     const imported = read(currentPath);
     assert.equal(sha256(source), item.sourceSha256, `${item.path} source hash should match import manifest hash`);
-    assert.equal(imported, item.transformed ? allowedCourseLinkRewrite(source) : source, `${item.path} should only apply allowed course link rewrites`);
+    if (item.editorialRewrite) {
+      assert.match(imported, /status: article-v2/, `${item.path} should record editorial article status`);
+    } else {
+      assert.equal(imported, item.transformed ? allowedCourseLinkRewrite(source) : source, `${item.path} should only apply allowed course link rewrites`);
+    }
   }
 });
 
