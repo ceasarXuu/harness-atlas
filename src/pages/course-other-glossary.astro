@@ -1,7 +1,7 @@
 ---
-import CardGrid from "../components/CardGrid.astro";
 import LearningLayout from "../components/LearningLayout.astro";
 import { getLearningPager, glossaryPage } from "../data/site.mjs";
+import { Content as GlossaryContent } from "../../course/resources/glossary-bilingual.md";
 
 const pager = getLearningPager(glossaryPage.active);
 ---
@@ -16,5 +16,7 @@ const pager = getLearningPager(glossaryPage.active);
   intro={glossaryPage.intro}
   pager={pager}
 >
-  <CardGrid cards={glossaryPage.cards} compact />
+  <article class="chapter-content">
+    <GlossaryContent />
+  </article>
 </LearningLayout>

@@ -1,2 +1,182 @@
-<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Evaluation and Benchmark · Harness Atlas</title><meta name="description" content="Harness Atlas Evaluation and Benchmark。"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preload" href="assets/css/style.css" as="style"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/learn.css"><link rel="prefetch" href="course-01.html"><link rel="prefetch" href="products.html"><link rel="prefetch" href="timeline.html"></head> <body> <div class="wrap"> <header class="top"> <a class="brand" href="./" aria-label="Harness Atlas 首页"> <span class="brand-mark" aria-hidden="true"></span> <span>HARNESS_ATLAS</span> </a> <nav class="nav" aria-label="主导航"> <a href="./"> <span>首页</span>  </a><a href="course-01.html"> <span>学习</span>  </a><a href="products.html"> <span>生态</span>  </a><a href="en.html"> <span>EN</span>  </a><a href="https://github.com/ceasarXuu/harness-atlas" target="_blank" rel="noreferrer"> <span>GitHub</span> <span class="nav-stat" aria-label="GitHub stars">
-★ 0 </span> </a> </nav> </header> <main>  <section class="section learn-shell"> <aside class="learn-sidebar" aria-label="学习目录"> <p class="section-kicker">学习目录</p> <nav class="learn-nav" aria-label="学习页目录导航"> <a href="course-01.html"><span>01</span>Agent Harness 定义</a><a href="course-02.html"><span>02</span>Context Engineering</a><a href="course-03.html"><span>03</span>Tools and MCP</a><a href="course-04.html"><span>04</span>Skills and Workflows</a><a href="course-05.html"><span>05</span>State, Memory and Session</a><a href="course-06.html"><span>06</span>Planning and Execution Loop</a><a href="course-07.html"><span>07</span>Multi-agent Orchestration</a><a class="active" href="course-08.html"><span>08</span>Evaluation and Benchmark</a><a href="course-09.html"><span>09</span>Security, Permission and Governance</a><a href="course-10.html"><span>10</span>Product Architecture</a><a href="course-11.html"><span>11</span>Future of Harness</a> <p class="learn-nav-group">其他</p> <a href="course-other-glossary.html"><span>其他</span>术语表</a> </nav> </aside> <div class="learn-content"> <nav class="learn-pager top" aria-label="学习页目录导航"> <a href="course-07.html"><span>上一节</span><strong>Multi-agent Orchestration</strong></a> <a href="course-09.html"><span>下一节</span><strong>Security, Permission and Governance</strong></a> </nav> <p class="section-kicker">学习 / Evaluation and Benchmark</p> <h1 class="content-title">Evaluation and Benchmark</h1> <p class="section-intro">建立衡量 Harness 质量的方法，把测试、评审、Benchmark 和运行时信号组合成评估闭环。</p>  <div class="matrix compact-matrix"> <div class="cell"><span>目标</span><h3>本课目标</h3><p>理解 Evaluation and Benchmark 在 Agent Harness 中解决的问题。</p></div><div class="cell"><span>关注点</span><h3>关键边界</h3><p>建立衡量 Harness 质量的方法，把测试、评审、Benchmark 和运行时信号组合成评估闭环。</p></div><div class="cell"><span>输出</span><h3>学习产出</h3><p>能够把这一节内容映射到真实产品、协议或工程流程，并形成可复查的判断。</p></div> </div>  <nav class="learn-pager bottom" aria-label="学习页目录导航"> <a href="course-07.html"><span>上一节</span><strong>Multi-agent Orchestration</strong></a> <a href="course-09.html"><span>下一节</span><strong>Security, Permission and Governance</strong></a> </nav> </div> </section>  </main> <footer class="footer"><span>HARNESS_ATLAS / 学习</span><span>CC BY 4.0 + MIT</span></footer> </div> </body></html>
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Skills as Capability Packaging / 技能作为能力封装 · Harness Atlas</title><meta name="description" content="Harness Atlas Skills as Capability Packaging / 技能作为能力封装。"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preload" href="assets/css/style.css" as="style"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/learn.css"><link rel="prefetch" href="course-01.html"><link rel="prefetch" href="products.html"><link rel="prefetch" href="timeline.html"></head> <body> <div class="wrap"> <header class="top"> <a class="brand" href="./" aria-label="Harness Atlas 首页"> <span class="brand-mark" aria-hidden="true"></span> <span>HARNESS_ATLAS</span> </a> <nav class="nav" aria-label="主导航"> <a href="./"> <span>首页</span>  </a><a href="course-01.html"> <span>学习</span>  </a><a href="products.html"> <span>生态</span>  </a><a href="en.html"> <span>EN</span>  </a><a href="https://github.com/ceasarXuu/harness-atlas" target="_blank" rel="noreferrer"> <span>GitHub</span> <span class="nav-stat" aria-label="GitHub stars">
+★ 0 </span> </a> </nav> </header> <main>  <section class="section learn-shell"> <aside class="learn-sidebar" aria-label="学习目录"> <p class="section-kicker">学习目录</p> <nav class="learn-nav" aria-label="学习页目录导航"> <a href="course-01.html"><span>01</span>Why Agent Harness / 为什么需要 Agent Harness</a><a href="course-02.html"><span>02</span>Task, Environment and Boundary / 任务、环境与边界</a><a href="course-03.html"><span>03</span>Minimal Harness / 最小 Agent Harness</a><a href="course-04.html"><span>04</span>Context as Information Boundary / 上下文作为信息边界</a><a href="course-05.html"><span>05</span>Tools and MCP as Action Boundary / 工具与 MCP 作为动作边界</a><a href="course-06.html"><span>06</span>State, Session and Memory / 状态、会话与记忆</a><a href="course-07.html"><span>07</span>Runtime Control / 运行时控制</a><a class="active" href="course-08.html"><span>08</span>Skills as Capability Packaging / 技能作为能力封装</a><a href="course-09.html"><span>09</span>Workflows as Deterministic Scaffolding / 工作流作为确定性支架</a><a href="course-10.html"><span>10</span>Multi-agent Orchestration / 多 Agent 编排</a><a href="course-11.html"><span>11</span>Observability and Debugging / 可观测性与调试</a><a href="course-12.html"><span>12</span>Evaluation, Testing and Benchmarking / 评测、测试与基准</a><a href="course-13.html"><span>13</span>Security, Permissions and Governance / 安全、权限与治理</a><a href="course-14.html"><span>14</span>Production Architecture / 生产架构</a><a href="course-15.html"><span>15</span>Patterns, Anti-patterns and Future / 模式、反模式与未来</a> <p class="learn-nav-group">其他</p> <a href="course-other-glossary.html"><span>其他</span>Bilingual Glossary / 中英术语表</a> </nav> </aside> <div class="learn-content"> <nav class="learn-pager top" aria-label="学习页目录导航"> <a href="course-07.html"><span>上一节</span><strong>Runtime Control / 运行时控制</strong></a> <a href="course-09.html"><span>下一节</span><strong>Workflows as Deterministic Scaffolding / 工作流作为确定性支架</strong></a> </nav> <p class="section-kicker">学习 / Skills as Capability Packaging / 技能作为能力封装</p> <h1 class="content-title">Skills as Capability Packaging / 技能作为能力封装</h1> <p class="section-intro">从一次性动作到可复用能力单元 / From one-off action to reusable capability unit</p>  <article class="chapter-content"> <h1 id="08-skills-as-capability-packaging--技能作为能力封装">08. Skills as Capability Packaging / 技能作为能力封装</h1>
+<blockquote>
+<p><strong>本章副标题 / Subtitle</strong><br>
+中文：从一次性动作到可复用能力单元<br>
+English: From one-off action to reusable capability unit</p>
+</blockquote>
+<h2 id="1-chapter-thesis--本章命题">1. Chapter Thesis / 本章命题</h2>
+<p><strong>中文</strong>：Skill 不是单个 prompt，也不是单个 tool。Skill 是围绕一类任务目标封装的上下文、工具、步骤、约束、示例和评测标准。</p>
+<p><strong>English</strong>: A skill is not a single prompt and not a single tool. A skill packages context, tools, steps, constraints, examples, and evaluation criteria around a class of task goals.</p>
+<h2 id="2-how-this-chapter-connects--前后关联">2. How This Chapter Connects / 前后关联</h2>
+<p><strong>中文</strong>：上一章建立了运行时控制。本章进入组合层：如何把多次成功经验封装为可复用能力。下一章会讨论 workflow 如何提供确定性支架。</p>
+<p><strong>English</strong>: The previous chapter established runtime control. This chapter moves into composition: how to package repeated successful behavior into reusable capability. The next chapter covers workflows as deterministic scaffolding.</p>
+<p>Previous / 上一章：<a href="course-07.html">07. Runtime Control</a> | Next / 下一章：<a href="course-09.html">09. Workflows as Deterministic Scaffolding</a></p>
+<h2 id="3-learning-outcomes--学习目标">3. Learning Outcomes / 学习目标</h2>
+<ul>
+<li>中文：解释 <code>Skills as Capability Packaging</code> 在 Agent Harness 中解决的工程问题。<br>
+English: Explain the engineering problem solved by <code>Skills as Capability Packaging</code> inside an Agent Harness.</li>
+<li>中文：用本章思维模型审查一个真实 Agent 设计。<br>
+English: Use this chapter’s mental model to review a real agent design.</li>
+<li>中文：产出本章对应的设计 artifact，并把它接入 Course Builder Harness 贯穿案例。<br>
+English: Produce the chapter artifact and connect it to the Course Builder Harness case study.</li>
+<li>中文：识别本章相关的典型失败模式。<br>
+English: Identify typical failure modes related to this chapter.</li>
+</ul>
+<h2 id="4-the-engineering-problem--工程问题">4. The Engineering Problem / 工程问题</h2>
+<p><strong>中文</strong>：如果每次任务都重新写 prompt、重新选择工具、重新解释流程，系统就无法积累能力。Skill 的意义是把一类任务的成功路径沉淀下来，让 Agent 能稳定复用，而不是每次从零探索。</p>
+<p><strong>English</strong>: If every task rewrites prompts, reselects tools, and re-explains the process, the system cannot accumulate capability. A skill captures a successful path for a class of tasks so the agent can reuse it reliably instead of exploring from scratch every time.</p>
+<h2 id="5-mental-model--思维模型">5. Mental Model / 思维模型</h2>
+<p><strong>中文</strong>：把 skill 看成工程团队中的“标准作业能力包”。它告诉 Agent：面对这类任务，应该使用哪些信息、哪些工具、哪些步骤、哪些限制，以及如何判断结果好坏。</p>
+<p><strong>English</strong>: Think of a skill as a standard operating capability package. It tells the agent what information, tools, steps, constraints, and quality criteria to use for this class of task.</p>
+<h2 id="6-harness-abstraction--harness-抽象">6. Harness Abstraction / Harness 抽象</h2>
+<h3 id="skill-manifest--技能清单">Skill manifest / 技能清单</h3>
+<ul>
+<li>中文：描述 skill 名称、目标、输入输出、依赖工具、权限、运行策略和版本。</li>
+<li>English: Describes skill name, goal, inputs, outputs, required tools, permissions, runtime policy, and version.</li>
+</ul>
+<h3 id="instruction-bundle--指令包">Instruction bundle / 指令包</h3>
+<ul>
+<li>中文：该 skill 的具体操作原则、风格、约束和错误处理建议。</li>
+<li>English: The skill’s operating principles, style, constraints, and error-handling guidance.</li>
+</ul>
+<h3 id="examples--示例">Examples / 示例</h3>
+<ul>
+<li>中文：高质量输入输出样例，帮助模型理解任务分布和质量标准。</li>
+<li>English: High-quality input-output examples that help the model understand task distribution and quality criteria.</li>
+</ul>
+<h3 id="evals--评测">Evals / 评测</h3>
+<ul>
+<li>中文：用于判断 skill 是否仍然有效的测试集和 rubric。</li>
+<li>English: Tests and rubrics used to judge whether the skill remains effective.</li>
+</ul>
+<h3 id="skill-registry--技能注册表">Skill registry / 技能注册表</h3>
+<ul>
+<li>中文：集中管理可用 skill、版本、依赖和授权范围。</li>
+<li>English: A central registry that manages available skills, versions, dependencies, and authorization scope.</li>
+</ul>
+<h2 id="7-reference-diagram--参考图">7. Reference Diagram / 参考图</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">flowchart TD</span></span>
+<span class="line"><span style="color:#E1E4E8">    Goal[Task Class] --> Skill[Skill Package]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Skill --> Manifest[Manifest]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Skill --> Instructions[Instructions]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Skill --> Tools[Tool Dependencies]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Skill --> Examples[Examples]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Skill --> Evals[Evals]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Skill --> Policy[Safety + Permissions]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Skill --> Runtime[Runtime Hints]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Skill --> Agent[Agent Runtime]</span></span></code></pre>
+<h2 id="8-design-principles--设计原则">8. Design Principles / 设计原则</h2>
+<ul>
+<li><strong>中文</strong>：Skill 封装的是完成任务的方法，不只是调用工具的方法。<br>
+<strong>English</strong>: A skill packages how to complete a task, not only how to call tools.</li>
+<li><strong>中文</strong>：每个 skill 都应该有适用范围和不适用范围。<br>
+<strong>English</strong>: Every skill should define where it applies and where it does not.</li>
+<li><strong>中文</strong>：可复用能力必须可评测。<br>
+<strong>English</strong>: Reusable capability must be evaluable.</li>
+<li><strong>中文</strong>：Skill 需要版本管理，因为能力封装会演化。<br>
+<strong>English</strong>: Skills need versioning because capability packages evolve.</li>
+<li><strong>中文</strong>：不要把高风险权限隐含在 skill 中。<br>
+<strong>English</strong>: Do not hide high-risk permissions inside a skill.</li>
+</ul>
+<h2 id="9-reference-implementation-direction--参考实现方向">9. Reference Implementation Direction / 参考实现方向</h2>
+<p><strong>中文</strong>：本课程强调“思维 > 具体方案”。参考实现的作用是帮助理解抽象，不应把某个框架、SDK 或协议等同于 Harness 本身。实现时建议先写清楚边界、状态和失败路径，再选择具体技术。</p>
+<p><strong>English</strong>: This course emphasizes “thinking > specific solution.” A reference implementation exists to explain the abstraction; no framework, SDK, or protocol should be equated with the harness itself. In implementation, specify boundaries, state, and failure paths before choosing technologies.</p>
+<p>Recommended implementation notes / 推荐实现备注：</p>
+<ul>
+<li>中文：用 Markdown 或 YAML 保存设计决策，便于版本化和评审。<br>
+English: Store design decisions in Markdown or YAML so they can be versioned and reviewed.</li>
+<li>中文：把本章 artifact 放入仓库的 <code>docs/design/</code> 或 <code>labs/</code> 目录。<br>
+English: Place this chapter artifact under <code>docs/design/</code> or <code>labs/</code> in the repository.</li>
+<li>中文：每次修改抽象边界后，都要更新相邻章节的接口假设。<br>
+English: Whenever an abstraction boundary changes, update the interface assumptions of adjacent chapters.</li>
+</ul>
+<h2 id="10-failure-modes--失效模式">10. Failure Modes / 失效模式</h2>
+<h3 id="prompt-fragment-as-skill">Prompt fragment as skill</h3>
+<ul>
+<li>中文：只保存一段 prompt，却没有输入输出、工具、权限和评测。</li>
+<li>English: Stores only a prompt fragment without inputs, outputs, tools, permissions, or evaluation.</li>
+</ul>
+<h3 id="over-general-skill">Over-general skill</h3>
+<ul>
+<li>中文：一个 skill 试图覆盖过多任务，导致行为不稳定。</li>
+<li>English: One skill tries to cover too many tasks, causing unstable behavior.</li>
+</ul>
+<h3 id="unversioned-skill">Unversioned skill</h3>
+<ul>
+<li>中文：修改 skill 后无法知道哪个版本导致回归。</li>
+<li>English: After modifying a skill, the team cannot know which version caused regression.</li>
+</ul>
+<h3 id="unsafe-reuse">Unsafe reuse</h3>
+<ul>
+<li>中文：在低风险场景设计的 skill 被复用到高风险场景。</li>
+<li>English: A skill designed for low-risk scenarios is reused in high-risk scenarios.</li>
+</ul>
+<h2 id="11-lab-course-builder-harness--实验课程构建-harness">11. Lab: Course Builder Harness / 实验：课程构建 Harness</h2>
+<ol>
+<li>中文：为 Course Builder Harness 定义 lesson_writer skill。<br>
+English: Define a lesson_writer skill for the Course Builder Harness.</li>
+<li>中文：写出 input_schema：topic、audience、chapter_position、source_materials、style_guide。<br>
+English: Write an input_schema: topic, audience, chapter_position, source_materials, and style_guide.</li>
+<li>中文：写出 output_schema：markdown、summary、image_descriptions、self_check。<br>
+English: Write an output_schema: markdown, summary, image_descriptions, and self_check.</li>
+<li>中文：设计三个 eval cases，用来判断 skill 是否稳定。<br>
+English: Design three eval cases to judge whether the skill is stable.</li>
+</ol>
+<p><strong>Expected artifact / 预期产物</strong>：一个完整 Skill Manifest。 / A complete Skill Manifest.</p>
+<h2 id="12-review-checklist--复盘清单">12. Review Checklist / 复盘清单</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能在自己的设计中落实：Skill 封装的是完成任务的方法，不只是调用工具的方法。<br>
+English: I can apply this principle in my own design: A skill packages how to complete a task, not only how to call tools.</li>
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能在自己的设计中落实：每个 skill 都应该有适用范围和不适用范围。<br>
+English: I can apply this principle in my own design: Every skill should define where it applies and where it does not.</li>
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能在自己的设计中落实：可复用能力必须可评测。<br>
+English: I can apply this principle in my own design: Reusable capability must be evaluable.</li>
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能识别并避免 <code>Prompt fragment as skill</code>：只保存一段 prompt，却没有输入输出、工具、权限和评测。<br>
+English: I can identify and avoid <code>Prompt fragment as skill</code>: Stores only a prompt fragment without inputs, outputs, tools, permissions, or evaluation.</li>
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能识别并避免 <code>Over-general skill</code>：一个 skill 试图覆盖过多任务，导致行为不稳定。<br>
+English: I can identify and avoid <code>Over-general skill</code>: One skill tries to cover too many tasks, causing unstable behavior.</li>
+</ul>
+<h2 id="13-image-descriptions--图片描述">13. Image Descriptions / 图片描述</h2>
+<h3 id="技能包-exploded-view">技能包 exploded view</h3>
+<ul>
+<li>中文图像描述：一个 skill 被拆开展示为 manifest、instructions、tools、examples、evals、policy、runtime hints。</li>
+<li>English image prompt: An exploded view of a skill package showing manifest, instructions, tools, examples, evals, policy, and runtime hints.</li>
+</ul>
+<h3 id="工具与技能对比图">工具与技能对比图</h3>
+<ul>
+<li>中文图像描述：左边是单个 tool 的扳手图标，右边是 skill 的工具箱，强调 skill 是更高层能力封装。</li>
+<li>English image prompt: A comparison: a single wrench icon for a tool on the left, and a toolbox for a skill on the right, emphasizing that a skill is a higher-level capability package.</li>
+</ul>
+<h2 id="skill-manifest-template--技能清单模板">Skill Manifest Template / 技能清单模板</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">lesson_writer</span></span>
+<span class="line"><span style="color:#85E89D">version</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.1.0</span></span>
+<span class="line"><span style="color:#85E89D">goal</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Generate a bilingual course lesson in Markdown.</span></span>
+<span class="line"><span style="color:#85E89D">inputs</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">topic</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">audience</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">chapter_position</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">source_materials</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">style_guide</span></span>
+<span class="line"><span style="color:#85E89D">outputs</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">markdown</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">summary</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">image_descriptions</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">self_check</span></span>
+<span class="line"><span style="color:#85E89D">tools</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">read_file</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">search_repo</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">write_draft</span></span>
+<span class="line"><span style="color:#85E89D">permissions</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  default</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">draft_only</span></span>
+<span class="line"><span style="color:#85E89D">evals</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">structure_completeness</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">bilingual_consistency</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">philosophy_alignment</span></span></code></pre>
+<h2 id="14-key-takeaways--关键总结">14. Key Takeaways / 关键总结</h2>
+<ul>
+<li>中文：<code>Skills as Capability Packaging</code> 不是孤立模块，而是 Agent Harness 处理不确定性的一层工程边界。</li>
+<li>English: <code>Skills as Capability Packaging</code> is not an isolated module; it is one engineering boundary through which the Agent Harness handles uncertainty.</li>
+<li>中文：具体工具会变化，但本章的判断问题应保持稳定：边界是什么，证据在哪里，失败如何恢复。</li>
+<li>English: Specific tools will change, but the chapter’s judgment questions should remain stable: what is the boundary, where is the evidence, and how does failure recover?</li>
+</ul> </article>  <nav class="learn-pager bottom" aria-label="学习页目录导航"> <a href="course-07.html"><span>上一节</span><strong>Runtime Control / 运行时控制</strong></a> <a href="course-09.html"><span>下一节</span><strong>Workflows as Deterministic Scaffolding / 工作流作为确定性支架</strong></a> </nav> </div> </section>  </main> <footer class="footer"><span>HARNESS_ATLAS / 学习</span><span>CC BY 4.0 + MIT</span></footer> </div> </body></html>

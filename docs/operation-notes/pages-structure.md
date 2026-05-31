@@ -47,10 +47,18 @@ When updating the Chinese homepage, keep navigation labels, CTA buttons, section
 
 ## Learning Shell
 
-- Learning directory entries should be static course subpages under the same learning shell: `course-01.html` through `course-11.html`, plus `course-other-glossary.html`.
+- Learning directory entries should be static course subpages under the same learning shell: `course-01.html` through `course-15.html`, plus `course-other-glossary.html`.
 - Do not reintroduce `course.html` as `00 学习路线`; the course entry point is `course-01.html`, and stale generated `docs/course.html` should be moved to Trash before release if it exists.
 - The left learning sidebar must stay visible on every learning subpage and should not use in-page hash links or jump to a non-learning page.
 - The body should render the active lesson content, not duplicate the full course outline that already lives in the sidebar.
+
+## Official Course Content Import
+
+- The formal course package is 15 Markdown chapters under `course/chapters/`, plus resource files under `course/resources/`.
+- Render chapter Markdown through Astro Markdown imports in `src/pages/course-*.astro`; keep `src/data/site.mjs` limited to route metadata, titles, subtitles, and pager/sidebar order.
+- Rewrite intra-chapter Markdown links from source-file paths such as `./02-task-environment-and-boundary.md` to public routes such as `course-02.html`, otherwise generated Pages output will contain broken local links.
+- After importing course content, run `npm run build`, copy `dist/.` into `docs/`, then run `npm test`. The tests compare generated `dist` artifacts byte-for-byte with checked-in `docs`, so a skipped copy is caught.
+- Browser smoke should cover at least `course-01.html` and `course-15.html` on desktop and mobile widths. If Playwright's bundled browser is missing, use the local Chrome executable with Playwright instead of installing browsers during a normal content update.
 
 ## Local Browser Smoke
 

@@ -3,11 +3,11 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, normalize } from "node:path";
 import test from "node:test";
 import { homePages } from "../src/data/home.mjs";
-import { getNav, githubStars, localeMessages, locales, navModel } from "../src/data/site.mjs";
+import { courseLessons, getNav, githubStars, glossaryPage, localeMessages, locales, navModel } from "../src/data/site.mjs";
 
 const root = new URL("..", import.meta.url).pathname;
 const docs = join(root, "docs");
-const courseLessonPages = Array.from({ length: 11 }, (_, index) => {
+const courseLessonPages = Array.from({ length: 15 }, (_, index) => {
   return `course-${String(index + 1).padStart(2, "0")}.html`;
 });
 
@@ -402,18 +402,8 @@ test("Chinese homepage merges industry updates into the first-scroll experience"
 
 test("Learning page exposes a left-side directory navigation", () => {
   const learningPages = [
-    ["course-01.html", "Agent Harness 定义"],
-    ["course-02.html", "Context Engineering"],
-    ["course-03.html", "Tools and MCP"],
-    ["course-04.html", "Skills and Workflows"],
-    ["course-05.html", "State, Memory and Session"],
-    ["course-06.html", "Planning and Execution Loop"],
-    ["course-07.html", "Multi-agent Orchestration"],
-    ["course-08.html", "Evaluation and Benchmark"],
-    ["course-09.html", "Security, Permission and Governance"],
-    ["course-10.html", "Product Architecture"],
-    ["course-11.html", "Future of Harness"],
-    ["course-other-glossary.html", "术语表"],
+    ...courseLessons.map((lesson) => [lesson.href, lesson.title]),
+    ["course-other-glossary.html", glossaryPage.heading],
   ];
 
   for (const [page, heading] of learningPages) {
@@ -426,7 +416,7 @@ test("Learning page exposes a left-side directory navigation", () => {
     assert.match(html, new RegExp(`<h1 class="content-title">${heading}</h1>`), `${page} should render its learning subpage`);
     assert.match(html, /class="learn-content"/, `${page} should include a main content panel`);
     assert.match(sidebar, /href="course-01\.html"/);
-    assert.match(sidebar, /href="course-11\.html"/);
+    assert.match(sidebar, /href="course-15\.html"/);
     assert.match(sidebar, /href="course-other-glossary\.html"/);
     assert.doesNotMatch(sidebar, /href="course\.html"/);
     assert.doesNotMatch(sidebar, />学习路线</);
@@ -439,18 +429,8 @@ test("Learning page exposes a left-side directory navigation", () => {
 
 test("Learning pages expose previous and next navigation at top and bottom", () => {
   const sequence = [
-    ["course-01.html", "Agent Harness 定义"],
-    ["course-02.html", "Context Engineering"],
-    ["course-03.html", "Tools and MCP"],
-    ["course-04.html", "Skills and Workflows"],
-    ["course-05.html", "State, Memory and Session"],
-    ["course-06.html", "Planning and Execution Loop"],
-    ["course-07.html", "Multi-agent Orchestration"],
-    ["course-08.html", "Evaluation and Benchmark"],
-    ["course-09.html", "Security, Permission and Governance"],
-    ["course-10.html", "Product Architecture"],
-    ["course-11.html", "Future of Harness"],
-    ["course-other-glossary.html", "术语表"],
+    ...courseLessons.map((lesson) => [lesson.href, lesson.title]),
+    ["course-other-glossary.html", glossaryPage.heading],
   ];
 
   sequence.forEach(([page], index) => {

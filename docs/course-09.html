@@ -1,2 +1,160 @@
-<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Security, Permission and Governance · Harness Atlas</title><meta name="description" content="Harness Atlas Security, Permission and Governance。"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preload" href="assets/css/style.css" as="style"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/learn.css"><link rel="prefetch" href="course-01.html"><link rel="prefetch" href="products.html"><link rel="prefetch" href="timeline.html"></head> <body> <div class="wrap"> <header class="top"> <a class="brand" href="./" aria-label="Harness Atlas 首页"> <span class="brand-mark" aria-hidden="true"></span> <span>HARNESS_ATLAS</span> </a> <nav class="nav" aria-label="主导航"> <a href="./"> <span>首页</span>  </a><a href="course-01.html"> <span>学习</span>  </a><a href="products.html"> <span>生态</span>  </a><a href="en.html"> <span>EN</span>  </a><a href="https://github.com/ceasarXuu/harness-atlas" target="_blank" rel="noreferrer"> <span>GitHub</span> <span class="nav-stat" aria-label="GitHub stars">
-★ 0 </span> </a> </nav> </header> <main>  <section class="section learn-shell"> <aside class="learn-sidebar" aria-label="学习目录"> <p class="section-kicker">学习目录</p> <nav class="learn-nav" aria-label="学习页目录导航"> <a href="course-01.html"><span>01</span>Agent Harness 定义</a><a href="course-02.html"><span>02</span>Context Engineering</a><a href="course-03.html"><span>03</span>Tools and MCP</a><a href="course-04.html"><span>04</span>Skills and Workflows</a><a href="course-05.html"><span>05</span>State, Memory and Session</a><a href="course-06.html"><span>06</span>Planning and Execution Loop</a><a href="course-07.html"><span>07</span>Multi-agent Orchestration</a><a href="course-08.html"><span>08</span>Evaluation and Benchmark</a><a class="active" href="course-09.html"><span>09</span>Security, Permission and Governance</a><a href="course-10.html"><span>10</span>Product Architecture</a><a href="course-11.html"><span>11</span>Future of Harness</a> <p class="learn-nav-group">其他</p> <a href="course-other-glossary.html"><span>其他</span>术语表</a> </nav> </aside> <div class="learn-content"> <nav class="learn-pager top" aria-label="学习页目录导航"> <a href="course-08.html"><span>上一节</span><strong>Evaluation and Benchmark</strong></a> <a href="course-10.html"><span>下一节</span><strong>Product Architecture</strong></a> </nav> <p class="section-kicker">学习 / Security, Permission and Governance</p> <h1 class="content-title">Security, Permission and Governance</h1> <p class="section-intro">设计安全边界、审计、风险和组织治理，让 Agent 能进入真实工程系统而不突破控制面。</p>  <div class="matrix compact-matrix"> <div class="cell"><span>目标</span><h3>本课目标</h3><p>理解 Security, Permission and Governance 在 Agent Harness 中解决的问题。</p></div><div class="cell"><span>关注点</span><h3>关键边界</h3><p>设计安全边界、审计、风险和组织治理，让 Agent 能进入真实工程系统而不突破控制面。</p></div><div class="cell"><span>输出</span><h3>学习产出</h3><p>能够把这一节内容映射到真实产品、协议或工程流程，并形成可复查的判断。</p></div> </div>  <nav class="learn-pager bottom" aria-label="学习页目录导航"> <a href="course-08.html"><span>上一节</span><strong>Evaluation and Benchmark</strong></a> <a href="course-10.html"><span>下一节</span><strong>Product Architecture</strong></a> </nav> </div> </section>  </main> <footer class="footer"><span>HARNESS_ATLAS / 学习</span><span>CC BY 4.0 + MIT</span></footer> </div> </body></html>
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Workflows as Deterministic Scaffolding / 工作流作为确定性支架 · Harness Atlas</title><meta name="description" content="Harness Atlas Workflows as Deterministic Scaffolding / 工作流作为确定性支架。"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preload" href="assets/css/style.css" as="style"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/learn.css"><link rel="prefetch" href="course-01.html"><link rel="prefetch" href="products.html"><link rel="prefetch" href="timeline.html"></head> <body> <div class="wrap"> <header class="top"> <a class="brand" href="./" aria-label="Harness Atlas 首页"> <span class="brand-mark" aria-hidden="true"></span> <span>HARNESS_ATLAS</span> </a> <nav class="nav" aria-label="主导航"> <a href="./"> <span>首页</span>  </a><a href="course-01.html"> <span>学习</span>  </a><a href="products.html"> <span>生态</span>  </a><a href="en.html"> <span>EN</span>  </a><a href="https://github.com/ceasarXuu/harness-atlas" target="_blank" rel="noreferrer"> <span>GitHub</span> <span class="nav-stat" aria-label="GitHub stars">
+★ 0 </span> </a> </nav> </header> <main>  <section class="section learn-shell"> <aside class="learn-sidebar" aria-label="学习目录"> <p class="section-kicker">学习目录</p> <nav class="learn-nav" aria-label="学习页目录导航"> <a href="course-01.html"><span>01</span>Why Agent Harness / 为什么需要 Agent Harness</a><a href="course-02.html"><span>02</span>Task, Environment and Boundary / 任务、环境与边界</a><a href="course-03.html"><span>03</span>Minimal Harness / 最小 Agent Harness</a><a href="course-04.html"><span>04</span>Context as Information Boundary / 上下文作为信息边界</a><a href="course-05.html"><span>05</span>Tools and MCP as Action Boundary / 工具与 MCP 作为动作边界</a><a href="course-06.html"><span>06</span>State, Session and Memory / 状态、会话与记忆</a><a href="course-07.html"><span>07</span>Runtime Control / 运行时控制</a><a href="course-08.html"><span>08</span>Skills as Capability Packaging / 技能作为能力封装</a><a class="active" href="course-09.html"><span>09</span>Workflows as Deterministic Scaffolding / 工作流作为确定性支架</a><a href="course-10.html"><span>10</span>Multi-agent Orchestration / 多 Agent 编排</a><a href="course-11.html"><span>11</span>Observability and Debugging / 可观测性与调试</a><a href="course-12.html"><span>12</span>Evaluation, Testing and Benchmarking / 评测、测试与基准</a><a href="course-13.html"><span>13</span>Security, Permissions and Governance / 安全、权限与治理</a><a href="course-14.html"><span>14</span>Production Architecture / 生产架构</a><a href="course-15.html"><span>15</span>Patterns, Anti-patterns and Future / 模式、反模式与未来</a> <p class="learn-nav-group">其他</p> <a href="course-other-glossary.html"><span>其他</span>Bilingual Glossary / 中英术语表</a> </nav> </aside> <div class="learn-content"> <nav class="learn-pager top" aria-label="学习页目录导航"> <a href="course-08.html"><span>上一节</span><strong>Skills as Capability Packaging / 技能作为能力封装</strong></a> <a href="course-10.html"><span>下一节</span><strong>Multi-agent Orchestration / 多 Agent 编排</strong></a> </nav> <p class="section-kicker">学习 / Workflows as Deterministic Scaffolding / 工作流作为确定性支架</p> <h1 class="content-title">Workflows as Deterministic Scaffolding / 工作流作为确定性支架</h1> <p class="section-intro">把确定性留给代码，把不确定性留给模型 / Leave determinism to code and uncertainty to the model</p>  <article class="chapter-content"> <h1 id="09-workflows-as-deterministic-scaffolding--工作流作为确定性支架">09. Workflows as Deterministic Scaffolding / 工作流作为确定性支架</h1>
+<blockquote>
+<p><strong>本章副标题 / Subtitle</strong><br>
+中文：把确定性留给代码，把不确定性留给模型<br>
+English: Leave determinism to code and uncertainty to the model</p>
+</blockquote>
+<h2 id="1-chapter-thesis--本章命题">1. Chapter Thesis / 本章命题</h2>
+<p><strong>中文</strong>：Workflow 不是 Agent 的反面，而是 Agent 的支架。好的 Harness 会把可确定、可枚举、可验证的部分写成流程，把开放判断、解释和生成交给模型。</p>
+<p><strong>English</strong>: A workflow is not the opposite of an agent; it is the agent’s scaffold. A good harness encodes deterministic, enumerable, and verifiable parts as workflow, while leaving open-ended judgment, explanation, and generation to the model.</p>
+<h2 id="2-how-this-chapter-connects--前后关联">2. How This Chapter Connects / 前后关联</h2>
+<p><strong>中文</strong>：上一章讲 skill 如何封装能力。本章讲 workflow 如何组织这些能力并约束执行顺序。下一章会讨论多 Agent 如何在更复杂组织中分工。</p>
+<p><strong>English</strong>: The previous chapter explained how skills package capability. This chapter explains how workflows organize those capabilities and constrain execution order. The next chapter covers multi-agent division of labor in more complex organizations.</p>
+<p>Previous / 上一章：<a href="course-08.html">08. Skills as Capability Packaging</a> | Next / 下一章：<a href="course-10.html">10. Multi-agent Orchestration</a></p>
+<h2 id="3-learning-outcomes--学习目标">3. Learning Outcomes / 学习目标</h2>
+<ul>
+<li>中文：解释 <code>Workflows as Deterministic Scaffolding</code> 在 Agent Harness 中解决的工程问题。<br>
+English: Explain the engineering problem solved by <code>Workflows as Deterministic Scaffolding</code> inside an Agent Harness.</li>
+<li>中文：用本章思维模型审查一个真实 Agent 设计。<br>
+English: Use this chapter’s mental model to review a real agent design.</li>
+<li>中文：产出本章对应的设计 artifact，并把它接入 Course Builder Harness 贯穿案例。<br>
+English: Produce the chapter artifact and connect it to the Course Builder Harness case study.</li>
+<li>中文：识别本章相关的典型失败模式。<br>
+English: Identify typical failure modes related to this chapter.</li>
+</ul>
+<h2 id="4-the-engineering-problem--工程问题">4. The Engineering Problem / 工程问题</h2>
+<p><strong>中文</strong>：很多 Agent 系统不稳定，是因为把确定性流程也交给模型决定。例如文件读取顺序、构建命令、审批流程、输出校验、提交前检查，这些并不需要模型自由发挥。Workflow 的价值是降低不确定性。</p>
+<p><strong>English</strong>: Many agent systems are unstable because deterministic procedures are delegated to the model: file-read order, build commands, approval flow, output validation, pre-commit checks. These do not need model creativity. The value of workflow is to reduce uncertainty.</p>
+<h2 id="5-mental-model--思维模型">5. Mental Model / 思维模型</h2>
+<p><strong>中文</strong>：把 workflow 看成轨道，把 Agent 看成在轨道上做判断的驾驶员。轨道限制了危险空间，驾驶员处理开放情境。没有轨道，驾驶员会乱跑；没有驾驶员，轨道只能处理固定路径。</p>
+<p><strong>English</strong>: Think of workflow as rails and the agent as a driver making judgments on the rails. Rails limit dangerous space; the driver handles open situations. Without rails, the driver wanders; without a driver, rails only handle fixed paths.</p>
+<h2 id="6-harness-abstraction--harness-抽象">6. Harness Abstraction / Harness 抽象</h2>
+<h3 id="deterministic-step--确定性步骤">Deterministic step / 确定性步骤</h3>
+<ul>
+<li>中文：输入输出明确、规则固定、无需模型判断的步骤。</li>
+<li>English: A step with clear input-output behavior and fixed rules that does not require model judgment.</li>
+</ul>
+<h3 id="agentic-step--agent-步骤">Agentic step / Agent 步骤</h3>
+<ul>
+<li>中文：需要开放判断、语义理解、生成、解释或探索的步骤。</li>
+<li>English: A step requiring open-ended judgment, semantic understanding, generation, explanation, or exploration.</li>
+</ul>
+<h3 id="workflow-graph--工作流图">Workflow graph / 工作流图</h3>
+<ul>
+<li>中文：步骤、依赖、分支和终止条件的显式结构。</li>
+<li>English: An explicit structure of steps, dependencies, branches, and termination conditions.</li>
+</ul>
+<h3 id="validator--校验器">Validator / 校验器</h3>
+<ul>
+<li>中文：用确定性规则检查模型输出或工具结果。</li>
+<li>English: Uses deterministic rules to check model output or tool results.</li>
+</ul>
+<h3 id="router--路由器">Router / 路由器</h3>
+<ul>
+<li>中文：根据任务类型、风险、上下文或结果选择下一条路径。</li>
+<li>English: Selects the next path based on task type, risk, context, or result.</li>
+</ul>
+<h2 id="7-reference-diagram--参考图">7. Reference Diagram / 参考图</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">flowchart TD</span></span>
+<span class="line"><span style="color:#E1E4E8">    Start[Task Intake] --> ValidateInput[Deterministic Input Validation]</span></span>
+<span class="line"><span style="color:#E1E4E8">    ValidateInput --> Classify[Agentic Classification]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Classify --> Draft[Agentic Draft]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Draft --> Lint[Deterministic Markdown Lint]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Lint --> Build[Deterministic Build]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Build --> Review[Agentic Review]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Review --> Gate{Approval Required?}</span></span>
+<span class="line"><span style="color:#E1E4E8">    Gate -->|Yes| Human[Human Approval]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Gate -->|No| Save[Save Draft]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Human --> Publish[Publish]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Save --> Done[Done]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Publish --> Done</span></span></code></pre>
+<h2 id="8-design-principles--设计原则">8. Design Principles / 设计原则</h2>
+<ul>
+<li><strong>中文</strong>：确定性流程不应交给模型即兴决定。<br>
+<strong>English</strong>: Deterministic procedures should not be improvised by the model.</li>
+<li><strong>中文</strong>：Workflow 负责结构，Agent 负责判断。<br>
+<strong>English</strong>: Workflow owns structure; the agent owns judgment.</li>
+<li><strong>中文</strong>：每个 Agentic step 后最好有 validator。<br>
+<strong>English</strong>: Each agentic step should ideally be followed by a validator.</li>
+<li><strong>中文</strong>：高风险分支应显式建模，而不是靠模型自觉。<br>
+<strong>English</strong>: High-risk branches should be explicitly modeled, not left to model self-discipline.</li>
+<li><strong>中文</strong>：不要为了显得智能而放弃可预测性。<br>
+<strong>English</strong>: Do not abandon predictability just to appear intelligent.</li>
+</ul>
+<h2 id="9-reference-implementation-direction--参考实现方向">9. Reference Implementation Direction / 参考实现方向</h2>
+<p><strong>中文</strong>：本课程强调“思维 > 具体方案”。参考实现的作用是帮助理解抽象，不应把某个框架、SDK 或协议等同于 Harness 本身。实现时建议先写清楚边界、状态和失败路径，再选择具体技术。</p>
+<p><strong>English</strong>: This course emphasizes “thinking > specific solution.” A reference implementation exists to explain the abstraction; no framework, SDK, or protocol should be equated with the harness itself. In implementation, specify boundaries, state, and failure paths before choosing technologies.</p>
+<p>Recommended implementation notes / 推荐实现备注：</p>
+<ul>
+<li>中文：用 Markdown 或 YAML 保存设计决策，便于版本化和评审。<br>
+English: Store design decisions in Markdown or YAML so they can be versioned and reviewed.</li>
+<li>中文：把本章 artifact 放入仓库的 <code>docs/design/</code> 或 <code>labs/</code> 目录。<br>
+English: Place this chapter artifact under <code>docs/design/</code> or <code>labs/</code> in the repository.</li>
+<li>中文：每次修改抽象边界后，都要更新相邻章节的接口假设。<br>
+English: Whenever an abstraction boundary changes, update the interface assumptions of adjacent chapters.</li>
+</ul>
+<h2 id="10-failure-modes--失效模式">10. Failure Modes / 失效模式</h2>
+<h3 id="agent-does-everything">Agent does everything</h3>
+<ul>
+<li>中文：把所有流程控制交给模型，导致不可复现。</li>
+<li>English: Hands all process control to the model, causing poor reproducibility.</li>
+</ul>
+<h3 id="rigid-workflow">Rigid workflow</h3>
+<ul>
+<li>中文：完全写死流程，无法处理开放任务。</li>
+<li>English: Hard-codes the entire process and cannot handle open-ended tasks.</li>
+</ul>
+<h3 id="no-validation-after-generation">No validation after generation</h3>
+<ul>
+<li>中文：生成结果直接进入下一步，错误被放大。</li>
+<li>English: Generated output directly enters the next step and errors amplify.</li>
+</ul>
+<h3 id="hidden-branch-logic">Hidden branch logic</h3>
+<ul>
+<li>中文：分支条件藏在 prompt 中，而不是 workflow graph 中。</li>
+<li>English: Branch conditions are hidden in prompts instead of workflow graphs.</li>
+</ul>
+<h2 id="11-lab-course-builder-harness--实验课程构建-harness">11. Lab: Course Builder Harness / 实验：课程构建 Harness</h2>
+<ol>
+<li>中文：设计一个章节生成 workflow：intake、context build、draft、review、lint、build、approval、publish。<br>
+English: Design a chapter-generation workflow: intake, context build, draft, review, lint, build, approval, publish.</li>
+<li>中文：标记哪些步骤是 deterministic，哪些步骤是 agentic。<br>
+English: Mark which steps are deterministic and which are agentic.</li>
+<li>中文：为 draft 输出设计一个 validator。<br>
+English: Design a validator for draft output.</li>
+<li>中文：为 publish 步骤设计人工审批。<br>
+English: Design human approval for the publish step.</li>
+</ol>
+<p><strong>Expected artifact / 预期产物</strong>：Course Publishing Hybrid Workflow 图和步骤说明。 / A Course Publishing Hybrid Workflow diagram and step description.</p>
+<h2 id="12-review-checklist--复盘清单">12. Review Checklist / 复盘清单</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能在自己的设计中落实：确定性流程不应交给模型即兴决定。<br>
+English: I can apply this principle in my own design: Deterministic procedures should not be improvised by the model.</li>
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能在自己的设计中落实：Workflow 负责结构，Agent 负责判断。<br>
+English: I can apply this principle in my own design: Workflow owns structure; the agent owns judgment.</li>
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能在自己的设计中落实：每个 Agentic step 后最好有 validator。<br>
+English: I can apply this principle in my own design: Each agentic step should ideally be followed by a validator.</li>
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能识别并避免 <code>Agent does everything</code>：把所有流程控制交给模型，导致不可复现。<br>
+English: I can identify and avoid <code>Agent does everything</code>: Hands all process control to the model, causing poor reproducibility.</li>
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能识别并避免 <code>Rigid workflow</code>：完全写死流程，无法处理开放任务。<br>
+English: I can identify and avoid <code>Rigid workflow</code>: Hard-codes the entire process and cannot handle open-ended tasks.</li>
+</ul>
+<h2 id="13-image-descriptions--图片描述">13. Image Descriptions / 图片描述</h2>
+<h3 id="轨道与驾驶员类比">轨道与驾驶员类比</h3>
+<ul>
+<li>中文图像描述：轨道代表 workflow，驾驶员代表 Agent，路牌代表 validators，收费站代表 approval gates。</li>
+<li>English image prompt: Rails represent workflow, a driver represents the agent, road signs represent validators, and toll gates represent approval gates.</li>
+</ul>
+<h3 id="混合工作流图">混合工作流图</h3>
+<ul>
+<li>中文图像描述：用不同形状区分 deterministic steps、agentic steps、approval gates、validators。</li>
+<li>English image prompt: A hybrid workflow diagram using different shapes for deterministic steps, agentic steps, approval gates, and validators.</li>
+</ul>
+<h2 id="14-key-takeaways--关键总结">14. Key Takeaways / 关键总结</h2>
+<ul>
+<li>中文：<code>Workflows as Deterministic Scaffolding</code> 不是孤立模块，而是 Agent Harness 处理不确定性的一层工程边界。</li>
+<li>English: <code>Workflows as Deterministic Scaffolding</code> is not an isolated module; it is one engineering boundary through which the Agent Harness handles uncertainty.</li>
+<li>中文：具体工具会变化，但本章的判断问题应保持稳定：边界是什么，证据在哪里，失败如何恢复。</li>
+<li>English: Specific tools will change, but the chapter’s judgment questions should remain stable: what is the boundary, where is the evidence, and how does failure recover?</li>
+</ul> </article>  <nav class="learn-pager bottom" aria-label="学习页目录导航"> <a href="course-08.html"><span>上一节</span><strong>Skills as Capability Packaging / 技能作为能力封装</strong></a> <a href="course-10.html"><span>下一节</span><strong>Multi-agent Orchestration / 多 Agent 编排</strong></a> </nav> </div> </section>  </main> <footer class="footer"><span>HARNESS_ATLAS / 学习</span><span>CC BY 4.0 + MIT</span></footer> </div> </body></html>

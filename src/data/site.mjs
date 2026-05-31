@@ -85,84 +85,112 @@ export const courseLessons = [
   {
     key: "course-01",
     num: "01",
-    title: "Agent Harness 定义",
+    title: "Why Agent Harness / 为什么需要 Agent Harness",
     href: "course-01.html",
-    body: "厘清概念边界、核心组成与常见误区，先判断什么是 Harness、什么只是一次性提示或工具调用。",
+    body: "从 Prompt 到工程系统 / From prompting to engineering systems",
   },
   {
     key: "course-02",
     num: "02",
-    title: "Context Engineering",
+    title: "Task, Environment and Boundary / 任务、环境与边界",
     href: "course-02.html",
-    body: "学习上下文选择、压缩、注入与刷新机制，理解 Harness 如何把项目事实稳定交给模型。",
+    body: "先设计问题，再设计 Agent / Design the problem before designing the agent",
   },
   {
     key: "course-03",
     num: "03",
-    title: "Tools and MCP",
+    title: "Minimal Harness / 最小 Agent Harness",
     href: "course-03.html",
-    body: "梳理工具协议、Schema、权限和失败恢复，把外部能力变成可审计、可回放、可治理的接口。",
+    body: "一个 Agent Harness 的最小闭环 / The minimal closed loop of an Agent Harness",
   },
   {
     key: "course-04",
     num: "04",
-    title: "Skills and Workflows",
+    title: "Context as Information Boundary / 上下文作为信息边界",
     href: "course-04.html",
-    body: "理解可复用能力、工作流封装和迁移方式，把一次经验沉淀为可以重复调用的任务能力。",
+    body: "Context Engineering 不只是 Prompt Engineering / Context engineering is more than prompt engineering",
   },
   {
     key: "course-05",
     num: "05",
-    title: "State, Memory and Session",
+    title: "Tools and MCP as Action Boundary / 工具与 MCP 作为动作边界",
     href: "course-05.html",
-    body: "处理长任务状态、项目记忆和会话连续性，让 Agent 能在多轮协作里保留判断依据和任务进度。",
+    body: "工具不是插件，而是受控副作用 / Tools are not plugins; they are controlled side effects",
   },
   {
     key: "course-06",
     num: "06",
-    title: "Planning and Execution Loop",
+    title: "State, Session and Memory / 状态、会话与记忆",
     href: "course-06.html",
-    body: "拆解计划、行动、观察、修正的闭环，理解 Harness 如何把开放目标变成可验证步骤。",
+    body: "连续性不是记住更多，而是管理状态 / Continuity is state management, not remembering more",
   },
   {
     key: "course-07",
     num: "07",
-    title: "Multi-agent Orchestration",
+    title: "Runtime Control / 运行时控制",
     href: "course-07.html",
-    body: "学习多 Agent 分工、委派和协作边界，避免并行任务在上下文、权限和结果合并上失控。",
+    body: "规划、执行与恢复 / Planning, execution, and recovery",
   },
   {
     key: "course-08",
     num: "08",
-    title: "Evaluation and Benchmark",
+    title: "Skills as Capability Packaging / 技能作为能力封装",
     href: "course-08.html",
-    body: "建立衡量 Harness 质量的方法，把测试、评审、Benchmark 和运行时信号组合成评估闭环。",
+    body: "从一次性动作到可复用能力单元 / From one-off action to reusable capability unit",
   },
   {
     key: "course-09",
     num: "09",
-    title: "Security, Permission and Governance",
+    title: "Workflows as Deterministic Scaffolding / 工作流作为确定性支架",
     href: "course-09.html",
-    body: "设计安全边界、审计、风险和组织治理，让 Agent 能进入真实工程系统而不突破控制面。",
+    body: "把确定性留给代码，把不确定性留给模型 / Leave determinism to code and uncertainty to the model",
   },
   {
     key: "course-10",
     num: "10",
-    title: "Product Architecture",
+    title: "Multi-agent Orchestration / 多 Agent 编排",
     href: "course-10.html",
-    body: "观察 Harness 产品形态和工程集成架构，理解 IDE、终端、云端和团队平台各自的系统取舍。",
+    body: "多 Agent 是组织设计，不是堆更多 Agent / Multi-agent design is organizational design, not more agents",
   },
   {
     key: "course-11",
     num: "11",
-    title: "Future of Harness",
+    title: "Observability and Debugging / 可观测性与调试",
     href: "course-11.html",
-    body: "跟踪 Agent Harness 生态的长期演进，连接协议标准、产品能力、组织流程和行业动态。",
+    body: "让 Agent Run 可见、可回放、可解释 / Make agent runs visible, replayable, and explainable",
+  },
+  {
+    key: "course-12",
+    num: "12",
+    title: "Evaluation, Testing and Benchmarking / 评测、测试与基准",
+    href: "course-12.html",
+    body: "从行为到证据的反馈系统 / A feedback system from behavior to evidence",
+  },
+  {
+    key: "course-13",
+    num: "13",
+    title: "Security, Permissions and Governance / 安全、权限与治理",
+    href: "course-13.html",
+    body: "限制 Agent 的权力 / Limit the agent’s power",
+  },
+  {
+    key: "course-14",
+    num: "14",
+    title: "Production Architecture / 生产架构",
+    href: "course-14.html",
+    body: "从 Demo 到可交付系统 / From demo to deliverable system",
+  },
+  {
+    key: "course-15",
+    num: "15",
+    title: "Patterns, Anti-patterns and Future / 模式、反模式与未来",
+    href: "course-15.html",
+    body: "设计原则、反模式与未来方向 / Design principles, anti-patterns, and future directions",
   },
 ];
 
 export const learningOther = [
-  { key: "glossary", eyebrow: "其他", label: "术语表", href: "course-other-glossary.html" },
+  { key: "glossary", eyebrow: "其他", label: "Bilingual Glossary / 中英术语表", href: "course-other-glossary.html" },
 ];
 
 export const learningChrome = {
@@ -226,14 +254,14 @@ export const updates = [
 
 export const homeSections = {
   learn: [
-    ["course-01.html", "课程", "第 1 课", "从 Agent Harness 定义开始，按照课程目录逐课进入。"],
+    ["course-01.html", "课程", "第 1 课", "从 Why Agent Harness 开始，按照正式课程目录逐课进入。"],
     ["course-other-glossary.html", "其他", "术语表", "统一 Agent、Harness、Tool、Skill、MCP 等概念边界。"],
   ],
   atlas: [
     ["products.html", "产品", "产品图谱", "整理 Coding Agent、框架、平台和横向能力矩阵。"],
     ["standards.html", "协议", "标准协议", "沉淀 MCP、AGENTS.md、Skills、Tool Calling 等接口规范。"],
     ["patterns.html", "模式", "设计模式", "把产品拆解和工程经验抽象成可复用 Harness 模式。"],
-    ["course-01.html", "架构", "核心组件", "从上下文、工具、状态、记忆、规划、评估和治理理解系统组成。"],
+    ["course-03.html", "架构", "核心组件", "从最小 Harness、上下文、工具、状态、运行时、评测和治理理解系统组成。"],
   ],
   evidence: [
     ["research.html", "研究", "研究资料", "收集论文、实验、理论和研究卡片。"],
@@ -251,11 +279,6 @@ export const courseLessonPages = courseLessons.map((lesson) => {
     heading: lesson.title,
     intro: lesson.body,
     compact: true,
-    cards: [
-      ["目标", "本课目标", `理解 ${lesson.title} 在 Agent Harness 中解决的问题。`],
-      ["关注点", "关键边界", lesson.body],
-      ["输出", "学习产出", "能够把这一节内容映射到真实产品、协议或工程流程，并形成可复查的判断。"],
-    ],
   };
 });
 
@@ -265,24 +288,14 @@ export function getCourseLessonPage(key) {
   return page;
 }
 
-export const glossaryTerms = [
-  ["AGENT", "Agent", "基于模型、上下文、工具和反馈执行任务的行为主体。"],
-  ["HARNESS", "Harness", "围绕 Agent 构建的运行时、控制、编排和治理层。"],
-  ["TOOL", "Tool", "暴露给 Agent 的外部能力，例如 Shell、文件、浏览器或 API。"],
-  ["SKILL", "Skill", "可复用任务能力封装，包含触发条件、步骤、资源和示例。"],
-  ["MCP", "MCP", "连接 AI 应用、工具、资源和外部系统的协议层。"],
-  ["SUB", "Subagent", "在主 Agent 或 Harness 编排下执行局部任务的 Agent。"],
-];
-
 export const glossaryPage = {
   active: "glossary",
   locale: "zh-CN",
   title: "术语表 · Harness Atlas",
-  description: "Agent Harness 相关术语解释。",
-  kicker: "学习 / 术语表",
-  heading: "术语表",
-  intro: "术语表作为学习目录中“其他”下面的一节，用于统一 Agent、Harness、Tool、Skill、Workflow、MCP、Subagent 等概念边界。",
-  cards: glossaryTerms,
+  description: "Agent Harness 双语术语解释。",
+  kicker: "学习 / Bilingual Glossary",
+  heading: "Bilingual Glossary / 中英术语表",
+  intro: "术语表来自正式课程资源，用于统一 Agent Harness、上下文边界、动作边界、运行时控制、工具网关、技能、工作流、跟踪、评测和最小自主权等核心概念。",
 };
 
 export const sectionPages = {

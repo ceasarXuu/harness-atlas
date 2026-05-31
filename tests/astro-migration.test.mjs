@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -9,8 +10,9 @@ const root = new URL("..", import.meta.url).pathname;
 const src = join(root, "src");
 const dist = join(root, "dist");
 const docs = join(root, "docs");
+const course = join(root, "course");
 const pagesBase = "/harness-atlas/";
-const courseLessonPages = Array.from({ length: 11 }, (_, index) => {
+const courseLessonPages = Array.from({ length: 15 }, (_, index) => {
   return `course-${String(index + 1).padStart(2, "0")}.html`;
 });
 
@@ -35,6 +37,10 @@ function readBytes(path) {
   return readFileSync(path);
 }
 
+function sha256(bytes) {
+  return createHash("sha256").update(bytes).digest("hex");
+}
+
 function sourceFiles(dir) {
   return readdirSync(dir).flatMap((entry) => {
     const path = join(dir, entry);
@@ -50,10 +56,59 @@ function publicHtmlPages(dir) {
     .sort();
 }
 
+function htmlPages(dir) {
+  return sourceFiles(dir)
+    .map((path) => relative(dir, path))
+    .filter((path) => path.endsWith(".html"))
+    .sort();
+}
+
 function distArtifactFiles() {
   return sourceFiles(dist)
     .map((path) => relative(dist, path))
     .sort();
+}
+
+function chapterFiles() {
+  return readdirSync(join(course, "chapters"))
+    .filter((file) => /^\d{2}-.*\.md$/.test(file))
+    .sort()
+    .map((file) => `chapters/${file}`);
+}
+
+function markdownFiles(dir) {
+  return sourceFiles(dir)
+    .map((path) => relative(dir, path))
+    .filter((path) => path.endsWith(".md"))
+    .sort();
+}
+
+function chapterHeading(markdown) {
+  return markdown.match(/^# (.+)$/m)?.[1] ?? "";
+}
+
+function chapterSubtitle(markdown, label) {
+  return markdown.match(new RegExp(`${label}[:：]\\s*(.+)`))?.[1].trim() ?? "";
+}
+
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function allowedCourseLinkRewrite(source) {
+  let rewritten = source;
+  for (const chapter of chapterFiles()) {
+    const basename = chapter.split("/").at(-1);
+    const route = `course-${basename.slice(0, 2)}.html`;
+    const escapedChapter = escapeRegex(chapter);
+    const escapedBasename = escapeRegex(basename);
+    rewritten = rewritten
+      .replace(new RegExp(`\\]\\(\\./${escapedChapter}\\)`, "g"), `](${route})`)
+      .replace(new RegExp(`\\]\\(${escapedChapter}\\)`, "g"), `](${route})`)
+      .replace(new RegExp(`\\]\\(\\./${escapedBasename}\\)`, "g"), `](${route})`)
+      .replace(new RegExp(`\\]\\(${escapedBasename}\\)`, "g"), `](${route})`);
+  }
+  return rewritten;
 }
 
 function visibleText(html) {
@@ -94,6 +149,7 @@ test("Astro source uses shared layouts and data instead of raw HTML passthrough"
   assert.doesNotMatch(siteData, /export const (zhNav|enNav)/, "localized nav arrays should not be maintained by hand");
   assert.match(siteData, /export const sectionPages/, "section page metadata should be centralized");
   assert.match(siteData, /export const courseLessons/, "course lessons should be centralized");
+  assert.equal(courseLessons.length, 15, "official course should expose all 15 lessons");
 });
 
 test("Astro build emits static Pages-compatible routes and assets", () => {
@@ -186,12 +242,19 @@ test("Built pages have complete local links and visible content", () => {
 });
 
 test("Checked-in Pages output is synced with Astro dist artifacts", () => {
+  assert.deepEqual(htmlPages(docs), htmlPages(dist), "docs HTML routes should exactly match dist HTML routes");
+
   for (const artifact of distArtifactFiles()) {
     const distPath = join(dist, artifact);
     const docsPath = join(docs, artifact);
 
     assert.ok(existsSync(docsPath), `docs/${artifact} should exist after syncing dist output`);
     assert.deepEqual(readBytes(docsPath), readBytes(distPath), `docs/${artifact} should match dist/${artifact}`);
+  }
+
+  for (const page of htmlPages(docs)) {
+    const html = read(join(docs, page));
+    assert.doesNotMatch(html, /{{|{%|site\./, `docs/${page} should not contain stale Liquid template syntax`);
   }
 });
 
@@ -218,36 +281,110 @@ test("Public HTML discovery covers docs and dist link checks", () => {
 });
 
 test("Course route files select lessons by stable keys", () => {
-  for (let index = 1; index <= 11; index += 1) {
+  for (let index = 1; index <= 15; index += 1) {
     const route = `course-${String(index).padStart(2, "0")}`;
     const source = read(join(src, "pages", `${route}.astro`));
+    const chapter = chapterFiles()[index - 1];
 
     assert.match(source, new RegExp(`getCourseLessonPage\\("${route}"\\)`), `${route}.astro should select by stable lesson key`);
+    assert.match(source, new RegExp(chapter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${route}.astro should import ${chapter}`);
     assert.doesNotMatch(source, /courseLessonPages\[\d+\]/, `${route}.astro should not depend on lesson array indexes`);
   }
 });
 
 test("Course lesson lookup rejects removed or unknown keys", () => {
-  assert.equal(getCourseLessonPage("course-01").heading, "Agent Harness 定义");
+  assert.equal(getCourseLessonPage("course-01").heading, "Why Agent Harness / 为什么需要 Agent Harness");
   assert.throws(() => getCourseLessonPage("course-00"), /Unknown course lesson: course-00/);
   assert.throws(() => getCourseLessonPage("course-missing"), /Unknown course lesson: course-missing/);
 });
 
 test("Course routes render the lesson selected by their route number", () => {
-  for (const lesson of courseLessons) {
+  for (const [index, lesson] of courseLessons.entries()) {
+    const markdown = read(join(course, chapterFiles()[index]));
     const html = read(join(dist, lesson.href));
+    const heading = chapterHeading(markdown);
+    const subtitle = [
+      chapterSubtitle(markdown, "中文"),
+      chapterSubtitle(markdown, "English"),
+    ].join(" / ");
 
     assert.match(html, new RegExp(`<h1 class="content-title">${lesson.title}</h1>`), `${lesson.href} should render ${lesson.title}`);
     assert.match(html, new RegExp(`学习 / ${lesson.title}`), `${lesson.href} should render its lesson kicker`);
+    assert.equal(lesson.body, subtitle, `${lesson.key} metadata subtitle should match official chapter subtitle`);
+    assert.match(html, new RegExp(heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${lesson.href} should render official chapter heading`);
+    assert.match(html, /Chapter Thesis \/ 本章命题/, `${lesson.href} should render official chapter body`);
+  }
+});
+
+test("Course pages render the official chapter markdown instead of placeholder cards", () => {
+  const first = read(join(dist, "course-01.html"));
+  const final = read(join(dist, "course-15.html"));
+
+  assert.match(first, /Chapter Thesis \/ 本章命题/, "first lesson should render official markdown section headings");
+  assert.match(first, /From prompting to engineering systems/, "first lesson should render official subtitle");
+  assert.match(first, /flowchart TD/, "first lesson should render official Mermaid source");
+  assert.doesNotMatch(first, /<h3>本课目标<\/h3>/, "first lesson should not render placeholder objective card");
+
+  assert.match(final, /Patterns, Anti-patterns and Future \/ 模式、反模式与未来/, "final lesson should render the official final chapter");
+  assert.match(final, /Design principles, anti-patterns, and future directions/, "final lesson should render official final subtitle");
+
+  for (const page of courseLessonPages) {
+    const html = read(join(dist, page));
+    assert.doesNotMatch(html, /<h3>本课目标<\/h3>|<h3>关键边界<\/h3>|<h3>学习产出<\/h3>/, `${page} should not render placeholder course cards`);
+  }
+});
+
+test("Official course import manifest pins imported markdown files", () => {
+  const manifest = JSON.parse(read(join(course, "import-manifest.json")));
+  const expectedFiles = [
+    "README.md",
+    "COURSE_INDEX.md",
+    ...chapterFiles(),
+    ...readdirSync(join(course, "resources")).filter((file) => file.endsWith(".md")).sort().map((file) => `resources/${file}`),
+  ];
+  const expectedInventory = [...expectedFiles].sort();
+
+  assert.equal(manifest.schema, "course-import-v1");
+  assert.equal(manifest.sourcePackage, "/Users/xuzhang/Downloads/agent-harness-atlas-course");
+  assert.ok(existsSync(manifest.sourcePackage), `missing official course source package ${manifest.sourcePackage}`);
+  assert.deepEqual(manifest.files.map((item) => item.path), expectedFiles);
+  assert.deepEqual(markdownFiles(course), expectedInventory, "imported Markdown inventory should match manifest");
+  assert.deepEqual(markdownFiles(manifest.sourcePackage), expectedInventory, "source Markdown inventory should match manifest");
+
+  for (const item of manifest.files) {
+    const currentPath = join(course, item.path);
+    const sourcePath = join(manifest.sourcePackage, item.path);
+    assert.ok(existsSync(currentPath), `missing imported course file ${item.path}`);
+    assert.ok(existsSync(sourcePath), `missing source course file ${item.path}`);
+    assert.equal(sha256(readBytes(currentPath)), item.importedSha256, `${item.path} should match import manifest hash`);
+
+    const source = read(sourcePath);
+    const imported = read(currentPath);
+    assert.equal(sha256(source), item.sourceSha256, `${item.path} source hash should match import manifest hash`);
+    assert.equal(imported, item.transformed ? allowedCourseLinkRewrite(source) : source, `${item.path} should only apply allowed course link rewrites`);
+  }
+});
+
+test("Official course markdown uses public chapter routes", () => {
+  const sourceFiles = ["COURSE_INDEX.md", ...chapterFiles()];
+
+  for (const file of sourceFiles) {
+    const markdown = read(join(course, file));
+    assert.doesNotMatch(markdown, /\]\(\.\/(?:chapters\/)?\d{2}-[^)]+\.md\)/, `${file} should not link source markdown chapter paths`);
+    assert.doesNotMatch(markdown, /href="[^"]+\.md"/, `${file} should not contain HTML links to markdown chapter paths`);
   }
 });
 
 test("Glossary content is nested under the learning page", () => {
   const course = read(join(dist, "course-other-glossary.html"));
+  const source = read(join(src, "pages", "course-other-glossary.astro"));
   const allBuiltHtml = pages.map((page) => read(join(dist, page))).join("\n");
 
-  assert.match(course, /学习 \/ 术语表/, "glossary should render inside the learning shell");
-  assert.match(course, /术语表/, "glossary subpage should contain glossary content");
+  assert.match(source, /glossary-bilingual\.md/, "glossary page should render the official glossary markdown resource");
+  assert.match(course, /学习 \/ Bilingual Glossary/, "glossary should render inside the learning shell");
+  assert.match(course, /Bilingual Glossary \/ 中英术语表/, "glossary subpage should contain official glossary content");
+  assert.match(course, /The engineering control system around an agent/, "glossary should render official English term definitions");
+  assert.match(course, /最小自主权/, "glossary should render official Chinese term definitions");
   assert.match(course, /<aside class="learn-sidebar"/, "glossary subpage should keep the learning sidebar");
   assert.doesNotMatch(allBuiltHtml, /href="glossary\.html"/, "built pages should not link a standalone glossary page");
 });

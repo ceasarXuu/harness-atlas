@@ -1,2 +1,175 @@
-<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Future of Harness · Harness Atlas</title><meta name="description" content="Harness Atlas Future of Harness。"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preload" href="assets/css/style.css" as="style"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/learn.css"><link rel="prefetch" href="course-01.html"><link rel="prefetch" href="products.html"><link rel="prefetch" href="timeline.html"></head> <body> <div class="wrap"> <header class="top"> <a class="brand" href="./" aria-label="Harness Atlas 首页"> <span class="brand-mark" aria-hidden="true"></span> <span>HARNESS_ATLAS</span> </a> <nav class="nav" aria-label="主导航"> <a href="./"> <span>首页</span>  </a><a href="course-01.html"> <span>学习</span>  </a><a href="products.html"> <span>生态</span>  </a><a href="en.html"> <span>EN</span>  </a><a href="https://github.com/ceasarXuu/harness-atlas" target="_blank" rel="noreferrer"> <span>GitHub</span> <span class="nav-stat" aria-label="GitHub stars">
-★ 0 </span> </a> </nav> </header> <main>  <section class="section learn-shell"> <aside class="learn-sidebar" aria-label="学习目录"> <p class="section-kicker">学习目录</p> <nav class="learn-nav" aria-label="学习页目录导航"> <a href="course-01.html"><span>01</span>Agent Harness 定义</a><a href="course-02.html"><span>02</span>Context Engineering</a><a href="course-03.html"><span>03</span>Tools and MCP</a><a href="course-04.html"><span>04</span>Skills and Workflows</a><a href="course-05.html"><span>05</span>State, Memory and Session</a><a href="course-06.html"><span>06</span>Planning and Execution Loop</a><a href="course-07.html"><span>07</span>Multi-agent Orchestration</a><a href="course-08.html"><span>08</span>Evaluation and Benchmark</a><a href="course-09.html"><span>09</span>Security, Permission and Governance</a><a href="course-10.html"><span>10</span>Product Architecture</a><a class="active" href="course-11.html"><span>11</span>Future of Harness</a> <p class="learn-nav-group">其他</p> <a href="course-other-glossary.html"><span>其他</span>术语表</a> </nav> </aside> <div class="learn-content"> <nav class="learn-pager top" aria-label="学习页目录导航"> <a href="course-10.html"><span>上一节</span><strong>Product Architecture</strong></a> <a href="course-other-glossary.html"><span>下一节</span><strong>术语表</strong></a> </nav> <p class="section-kicker">学习 / Future of Harness</p> <h1 class="content-title">Future of Harness</h1> <p class="section-intro">跟踪 Agent Harness 生态的长期演进，连接协议标准、产品能力、组织流程和行业动态。</p>  <div class="matrix compact-matrix"> <div class="cell"><span>目标</span><h3>本课目标</h3><p>理解 Future of Harness 在 Agent Harness 中解决的问题。</p></div><div class="cell"><span>关注点</span><h3>关键边界</h3><p>跟踪 Agent Harness 生态的长期演进，连接协议标准、产品能力、组织流程和行业动态。</p></div><div class="cell"><span>输出</span><h3>学习产出</h3><p>能够把这一节内容映射到真实产品、协议或工程流程，并形成可复查的判断。</p></div> </div>  <nav class="learn-pager bottom" aria-label="学习页目录导航"> <a href="course-10.html"><span>上一节</span><strong>Product Architecture</strong></a> <a href="course-other-glossary.html"><span>下一节</span><strong>术语表</strong></a> </nav> </div> </section>  </main> <footer class="footer"><span>HARNESS_ATLAS / 学习</span><span>CC BY 4.0 + MIT</span></footer> </div> </body></html>
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Observability and Debugging / 可观测性与调试 · Harness Atlas</title><meta name="description" content="Harness Atlas Observability and Debugging / 可观测性与调试。"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="preload" href="assets/css/style.css" as="style"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/learn.css"><link rel="prefetch" href="course-01.html"><link rel="prefetch" href="products.html"><link rel="prefetch" href="timeline.html"></head> <body> <div class="wrap"> <header class="top"> <a class="brand" href="./" aria-label="Harness Atlas 首页"> <span class="brand-mark" aria-hidden="true"></span> <span>HARNESS_ATLAS</span> </a> <nav class="nav" aria-label="主导航"> <a href="./"> <span>首页</span>  </a><a href="course-01.html"> <span>学习</span>  </a><a href="products.html"> <span>生态</span>  </a><a href="en.html"> <span>EN</span>  </a><a href="https://github.com/ceasarXuu/harness-atlas" target="_blank" rel="noreferrer"> <span>GitHub</span> <span class="nav-stat" aria-label="GitHub stars">
+★ 0 </span> </a> </nav> </header> <main>  <section class="section learn-shell"> <aside class="learn-sidebar" aria-label="学习目录"> <p class="section-kicker">学习目录</p> <nav class="learn-nav" aria-label="学习页目录导航"> <a href="course-01.html"><span>01</span>Why Agent Harness / 为什么需要 Agent Harness</a><a href="course-02.html"><span>02</span>Task, Environment and Boundary / 任务、环境与边界</a><a href="course-03.html"><span>03</span>Minimal Harness / 最小 Agent Harness</a><a href="course-04.html"><span>04</span>Context as Information Boundary / 上下文作为信息边界</a><a href="course-05.html"><span>05</span>Tools and MCP as Action Boundary / 工具与 MCP 作为动作边界</a><a href="course-06.html"><span>06</span>State, Session and Memory / 状态、会话与记忆</a><a href="course-07.html"><span>07</span>Runtime Control / 运行时控制</a><a href="course-08.html"><span>08</span>Skills as Capability Packaging / 技能作为能力封装</a><a href="course-09.html"><span>09</span>Workflows as Deterministic Scaffolding / 工作流作为确定性支架</a><a href="course-10.html"><span>10</span>Multi-agent Orchestration / 多 Agent 编排</a><a class="active" href="course-11.html"><span>11</span>Observability and Debugging / 可观测性与调试</a><a href="course-12.html"><span>12</span>Evaluation, Testing and Benchmarking / 评测、测试与基准</a><a href="course-13.html"><span>13</span>Security, Permissions and Governance / 安全、权限与治理</a><a href="course-14.html"><span>14</span>Production Architecture / 生产架构</a><a href="course-15.html"><span>15</span>Patterns, Anti-patterns and Future / 模式、反模式与未来</a> <p class="learn-nav-group">其他</p> <a href="course-other-glossary.html"><span>其他</span>Bilingual Glossary / 中英术语表</a> </nav> </aside> <div class="learn-content"> <nav class="learn-pager top" aria-label="学习页目录导航"> <a href="course-10.html"><span>上一节</span><strong>Multi-agent Orchestration / 多 Agent 编排</strong></a> <a href="course-12.html"><span>下一节</span><strong>Evaluation, Testing and Benchmarking / 评测、测试与基准</strong></a> </nav> <p class="section-kicker">学习 / Observability and Debugging / 可观测性与调试</p> <h1 class="content-title">Observability and Debugging / 可观测性与调试</h1> <p class="section-intro">让 Agent Run 可见、可回放、可解释 / Make agent runs visible, replayable, and explainable</p>  <article class="chapter-content"> <h1 id="11-observability-and-debugging--可观测性与调试">11. Observability and Debugging / 可观测性与调试</h1>
+<blockquote>
+<p><strong>本章副标题 / Subtitle</strong><br>
+中文：让 Agent Run 可见、可回放、可解释<br>
+English: Make agent runs visible, replayable, and explainable</p>
+</blockquote>
+<h2 id="1-chapter-thesis--本章命题">1. Chapter Thesis / 本章命题</h2>
+<p><strong>中文</strong>：不能观察的 Agent 不能调试，不能调试的 Agent 不能生产化。Observability 把一次 Agent run 变成可阅读、可回放、可比较的工程证据。</p>
+<p><strong>English</strong>: An agent that cannot be observed cannot be debugged; an agent that cannot be debugged cannot be productionized. Observability turns an agent run into readable, replayable, and comparable engineering evidence.</p>
+<h2 id="2-how-this-chapter-connects--前后关联">2. How This Chapter Connects / 前后关联</h2>
+<p><strong>中文</strong>：前面章节定义了执行结构。本章进入信任层：系统运行时必须留下证据。下一章会基于这些证据做评测、测试和基准。</p>
+<p><strong>English</strong>: The previous chapters defined execution structure. This chapter enters the trust layer: system execution must leave evidence. The next chapter uses that evidence for evaluation, testing, and benchmarking.</p>
+<p>Previous / 上一章：<a href="course-10.html">10. Multi-agent Orchestration</a> | Next / 下一章：<a href="course-12.html">12. Evaluation, Testing and Benchmarking</a></p>
+<h2 id="3-learning-outcomes--学习目标">3. Learning Outcomes / 学习目标</h2>
+<ul>
+<li>中文：解释 <code>Observability and Debugging</code> 在 Agent Harness 中解决的工程问题。<br>
+English: Explain the engineering problem solved by <code>Observability and Debugging</code> inside an Agent Harness.</li>
+<li>中文：用本章思维模型审查一个真实 Agent 设计。<br>
+English: Use this chapter’s mental model to review a real agent design.</li>
+<li>中文：产出本章对应的设计 artifact，并把它接入 Course Builder Harness 贯穿案例。<br>
+English: Produce the chapter artifact and connect it to the Course Builder Harness case study.</li>
+<li>中文：识别本章相关的典型失败模式。<br>
+English: Identify typical failure modes related to this chapter.</li>
+</ul>
+<h2 id="4-the-engineering-problem--工程问题">4. The Engineering Problem / 工程问题</h2>
+<p><strong>中文</strong>：Agent 失败时，如果只看到最终回答，就无法判断问题来自任务定义、上下文、工具、状态、模型判断、权限还是 runtime。可观测性的目的不是收集更多日志，而是让失败原因可定位，让系统变化可比较。</p>
+<p><strong>English</strong>: When an agent fails, the final answer alone cannot tell whether the problem came from task definition, context, tools, state, model judgment, permissions, or runtime. Observability is not about collecting more logs; it is about locating causes of failure and comparing system changes.</p>
+<h2 id="5-mental-model--思维模型">5. Mental Model / 思维模型</h2>
+<p><strong>中文</strong>：把 observability 看成 Agent 的黑匣子和时间线。每一次运行都应该能重建：它看到了什么、想做什么、做了什么、外部世界返回了什么、状态如何变化、为什么停止。</p>
+<p><strong>English</strong>: Think of observability as the agent’s black box and timeline. Every run should be reconstructable: what it saw, what it intended, what it did, what the external world returned, how state changed, and why it stopped.</p>
+<h2 id="6-harness-abstraction--harness-抽象">6. Harness Abstraction / Harness 抽象</h2>
+<h3 id="trace--跟踪">Trace / 跟踪</h3>
+<ul>
+<li>中文：一次完整 Agent run 的顶层记录。</li>
+<li>English: The top-level record of one complete agent run.</li>
+</ul>
+<h3 id="span--跨度">Span / 跨度</h3>
+<ul>
+<li>中文：一次子操作，例如 context build、model call、tool call、validation、approval。</li>
+<li>English: A sub-operation such as context build, model call, tool call, validation, or approval.</li>
+</ul>
+<h3 id="event--事件">Event / 事件</h3>
+<ul>
+<li>中文：运行中的离散事实，例如 retry、error、user interruption、policy denial。</li>
+<li>English: A discrete fact during execution, such as retry, error, user interruption, or policy denial.</li>
+</ul>
+<h3 id="context-snapshot--上下文快照">Context snapshot / 上下文快照</h3>
+<ul>
+<li>中文：模型调用时实际看到的上下文记录，用于回放和差异比较。</li>
+<li>English: A record of the exact context seen by the model call, used for replay and diffing.</li>
+</ul>
+<h3 id="state-diff--状态差异">State diff / 状态差异</h3>
+<ul>
+<li>中文：每一步前后状态变化，帮助判断错误何时进入系统。</li>
+<li>English: The state changes before and after each step, helping identify when an error entered the system.</li>
+</ul>
+<h3 id="replay--回放">Replay / 回放</h3>
+<ul>
+<li>中文：用同样输入、状态和上下文重跑或检查某次运行。</li>
+<li>English: Reruns or inspects a run using the same input, state, and context.</li>
+</ul>
+<h2 id="7-reference-diagram--参考图">7. Reference Diagram / 参考图</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">flowchart TD</span></span>
+<span class="line"><span style="color:#E1E4E8">    Run[Agent Run Trace] --> S1[Span: Context Build]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Run --> S2[Span: Model Call]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Run --> S3[Span: Tool Call]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Run --> S4[Span: Validation]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Run --> S5[Span: State Update]</span></span>
+<span class="line"><span style="color:#E1E4E8">    S1 --> CS[Context Snapshot]</span></span>
+<span class="line"><span style="color:#E1E4E8">    S2 --> MI[Model Input/Output]</span></span>
+<span class="line"><span style="color:#E1E4E8">    S3 --> TO[Tool Observation]</span></span>
+<span class="line"><span style="color:#E1E4E8">    S5 --> SD[State Diff]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Run --> Metrics[Cost / Latency / Tokens]</span></span>
+<span class="line"><span style="color:#E1E4E8">    Run --> Replay[Replay Bundle]</span></span></code></pre>
+<h2 id="8-design-principles--设计原则">8. Design Principles / 设计原则</h2>
+<ul>
+<li><strong>中文</strong>：记录足够回放的信息，而不是只记录最终答案。<br>
+<strong>English</strong>: Record enough information for replay, not only the final answer.</li>
+<li><strong>中文</strong>：日志应结构化，能被检索、聚合和比较。<br>
+<strong>English</strong>: Logs should be structured so they can be searched, aggregated, and compared.</li>
+<li><strong>中文</strong>：每次模型调用都要关联上下文快照。<br>
+<strong>English</strong>: Every model call should be associated with a context snapshot.</li>
+<li><strong>中文</strong>：每次工具调用都要有关联 ID、参数、结果、错误和权限记录。<br>
+<strong>English</strong>: Every tool call needs a correlation ID, arguments, result, error, and permission record.</li>
+<li><strong>中文</strong>：隐私与可观测性必须同时设计。<br>
+<strong>English</strong>: Privacy and observability must be designed together.</li>
+</ul>
+<h2 id="9-reference-implementation-direction--参考实现方向">9. Reference Implementation Direction / 参考实现方向</h2>
+<p><strong>中文</strong>：本课程强调“思维 > 具体方案”。参考实现的作用是帮助理解抽象，不应把某个框架、SDK 或协议等同于 Harness 本身。实现时建议先写清楚边界、状态和失败路径，再选择具体技术。</p>
+<p><strong>English</strong>: This course emphasizes “thinking > specific solution.” A reference implementation exists to explain the abstraction; no framework, SDK, or protocol should be equated with the harness itself. In implementation, specify boundaries, state, and failure paths before choosing technologies.</p>
+<p>Recommended implementation notes / 推荐实现备注：</p>
+<ul>
+<li>中文：用 Markdown 或 YAML 保存设计决策，便于版本化和评审。<br>
+English: Store design decisions in Markdown or YAML so they can be versioned and reviewed.</li>
+<li>中文：把本章 artifact 放入仓库的 <code>docs/design/</code> 或 <code>labs/</code> 目录。<br>
+English: Place this chapter artifact under <code>docs/design/</code> or <code>labs/</code> in the repository.</li>
+<li>中文：每次修改抽象边界后，都要更新相邻章节的接口假设。<br>
+English: Whenever an abstraction boundary changes, update the interface assumptions of adjacent chapters.</li>
+</ul>
+<h2 id="10-failure-modes--失效模式">10. Failure Modes / 失效模式</h2>
+<h3 id="final-answer-only-logging">Final-answer-only logging</h3>
+<ul>
+<li>中文：只保存最终回答，无法分析中间步骤。</li>
+<li>English: Only final answers are saved, making intermediate analysis impossible.</li>
+</ul>
+<h3 id="unstructured-logs">Unstructured logs</h3>
+<ul>
+<li>中文：日志是自然语言碎片，难以聚合和比较。</li>
+<li>English: Logs are natural-language fragments, hard to aggregate or compare.</li>
+</ul>
+<h3 id="no-context-snapshot">No context snapshot</h3>
+<ul>
+<li>中文：无法知道模型当时看到了什么。</li>
+<li>English: Cannot know what the model saw at the time.</li>
+</ul>
+<h3 id="no-correlation-ids">No correlation IDs</h3>
+<ul>
+<li>中文：无法把工具调用、状态变化和用户请求关联起来。</li>
+<li>English: Cannot connect tool calls, state changes, and user requests.</li>
+</ul>
+<h2 id="11-lab-course-builder-harness--实验课程构建-harness">11. Lab: Course Builder Harness / 实验：课程构建 Harness</h2>
+<ol>
+<li>中文：为 Course Builder Harness 设计 trace_id、run_id、step_id、tool_call_id。<br>
+English: Design trace_id, run_id, step_id, and tool_call_id for the Course Builder Harness.</li>
+<li>中文：定义每个 model_call span 应保存的字段。<br>
+English: Define fields to store for each model_call span.</li>
+<li>中文：定义 context diff：当章节质量退化时，如何比较两次上下文。<br>
+English: Define context diff: how to compare two contexts when chapter quality regresses.</li>
+<li>中文：设计一个 failure replay 页面或报告。<br>
+English: Design a failure replay page or report.</li>
+</ol>
+<p><strong>Expected artifact / 预期产物</strong>：Agent Run Trace Schema 与 Debugging Report 模板。 / An Agent Run Trace Schema and Debugging Report template.</p>
+<h2 id="12-review-checklist--复盘清单">12. Review Checklist / 复盘清单</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能在自己的设计中落实：记录足够回放的信息，而不是只记录最终答案。<br>
+English: I can apply this principle in my own design: Record enough information for replay, not only the final answer.</li>
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能在自己的设计中落实：日志应结构化，能被检索、聚合和比较。<br>
+English: I can apply this principle in my own design: Logs should be structured so they can be searched, aggregated, and compared.</li>
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能在自己的设计中落实：每次模型调用都要关联上下文快照。<br>
+English: I can apply this principle in my own design: Every model call should be associated with a context snapshot.</li>
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能识别并避免 <code>Final-answer-only logging</code>：只保存最终回答，无法分析中间步骤。<br>
+English: I can identify and avoid <code>Final-answer-only logging</code>: Only final answers are saved, making intermediate analysis impossible.</li>
+<li class="task-list-item"><input type="checkbox" disabled> 中文：我能识别并避免 <code>Unstructured logs</code>：日志是自然语言碎片，难以聚合和比较。<br>
+English: I can identify and avoid <code>Unstructured logs</code>: Logs are natural-language fragments, hard to aggregate or compare.</li>
+</ul>
+<h2 id="13-image-descriptions--图片描述">13. Image Descriptions / 图片描述</h2>
+<h3 id="agent-黑匣子">Agent 黑匣子</h3>
+<ul>
+<li>中文图像描述：一个黑匣子记录 task、context、model output、tool call、state diff、stop reason。</li>
+<li>English image prompt: A black-box recorder showing task, context, model output, tool call, state diff, and stop reason.</li>
+</ul>
+<h3 id="运行时间线">运行时间线</h3>
+<ul>
+<li>中文图像描述：横向时间线显示每个 span 的耗时、成本、输入、输出、错误。</li>
+<li>English image prompt: A horizontal timeline showing duration, cost, input, output, and errors for each span.</li>
+</ul>
+<h2 id="trace-schema-example--trace-schema-示例">Trace Schema Example / Trace Schema 示例</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "run_id"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"run_001"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "task_id"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"chapter_revision"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "spans"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#79B8FF">"type"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"context_build"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"context_hash"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"..."</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"sources"</span><span style="color:#E1E4E8">: []},</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#79B8FF">"type"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"model_call"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"input_hash"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"..."</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"output_hash"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"..."</span><span style="color:#E1E4E8">},</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#79B8FF">"type"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"tool_call"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"tool"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"write_draft"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"risk"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"draft"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">  ],</span></span>
+<span class="line"><span style="color:#79B8FF">  "stop_reason"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"success_criteria_met"</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="14-key-takeaways--关键总结">14. Key Takeaways / 关键总结</h2>
+<ul>
+<li>中文：<code>Observability and Debugging</code> 不是孤立模块，而是 Agent Harness 处理不确定性的一层工程边界。</li>
+<li>English: <code>Observability and Debugging</code> is not an isolated module; it is one engineering boundary through which the Agent Harness handles uncertainty.</li>
+<li>中文：具体工具会变化，但本章的判断问题应保持稳定：边界是什么，证据在哪里，失败如何恢复。</li>
+<li>English: Specific tools will change, but the chapter’s judgment questions should remain stable: what is the boundary, where is the evidence, and how does failure recover?</li>
+</ul> </article>  <nav class="learn-pager bottom" aria-label="学习页目录导航"> <a href="course-10.html"><span>上一节</span><strong>Multi-agent Orchestration / 多 Agent 编排</strong></a> <a href="course-12.html"><span>下一节</span><strong>Evaluation, Testing and Benchmarking / 评测、测试与基准</strong></a> </nav> </div> </section>  </main> <footer class="footer"><span>HARNESS_ATLAS / 学习</span><span>CC BY 4.0 + MIT</span></footer> </div> </body></html>
