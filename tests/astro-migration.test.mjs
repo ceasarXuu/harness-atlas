@@ -3,10 +3,12 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { spawnSync } from "node:child_process";
 import test from "node:test";
+import { courseLessons, getCourseLessonPage } from "../src/data/site.mjs";
 
 const root = new URL("..", import.meta.url).pathname;
 const src = join(root, "src");
 const dist = join(root, "dist");
+const docs = join(root, "docs");
 const pagesBase = "/harness-atlas/";
 const courseLessonPages = Array.from({ length: 11 }, (_, index) => {
   return `course-${String(index + 1).padStart(2, "0")}.html`;
@@ -15,7 +17,6 @@ const courseLessonPages = Array.from({ length: 11 }, (_, index) => {
 const pages = [
   "index.html",
   "en.html",
-  "course.html",
   ...courseLessonPages,
   "course-other-glossary.html",
   "products.html",
@@ -30,11 +31,29 @@ function read(path) {
   return readFileSync(path, "utf8");
 }
 
+function readBytes(path) {
+  return readFileSync(path);
+}
+
 function sourceFiles(dir) {
   return readdirSync(dir).flatMap((entry) => {
     const path = join(dir, entry);
     return statSync(path).isDirectory() ? sourceFiles(path) : [path];
   });
+}
+
+function publicHtmlPages(dir) {
+  return sourceFiles(dir)
+    .map((path) => relative(dir, path))
+    .filter((path) => path.endsWith(".html"))
+    .filter((path) => !path.split("/").some((segment) => segment.startsWith("_")))
+    .sort();
+}
+
+function distArtifactFiles() {
+  return sourceFiles(dist)
+    .map((path) => relative(dist, path))
+    .sort();
 }
 
 function visibleText(html) {
@@ -91,6 +110,7 @@ test("Astro build emits static Pages-compatible routes and assets", () => {
     assert.ok(existsSync(join(dist, page)), `missing built route dist/${page}`);
   }
   assert.equal(existsSync(join(dist, "glossary.html")), false, "glossary should be part of learning, not a standalone route");
+  assert.equal(existsSync(join(dist, "course.html")), false, "learning roadmap page should not be emitted");
   assert.equal(existsSync(join(dist, "course-modules.html")), false, "course outline page should not be emitted");
   assert.equal(existsSync(join(dist, "course-practice.html")), false, "practice checklist page should not be emitted");
 
@@ -100,7 +120,7 @@ test("Astro build emits static Pages-compatible routes and assets", () => {
 });
 
 test("Built pages keep page-specific loading boundaries", () => {
-  const learningPages = new Set(["course.html", ...courseLessonPages, "course-other-glossary.html"]);
+  const learningPages = new Set([...courseLessonPages, "course-other-glossary.html"]);
 
   for (const page of pages) {
     const html = read(join(dist, page));
@@ -147,7 +167,7 @@ test("Homepage hero keeps the centered equation above the swapped runtime map la
 });
 
 test("Built pages have complete local links and visible content", () => {
-  for (const page of pages) {
+  for (const page of publicHtmlPages(dist)) {
     const html = read(join(dist, page));
     const text = visibleText(html);
 
@@ -165,6 +185,63 @@ test("Built pages have complete local links and visible content", () => {
   }
 });
 
+test("Checked-in Pages output is synced with Astro dist artifacts", () => {
+  for (const artifact of distArtifactFiles()) {
+    const distPath = join(dist, artifact);
+    const docsPath = join(docs, artifact);
+
+    assert.ok(existsSync(docsPath), `docs/${artifact} should exist after syncing dist output`);
+    assert.deepEqual(readBytes(docsPath), readBytes(distPath), `docs/${artifact} should match dist/${artifact}`);
+  }
+});
+
+test("Public HTML discovery covers docs and dist link checks", () => {
+  for (const [label, dir] of [["docs", docs], ["dist", dist]]) {
+    const publicPages = publicHtmlPages(dir);
+
+    assert.ok(publicPages.length >= pages.length, `${label} should expose every known public page`);
+    assert.equal(publicPages.includes("course.html"), false, `${label} should not expose removed course.html`);
+
+    for (const page of publicPages) {
+      const html = read(join(dir, page));
+      assert.doesNotMatch(html, /href="course\.html"/, `${label}/${page} should not link removed course.html`);
+      for (const href of localLinks(html)) {
+        const localHref = href.startsWith(pagesBase) ? href.slice(pagesBase.length) : href;
+        const withoutAnchor = localHref.split("#")[0] || ".";
+        const target = withoutAnchor.endsWith("/")
+          ? join(dir, withoutAnchor, "index.html")
+          : join(dir, withoutAnchor);
+        assert.ok(existsSync(target), `${label}/${page} links to missing local asset or route: ${relative(dir, target)}`);
+      }
+    }
+  }
+});
+
+test("Course route files select lessons by stable keys", () => {
+  for (let index = 1; index <= 11; index += 1) {
+    const route = `course-${String(index).padStart(2, "0")}`;
+    const source = read(join(src, "pages", `${route}.astro`));
+
+    assert.match(source, new RegExp(`getCourseLessonPage\\("${route}"\\)`), `${route}.astro should select by stable lesson key`);
+    assert.doesNotMatch(source, /courseLessonPages\[\d+\]/, `${route}.astro should not depend on lesson array indexes`);
+  }
+});
+
+test("Course lesson lookup rejects removed or unknown keys", () => {
+  assert.equal(getCourseLessonPage("course-01").heading, "Agent Harness 定义");
+  assert.throws(() => getCourseLessonPage("course-00"), /Unknown course lesson: course-00/);
+  assert.throws(() => getCourseLessonPage("course-missing"), /Unknown course lesson: course-missing/);
+});
+
+test("Course routes render the lesson selected by their route number", () => {
+  for (const lesson of courseLessons) {
+    const html = read(join(dist, lesson.href));
+
+    assert.match(html, new RegExp(`<h1 class="content-title">${lesson.title}</h1>`), `${lesson.href} should render ${lesson.title}`);
+    assert.match(html, new RegExp(`学习 / ${lesson.title}`), `${lesson.href} should render its lesson kicker`);
+  }
+});
+
 test("Glossary content is nested under the learning page", () => {
   const course = read(join(dist, "course-other-glossary.html"));
   const allBuiltHtml = pages.map((page) => read(join(dist, page))).join("\n");
@@ -176,7 +253,7 @@ test("Glossary content is nested under the learning page", () => {
 });
 
 test("Learning directory entries are subpages, not scroll anchors", () => {
-  const learningPages = ["course.html", ...courseLessonPages, "course-other-glossary.html"];
+  const learningPages = [...courseLessonPages, "course-other-glossary.html"];
   const expectedLinks = learningPages.map((page) => `href="${page}"`);
 
   for (const page of learningPages) {
@@ -190,6 +267,8 @@ test("Learning directory entries are subpages, not scroll anchors", () => {
 
     const sidebar = html.match(/<aside class="learn-sidebar"[\s\S]*?<\/aside>/)?.[0] ?? "";
     assert.doesNotMatch(sidebar, /href="#/, `${page} sidebar should not use in-page anchors`);
+    assert.doesNotMatch(sidebar, /href="course\.html"/, `${page} sidebar should not expose the removed roadmap page`);
+    assert.doesNotMatch(sidebar, />学习路线</, `${page} sidebar should not expose the removed roadmap item`);
     assert.doesNotMatch(sidebar, /href="patterns\.html"/, `${page} sidebar should not jump outside the learning shell`);
     assert.doesNotMatch(sidebar, /href="course-practice\.html"/, `${page} sidebar should not expose practice checklist`);
     assert.match(sidebar, />其他</, `${page} sidebar should group glossary under Other`);

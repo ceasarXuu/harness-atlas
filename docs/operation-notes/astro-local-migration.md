@@ -14,7 +14,7 @@
 - Use Astro as a static build shell for GitHub Pages-compatible routes.
 - Render local preview pages from Astro layouts, components, and central site data instead of streaming checked-in HTML.
 - Copy existing static assets to `public/` so local Astro dev and build use the same CSS and favicon.
-- Set `build.format: "file"` so routes build to `course.html`, `products.html`, and other existing URL shapes.
+- Set `build.format: "file"` so routes build to flat HTML files such as `course-01.html`, `products.html`, and other existing URL shapes.
 
 ## Route And Loading Structure
 
@@ -49,6 +49,6 @@ For the learning-site homepage, keep the structure vertical: header, hero, then 
 
 ## Learning Page Sidebar
 
-The learning pages should use a `.learn-shell` two-column section without a top hero. Keep `.learn-sidebar` visible on every lesson page and render course lessons directly in the sidebar. Treat `course.html` as lesson 00, use `course-01.html` through `course-11.html` for the main sequence, and put the glossary under an `其他` group.
+The learning pages should use a `.learn-shell` two-column section without a top hero. Keep `.learn-sidebar` visible on every lesson page and render course lessons directly in the sidebar. The main sequence starts at `course-01.html`; do not generate `course.html` as lesson 00. Put the glossary under an `其他` group.
 
 Section pages other than home should not use `.hero` or a separate `.page-heading` block. Start `main` directly with the content section so readers reach navigation, directories, and article lists faster. Keep the full visual hero only for the homepage and the English homepage.

@@ -1,6 +1,6 @@
 ---
 import CourseLessonPage from "../components/CourseLessonPage.astro";
-import { courseLessonPages } from "../data/site.mjs";
+import { getCourseLessonPage } from "../data/site.mjs";
 ---
 
-<CourseLessonPage page={courseLessonPages[9]} />
+<CourseLessonPage page={getCourseLessonPage("course-09")} />

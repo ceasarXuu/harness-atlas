@@ -4,7 +4,7 @@ export const githubStars = 0;
 
 export const navModel = [
   { key: "home", href: { "zh-CN": "./", en: "./" } },
-  { key: "course", href: { "zh-CN": "course.html", en: "course.html" } },
+  { key: "course", href: { "zh-CN": "course-01.html", en: "course-01.html" } },
   { key: "atlas", href: { "zh-CN": "products.html", en: "products.html" } },
   { key: "locale", href: { "zh-CN": "en.html", en: "index.html" } },
   {
@@ -76,20 +76,12 @@ export const navByLocale = Object.fromEntries(
 );
 
 export const prefetchRoutes = [
-  "course.html",
   "course-01.html",
   "products.html",
   "timeline.html",
 ];
 
 export const courseLessons = [
-  {
-    key: "course-00",
-    num: "00",
-    title: "学习路线",
-    href: "course.html",
-    body: "把 Agent Harness 的学习分成基础概念、核心组件、工程实践和生态演进四个阶段。",
-  },
   {
     key: "course-01",
     num: "01",
@@ -234,7 +226,6 @@ export const updates = [
 
 export const homeSections = {
   learn: [
-    ["course.html", "路线", "学习路线", "把课程拆成入门、核心、运行机制和系统治理几个阶段。"],
     ["course-01.html", "课程", "第 1 课", "从 Agent Harness 定义开始，按照课程目录逐课进入。"],
     ["course-other-glossary.html", "其他", "术语表", "统一 Agent、Harness、Tool、Skill、MCP 等概念边界。"],
   ],
@@ -242,7 +233,7 @@ export const homeSections = {
     ["products.html", "产品", "产品图谱", "整理 Coding Agent、框架、平台和横向能力矩阵。"],
     ["standards.html", "协议", "标准协议", "沉淀 MCP、AGENTS.md、Skills、Tool Calling 等接口规范。"],
     ["patterns.html", "模式", "设计模式", "把产品拆解和工程经验抽象成可复用 Harness 模式。"],
-    ["course.html", "架构", "核心组件", "从上下文、工具、状态、记忆、规划、评估和治理理解系统组成。"],
+    ["course-01.html", "架构", "核心组件", "从上下文、工具、状态、记忆、规划、评估和治理理解系统组成。"],
   ],
   evidence: [
     ["research.html", "研究", "研究资料", "收集论文、实验、理论和研究卡片。"],
@@ -250,15 +241,7 @@ export const homeSections = {
   ],
 };
 
-export const learningRoadmap = [
-  ["入门", "基础概念", "先建立 Agent Harness 的边界、价值和核心组成。"],
-  ["核心", "运行组件", "集中理解上下文、工具、状态、记忆和执行循环。"],
-  ["工程", "系统实践", "把模式、协议、评估和治理连接到真实开发流程。"],
-  ["演进", "未来方向", "跟踪行业动态、产品形态和标准生态的长期变化。"],
-];
-
 export const courseLessonPages = courseLessons.map((lesson) => {
-  const isRoadmap = lesson.num === "00";
   return {
     key: lesson.key,
     locale: "zh-CN",
@@ -267,16 +250,20 @@ export const courseLessonPages = courseLessons.map((lesson) => {
     kicker: `学习 / ${lesson.title}`,
     heading: lesson.title,
     intro: lesson.body,
-    compact: !isRoadmap,
-    cards: isRoadmap
-      ? learningRoadmap
-      : [
-          ["目标", "本课目标", `理解 ${lesson.title} 在 Agent Harness 中解决的问题。`],
-          ["关注点", "关键边界", lesson.body],
-          ["输出", "学习产出", "能够把这一节内容映射到真实产品、协议或工程流程，并形成可复查的判断。"],
-        ],
+    compact: true,
+    cards: [
+      ["目标", "本课目标", `理解 ${lesson.title} 在 Agent Harness 中解决的问题。`],
+      ["关注点", "关键边界", lesson.body],
+      ["输出", "学习产出", "能够把这一节内容映射到真实产品、协议或工程流程，并形成可复查的判断。"],
+    ],
   };
 });
+
+export function getCourseLessonPage(key) {
+  const page = courseLessonPages.find((lesson) => lesson.key === key);
+  if (!page) throw new Error(`Unknown course lesson: ${key}`);
+  return page;
+}
 
 export const glossaryTerms = [
   ["AGENT", "Agent", "基于模型、上下文、工具和反馈执行任务的行为主体。"],

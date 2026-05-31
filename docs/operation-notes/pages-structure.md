@@ -47,7 +47,8 @@ When updating the Chinese homepage, keep navigation labels, CTA buttons, section
 
 ## Learning Shell
 
-- Learning directory entries should be static course subpages under the same learning shell: `course.html`, `course-01.html` through `course-11.html`, plus `course-other-glossary.html`.
+- Learning directory entries should be static course subpages under the same learning shell: `course-01.html` through `course-11.html`, plus `course-other-glossary.html`.
+- Do not reintroduce `course.html` as `00 学习路线`; the course entry point is `course-01.html`, and stale generated `docs/course.html` should be moved to Trash before release if it exists.
 - The left learning sidebar must stay visible on every learning subpage and should not use in-page hash links or jump to a non-learning page.
 - The body should render the active lesson content, not duplicate the full course outline that already lives in the sidebar.
 

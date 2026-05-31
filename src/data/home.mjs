@@ -26,7 +26,7 @@ export const homePages = {
         ["工程化", "用权限、日志、测试和评估约束智能行为。"],
       ],
       actions: [
-        ["course.html", "进入课程", true],
+        ["course-01.html", "进入课程", true],
       ],
       audience: "适合读者：开发者、独立开发者、产品经理、工程团队。",
       mapAria: "Agent Harness 运行时结构图",
@@ -220,7 +220,7 @@ export const homePages = {
         ["Engineer", "Constrain intelligent behavior with permissions, logs, tests, and evals."],
       ],
       actions: [
-        ["course.html", "Enter Course", true],
+        ["course-01.html", "Enter Course", true],
       ],
       audience: "For developers, indie builders, product managers, and engineering teams.",
       mapAria: "Agent Harness runtime structure map",
