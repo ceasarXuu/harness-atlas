@@ -44,12 +44,6 @@ const nav = getNavForPage(locale, localeHref);
     </aside>
 
     <div class="learn-content">
-      {hasPager && (
-        <nav class="learn-pager top" aria-label={chrome.directoryAria}>
-          {pager.previous && <a href={pager.previous.href}><span>{chrome.previousLabel}</span><strong>{pager.previous.title}</strong></a>}
-          {pager.next && <a href={pager.next.href}><span>{chrome.nextLabel}</span><strong>{pager.next.title}</strong></a>}
-        </nav>
-      )}
       <p class="section-kicker">{kicker}</p>
       <h1 class="content-title">{heading}</h1>
       <p class="section-intro">{intro}</p>

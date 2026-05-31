@@ -3,7 +3,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, normalize } from "node:path";
 import test from "node:test";
 import { homePages } from "../src/data/home.mjs";
-import { courseLessons, getNav, githubStars, glossaryPage, localeMessages, locales, navModel } from "../src/data/site.mjs";
+import { courseLessons, getCourseLessons, getLearningOther, getNav, githubStars, glossaryPage, localeMessages, locales, navModel } from "../src/data/site.mjs";
 
 const root = new URL("..", import.meta.url).pathname;
 const docs = join(root, "docs");
@@ -427,35 +427,29 @@ test("Learning page exposes a left-side directory navigation", () => {
   }
 });
 
-test("Learning pages expose previous and next navigation at top and bottom", () => {
-  const sequence = [
-    ...courseLessons.map((lesson) => [lesson.href, lesson.title]),
-    ["course-other-glossary.html", glossaryPage.heading],
-  ];
+test("Learning pages expose previous and next navigation at the bottom only", () => {
+  for (const locale of locales) {
+    const labels = locale === "en" ? ["Previous", "Next"] : ["上一节", "下一节"];
+    const sequence = [
+      ...getCourseLessons(locale).map((lesson) => [lesson.href, lesson.title]),
+      ...getLearningOther(locale).map((item) => [item.href, item.label]),
+    ];
 
-  sequence.forEach(([page], index) => {
-    const html = readDocsFile(page);
-    const pagers = [...html.matchAll(/<nav class="[^"]*\blearn-pager\b[^"]*"[\s\S]*?<\/nav>/g)].map((match) => match[0]);
-    const previous = sequence[index - 1];
-    const next = sequence[index + 1];
+    sequence.forEach(([page], index) => {
+      const html = readDocsFile(page);
+      const topPager = html.match(/<nav class="[^"]*\blearn-pager\b[^"]*\btop\b[^"]*"[\s\S]*?<\/nav>/)?.[0] ?? "";
+      const bottomPager = html.match(/<nav class="[^"]*\blearn-pager\b[^"]*\bbottom\b[^"]*"[\s\S]*?<\/nav>/)?.[0] ?? "";
+      const previous = sequence[index - 1];
+      const next = sequence[index + 1];
 
-    assert.equal(pagers.length, 2, `${page} should render pager navigation at top and bottom`);
-    for (const pager of pagers) {
-      if (previous) {
-        assert.match(pager, new RegExp(`href="${previous[0]}"`), `${page} should link previous page ${previous[0]}`);
-        assert.match(pager, new RegExp(`上一节[\\s\\S]*?${previous[1]}`), `${page} should label previous page`);
-      } else {
-        assert.doesNotMatch(pager, /上一节/, `${page} should not render previous on the first lesson`);
-      }
-
-      if (next) {
-        assert.match(pager, new RegExp(`href="${next[0]}"`), `${page} should link next page ${next[0]}`);
-        assert.match(pager, new RegExp(`下一节[\\s\\S]*?${next[1]}`), `${page} should label next page`);
-      } else {
-        assert.doesNotMatch(pager, /下一节/, `${page} should not render next on the last lesson`);
-      }
-    }
-  });
+      assert.equal(topPager, "", `${page} should not render pager navigation above the title`);
+      assert.ok(bottomPager, `${page} should render pager navigation at the bottom`);
+      if (previous) assert.match(bottomPager, new RegExp(`href="${previous[0]}"[\\s\\S]*?${labels[0]}[\\s\\S]*?${previous[1]}`), `${page} should link previous page`);
+      else assert.doesNotMatch(bottomPager, new RegExp(labels[0]), `${page} should not render previous on the first lesson`);
+      if (next) assert.match(bottomPager, new RegExp(`href="${next[0]}"[\\s\\S]*?${labels[1]}[\\s\\S]*?${next[1]}`), `${page} should link next page`);
+      else assert.doesNotMatch(bottomPager, new RegExp(labels[1]), `${page} should not render next on the last lesson`);
+    });
+  }
 });
 
 test("Section pages start directly with content instead of top heading blocks", () => {
