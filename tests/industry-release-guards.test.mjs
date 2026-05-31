@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
@@ -75,10 +76,22 @@ test("latest industry update review report is closed before release", () => {
 
   assert.ok(reviewFile, "industry update release should keep a review report");
   const report = read(join(reviewDir, reviewFile));
+  const reportRelativePath = `vs_review/${reviewFile}`;
+  const finalConclusionIndex = report.lastIndexOf("\n## Final Conclusion");
+  const lastRoundIndex = report.lastIndexOf("\n## Round ");
+
+  assert.doesNotThrow(
+    () => execFileSync("git", ["ls-files", "--error-unmatch", reportRelativePath], { cwd: root }),
+    `latest industry update review report should be tracked in git: ${reportRelativePath}`,
+  );
 
   assert.match(report, /- Status: passed\b/, "latest industry update review report should be closed as passed");
   assert.doesNotMatch(report, /- Status: open\b/, "latest industry update review report should not stay open");
-  assert.doesNotMatch(report, /^\| pending\b/m, "latest industry update review report should not keep pending table placeholders");
+  assert.doesNotMatch(
+    report,
+    /^\|[^\n]*\|\s*pending\s*\|\s*pending\s*\|\s*pending\s*\|\s*pending\s*\|?$/m,
+    "latest industry update review report should not keep pending table placeholders",
+  );
   assert.doesNotMatch(report, /^- pending\b/m, "latest industry update review report should not keep pending list placeholders");
   assert.doesNotMatch(report, /^Pending review\.$/m, "latest industry update review report should not keep a pending conclusion");
   assert.match(report, new RegExp(`- Feed latest date: ${latestDate}\\b`), "latest industry update review should bind to the current feed latest date");
@@ -86,5 +99,6 @@ test("latest industry update review report is closed before release", () => {
     assert.ok(report.includes(href), `latest industry update review should cover current latest-date href ${href}`);
   }
   assert.match(report, /- Allowed to proceed: yes\b/, "latest industry update review report should explicitly allow release");
-  assert.match(report, /## Final Conclusion/, "latest industry update review report should include a final conclusion");
+  assert.match(report, /^## Final Conclusion\b/m, "latest industry update review report should include a final conclusion heading");
+  assert.ok(finalConclusionIndex > lastRoundIndex, "latest industry update review report should place final conclusion after the latest round");
 });
