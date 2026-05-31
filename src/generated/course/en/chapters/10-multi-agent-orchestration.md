@@ -1,8 +1,5 @@
 # 10. Multi-agent Orchestration
 
-> **Subtitle**
-> Multi-agent design is organizational design, not more agents
-
 ## 1. Chapter Thesis
 
 Multi-agent design is valuable only when goals, contexts, permissions, or evaluation criteria need separation. It is not about adding more capability; it is a tradeoff between complexity and coordination cost.

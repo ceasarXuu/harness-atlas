@@ -1,8 +1,5 @@
 # 11. Observability and Debugging
 
-> **Subtitle**
-> Make agent runs visible, replayable, and explainable
-
 ## 1. Chapter Thesis
 
 An agent that cannot be observed cannot be debugged; an agent that cannot be debugged cannot be productionized. Observability turns an agent run into readable, replayable, and comparable engineering evidence.

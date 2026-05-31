@@ -1,8 +1,5 @@
 # 01. Why Agent Harness
 
-> **Subtitle**
-> From prompting to engineering systems
-
 ## 1. Chapter Thesis
 
 The core of an Agent Harness is not making the model smarter. It is placing open-ended, probabilistic model capability inside an engineering system that can control, observe, evaluate, and govern it.

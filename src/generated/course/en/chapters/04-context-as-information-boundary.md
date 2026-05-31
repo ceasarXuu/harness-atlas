@@ -1,8 +1,5 @@
 # 04. Context as Information Boundary
 
-> **Subtitle**
-> Context engineering is more than prompt engineering
-
 ## 1. Chapter Thesis
 
 Context is not about stuffing more text into a window. It is the decision about what the agent should know at a step, what it should not know, in what order it should know it, and why it should trust that information.

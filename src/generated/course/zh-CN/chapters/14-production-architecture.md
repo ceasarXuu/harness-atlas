@@ -1,8 +1,5 @@
 # 14. 生产架构
 
-> **本章副标题**
-> 从 Demo 到可交付系统  
-
 ## 1. 本章命题
 
 Agent 产品不是一个 prompt 加几个 tools，而是一套围绕不确定性构建的控制系统。生产架构需要把 API、runtime、context、model、tool、state、policy、eval、observability 组织成可维护边界。

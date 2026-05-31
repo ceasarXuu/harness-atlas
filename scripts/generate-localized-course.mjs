@@ -123,6 +123,7 @@ function localizeMarkdown(markdown, locale, currentNum = "01") {
   let codeLang = "";
   let inImageDescriptions = false;
   let imagePromptCount = 0;
+  let skippingSubtitleBlock = false;
 
   for (const line of lines) {
     const fence = line.match(/^```(\w*)/);
@@ -137,6 +138,11 @@ function localizeMarkdown(markdown, locale, currentNum = "01") {
     if (inCode) {
       output.push(codeLang === "mermaid" ? localizeMermaid(line, locale) : line);
       continue;
+    }
+
+    if (skippingSubtitleBlock) {
+      if (/^>\s*(?:中文|English)[:：]/.test(line) || line.trim() === "") continue;
+      skippingSubtitleBlock = false;
     }
 
     const nav = navigationLine(line, locale, currentNum);
@@ -155,7 +161,7 @@ function localizeMarkdown(markdown, locale, currentNum = "01") {
 
     const subtitleLabel = line.match(/^>\s+\*\*本章副标题 \/ Subtitle\*\*/);
     if (subtitleLabel) {
-      output.push(locale === "en" ? "> **Subtitle**" : "> **本章副标题**");
+      skippingSubtitleBlock = true;
       pending = null;
       continue;
     }

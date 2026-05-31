@@ -1,8 +1,5 @@
 # 14. Production Architecture
 
-> **Subtitle**
-> From demo to deliverable system
-
 ## 1. Chapter Thesis
 
 An agent product is not a prompt plus several tools; it is a control system built around uncertainty. Production architecture must organize API, runtime, context, model, tools, state, policy, eval, and observability into maintainable boundaries.

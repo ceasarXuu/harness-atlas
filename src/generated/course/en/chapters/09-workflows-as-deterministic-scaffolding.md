@@ -1,8 +1,5 @@
 # 09. Workflows as Deterministic Scaffolding
 
-> **Subtitle**
-> Leave determinism to code and uncertainty to the model
-
 ## 1. Chapter Thesis
 
 A workflow is not the opposite of an agent; it is the agent’s scaffold. A good harness encodes deterministic, enumerable, and verifiable parts as workflow, while leaving open-ended judgment, explanation, and generation to the model.

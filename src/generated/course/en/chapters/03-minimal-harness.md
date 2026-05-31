@@ -1,8 +1,5 @@
 # 03. Minimal Harness
 
-> **Subtitle**
-> The minimal closed loop of an Agent Harness
-
 ## 1. Chapter Thesis
 
 A minimal harness is not a collection of modules. It is a closed loop: build context, call the model, select an action, execute tools, observe results, update state, and decide whether to continue or stop.

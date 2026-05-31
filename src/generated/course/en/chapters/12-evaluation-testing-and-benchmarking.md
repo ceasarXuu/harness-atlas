@@ -1,8 +1,5 @@
 # 12. Evaluation, Testing and Benchmarking
 
-> **Subtitle**
-> A feedback system from behavior to evidence
-
 ## 1. Chapter Thesis
 
 Evaluation is not about ranking models on leaderboards; it is about building a feedback loop for the harness. It answers whether the system completes tasks, whether it regressed, why it failed, and whether a change is ready to ship.

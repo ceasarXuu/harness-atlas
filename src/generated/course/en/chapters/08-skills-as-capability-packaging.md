@@ -1,8 +1,5 @@
 # 08. Skills as Capability Packaging
 
-> **Subtitle**
-> From one-off action to reusable capability unit
-
 ## 1. Chapter Thesis
 
 A skill is not a single prompt and not a single tool. A skill packages context, tools, steps, constraints, examples, and evaluation criteria around a class of task goals.

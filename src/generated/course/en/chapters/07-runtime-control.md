@@ -1,8 +1,5 @@
 # 07. Runtime Control
 
-> **Subtitle**
-> Planning, execution, and recovery
-
 ## 1. Chapter Thesis
 
 Agent intelligence comes from the model, but reliability comes from the runtime. Runtime Control manages steps, loops, errors, retries, rollback, interruption, cost, and human intervention.

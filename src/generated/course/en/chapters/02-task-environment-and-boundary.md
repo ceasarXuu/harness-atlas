@@ -1,8 +1,5 @@
 # 02. Task, Environment and Boundary
 
-> **Subtitle**
-> Design the problem before designing the agent
-
 ## 1. Chapter Thesis
 
 The first step in agent design is not choosing tools, frameworks, or models. It is defining the task, environment, and boundaries. Boundaries determine what the agent may know, what it may do, how success is judged, and where it must stop.

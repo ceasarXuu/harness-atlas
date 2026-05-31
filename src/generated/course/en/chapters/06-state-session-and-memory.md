@@ -1,8 +1,5 @@
 # 06. State, Session and Memory
 
-> **Subtitle**
-> Continuity is state management, not remembering more
-
 ## 1. Chapter Thesis
 
 Agent continuity comes from explicit state management, not from injecting all history back into context. Memory is fundamentally a policy: what is worth carrying into the future, how long to keep it, how to correct it, and when to delete it.

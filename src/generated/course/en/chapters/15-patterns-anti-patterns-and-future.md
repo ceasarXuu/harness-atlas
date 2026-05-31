@@ -1,8 +1,5 @@
 # 15. Patterns, Anti-patterns and Future
 
-> **Subtitle**
-> Design principles, anti-patterns, and future directions
-
 ## 1. Chapter Thesis
 
 The future of the harness is not “larger agents,” but better control layers. This chapter abstracts the entire course into reusable design patterns, common anti-patterns, and future directions.

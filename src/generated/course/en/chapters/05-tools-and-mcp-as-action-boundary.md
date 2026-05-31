@@ -1,8 +1,5 @@
 # 05. Tools and MCP as Action Boundary
 
-> **Subtitle**
-> Tools are not plugins; they are controlled side effects
-
 ## 1. Chapter Thesis
 
 Tools turn an agent from something that can speak into something that can act. Once an agent can act, tools must be treated as action boundaries: every action needs a contract, permission, audit, isolation, and recovery strategy.

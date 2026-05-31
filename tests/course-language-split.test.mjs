@@ -51,6 +51,16 @@ function withoutLanguageSwitch(html) {
   return html.replace(/<a href="course-[^"]+\.html">\s*<span>中文<\/span>[\s\S]*?<\/a>/, "");
 }
 
+function sectionIntro(html) {
+  const match = html.match(/<p class="section-intro">([\s\S]*?)<\/p>/);
+  return match ? visibleText(match[1]) : "";
+}
+
+function chapterContentText(html) {
+  const match = html.match(/<article class="chapter-content">([\s\S]*?)<\/article>/);
+  return match ? visibleText(match[1]) : "";
+}
+
 test("English learning pages do not leak Chinese course content", () => {
   for (const page of englishCoursePages) {
     const text = visibleText(withoutLanguageSwitch(read(join(dist, page))));
@@ -74,6 +84,20 @@ test("Course language switches stay paired by route", () => {
   const enGlossary = read(join(dist, "en-course-other-glossary.html"));
   assert.match(zhGlossary, /href="en-course-other-glossary\.html"[\s\S]*?>EN</, "Chinese glossary should switch to English glossary");
   assert.match(enGlossary, /href="course-other-glossary\.html"[\s\S]*?>中文</, "English glossary should switch to Chinese glossary");
+});
+
+test("Course chapter bodies do not repeat subtitles already shown in the page intro", () => {
+  const chapterPages = [...chineseCoursePages, ...englishCoursePages].filter((page) => /course-\d{2}\.html$/.test(page));
+
+  for (const page of chapterPages) {
+    const html = read(join(dist, page));
+    const intro = sectionIntro(html);
+    const body = chapterContentText(html);
+
+    assert.ok(intro, `${page} should expose a page intro subtitle`);
+    assert.doesNotMatch(body, /本章副标题|Subtitle/, `${page} should not render the source subtitle label in the chapter body`);
+    assert.ok(!body.includes(intro), `${page} should not repeat the page intro subtitle in the chapter body`);
+  }
 });
 
 test("Localized course markdown is reproducible from the formal source package", () => {

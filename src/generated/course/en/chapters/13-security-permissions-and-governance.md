@@ -1,8 +1,5 @@
 # 13. Security, Permissions and Governance
 
-> **Subtitle**
-> Limit the agent’s power
-
 ## 1. Chapter Thesis
 
 Agent security is not about making the model more obedient; it is about keeping the system safe even when the model is unreliable. Permissions, approval, sandboxing, audit, and policy engines should be part of the harness architecture.
