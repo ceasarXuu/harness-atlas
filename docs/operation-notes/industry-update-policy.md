@@ -111,6 +111,7 @@ If any answer is no, skip the entry. Prefer leaving the feed unchanged over publ
 - Keep each entry based on a primary source.
 - Accept an entry only when the primary source exposes an exact publish date that is strictly later than the current feed latest `dateTime`.
 - Treat same-day items, generic `Updated:` timestamps, event dates, and undated overview pages as insufficient for a new feed entry unless the exact new section date is visible in the primary source.
+- Official GitHub Releases pages, including clearly labeled pre-releases or nightlies, are eligible primary sources when they expose an exact publish date and a concrete harness mechanism. If a pre-release is skipped, record the reason in the review notes.
 - Keep `zh-CN` and `en` records aligned by `date`, `dateTime`, `href`, `sourceName`, and order.
 - Keep descriptions between 100 and 200 characters.
 - Use conservative wording and avoid claims not directly supported by the source.

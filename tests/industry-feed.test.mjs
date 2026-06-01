@@ -14,6 +14,7 @@ test("localized industry feed records keep matching source identity", () => {
     "Anthropic",
     "Google",
     "Gemini",
+    "Qwen",
     "Stainless",
     "MCP",
     "REST API",

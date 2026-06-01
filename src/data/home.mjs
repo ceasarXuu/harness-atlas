@@ -53,6 +53,16 @@ export const homePages = {
         sourceLinkLabel: "查看原文",
         updates: [
           {
+            date: "2026.06.01",
+            dateTime: "2026-06-01",
+            title: "Qwen Code 夜版增加内存压力监视",
+            tag: "状态治理",
+            description: "Qwen Code 的 6 月 1 日 nightly 预发布新增 `memory pressure monitor`，并补上 resumed history 与 tool results 顺序防护。Agent runtime 正把上下文膨胀和工具序列错误前移为显式状态约束。",
+            href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.17.0-nightly.20260601.1c48e4121",
+            external: true,
+            sourceName: "GitHub Releases",
+          },
+          {
             date: "2026.05.29",
             dateTime: "2026-05-29",
             title: "Copilot 指标 API 增加 Agent 采用分层",
@@ -246,6 +256,16 @@ export const homePages = {
         heading: "Industry Updates",
         sourceLinkLabel: "View Source",
         updates: [
+          {
+            date: "2026.06.01",
+            dateTime: "2026-06-01",
+            title: "Qwen Code nightly adds memory pressure monitor",
+            tag: "State Guard",
+            description: "Qwen Code's June 1 nightly pre-release adds a memory pressure monitor plus guards for oversized resumed history and adjacent tool results. It turns pressure and tool ordering into runtime checks.",
+            href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.17.0-nightly.20260601.1c48e4121",
+            external: true,
+            sourceName: "GitHub Releases",
+          },
           {
             date: "2026.05.29",
             dateTime: "2026-05-29",
