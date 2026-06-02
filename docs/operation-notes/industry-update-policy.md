@@ -1,6 +1,6 @@
 # Industry Update Policy
 
-- Date: 2026-05-30
+- Date: 2026-06-02
 - Scope: homepage industry feed in `src/data/home.mjs`
 
 ## Editorial Focus
@@ -23,6 +23,24 @@ Avoid updates that are only:
 - speculative commentary, rumors, social posts, or secondary reporting
 
 If a financing, partnership, or enterprise story includes a concrete new harness feature, cite and summarize only the feature. Do not frame the entry around capital, valuation, market leadership, or customer logos.
+
+## Discovery Scope
+
+Use a broad discovery pass before applying the must-pass gate. Discovery sources can include:
+
+- official sources: docs, changelogs, release notes, engineering blogs, GitHub releases, SDK repos, protocol repos, benchmark repos, and product update pages
+- social platforms: X/Twitter, LinkedIn, Reddit, Hacker News, Discord or forum announcements, maintainer posts, and conference or launch threads
+- technology news and media: The Verge, TechCrunch, VentureBeat, InfoQ, The New Stack, The Decoder, ZDNET, Ars Technica, Wired, MIT Technology Review, Axios, CNBC, Bloomberg, and other credible tech or business news sources
+- developer-community sources: GitHub Trending, GitHub issues and discussions, Product Hunt, Dev.to, Medium engineering posts, Substack newsletters, Latent Space, Ben's Bites, Simon Willison, Import AI, and other agent or developer tooling newsletters
+- ecosystem scans: release-monitoring pages, package registries, benchmark leaderboards, conference schedules, launch-week roundups, and curated AI tooling lists
+
+Use broad keywords during discovery, including:
+
+- agent runtime, coding agent, software engineering agent, cloud agent, browser agent, GUI agent, tool use, tool calling, MCP, A2A, ACP, AG-UI
+- memory, state, context, session, resume, checkpoint, sandbox, permission, policy, governance, guardrail, tracing, observability, eval, benchmark, workflow, subagent, orchestration, handoff, computer use
+- product names from the priority watchlist plus terms such as release, changelog, launch, preview, GA, beta, API, SDK, CLI, docs, repo, benchmark, eval, protocol, and runtime
+
+Treat social, media, newsletter, and community items as leads by default. They can expand the candidate pool, but the final feed entry should still cite a primary source unless the non-primary source is the only source that directly publishes a concrete mechanism with an exact date and enough evidence. When a non-primary source is used as a lead, record the primary source found through it or the reason no primary source exists.
 
 ## Must-Pass Gate
 
