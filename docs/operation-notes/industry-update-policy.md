@@ -33,6 +33,7 @@ Use a broad discovery pass before applying the must-pass gate. Discovery sources
 - technology news and media: The Verge, TechCrunch, VentureBeat, InfoQ, The New Stack, The Decoder, ZDNET, Ars Technica, Wired, MIT Technology Review, Axios, CNBC, Bloomberg, and other credible tech or business news sources
 - developer-community sources: GitHub Trending, GitHub issues and discussions, Product Hunt, Dev.to, Medium engineering posts, Substack newsletters, Latent Space, Ben's Bites, Simon Willison, Import AI, and other agent or developer tooling newsletters
 - ecosystem scans: release-monitoring pages, package registries, benchmark leaderboards, conference schedules, launch-week roundups, and curated AI tooling lists
+- recurring discovery leads: Papers with Code, Techmeme, Hacker News, GitHub Trending, MiraclePlus AI News, and similar high-signal aggregation pages
 
 Use broad keywords during discovery, including:
 
