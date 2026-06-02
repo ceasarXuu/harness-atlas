@@ -85,7 +85,7 @@
     {
       "path": "chapters/10-multi-agent-orchestration.md",
       "sourceSha256": "a554b7ff8616bbfa61aabed39f700ed9b2014862f9cf2fee8108fb93e4539c6c",
-      "importedSha256": "09f73fb949666fdc5dfd598946631e01eb61c2667a21ed5ba75518a69376ca57",
+      "importedSha256": "a390791dd296b5d79ddf6c22430dd135839bcadd858122ec2f2534f358db81bd",
       "transformed": true,
       "editorialRewrite": true
     },

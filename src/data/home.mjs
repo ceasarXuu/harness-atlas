@@ -73,6 +73,11 @@ export const homePages = {
             sourceName: "GitHub Releases",
           },
           {
+            date: "2026.06.01", dateTime: "2026-06-01", title: "AWS 用 AgentOps 组织 AgentCore 运维", tag: "观测评测",
+            description: "AWS 介绍 Bedrock AgentCore 的 AgentOps 方法，把治理、安全、构建运维、评测和四层遥测串成生产循环。Agent 运维从单次日志转向可追踪、可反馈的 runtime 控制面。",
+            href: "https://aws.amazon.com/blogs/machine-learning/agentops-operationalize-agentic-ai-at-scale-with-amazon-bedrock-agentcore/", external: true, sourceName: "AWS Blog",
+          },
+          {
             date: "2026.05.29",
             dateTime: "2026-05-29",
             title: "Copilot 指标 API 增加 Agent 采用分层",
@@ -93,9 +98,24 @@ export const homePages = {
             sourceName: "OpenAI",
           },
           {
+            date: "2026.05.29", dateTime: "2026-05-29", title: "Cursor Auto-review 细分工具调用权限", tag: "工具权限",
+            description: "Cursor Auto-review Run Mode 把 Shell、MCP、Fetch tool calls 分成 allowlist、sandbox 和 classifier subagent 路径。代码审查 Agent 正把工具调用前置为可审计的权限决策。",
+            href: "https://cursor.com/changelog/auto-review", external: true, sourceName: "Cursor Changelog",
+          },
+          {
+            date: "2026.05.29", dateTime: "2026-05-29", title: "Codex 在 Windows 接入 computer use", tag: "GUI 运行时",
+            description: "OpenAI release notes 写明 Codex 可在 Windows app 中看屏幕、点击和输入，并由 remote control 保留本机项目、shell、app server 与 local context。Coding Agent 的运行面扩到真实桌面。",
+            href: "https://help.openai.com/en/articles/6825453-chatgpt-release-notes", external: true, sourceName: "OpenAI Help Center",
+          },
+          {
             date: "2026.05.28", dateTime: "2026-05-28", title: "Claude Code 发布 Dynamic Workflows", tag: "多 Agent 编排",
             description: "Anthropic 发布 Claude Code Dynamic Workflows，Claude 可动态编写编排脚本，在单次会话中并行运行数十到数百个 subagents，并在汇总前做检查。它把大型迁移、代码审计和对抗性复核推向平台级运行时。",
             href: "https://claude.com/blog/introducing-dynamic-workflows-in-claude-code", external: true, sourceName: "Claude Blog",
+          },
+          {
+            date: "2026.05.28", dateTime: "2026-05-28", title: "OpenAI workspace agents 增加发布权限", tag: "Agent 治理",
+            description: "OpenAI 为 ChatGPT workspace agents 增加 reasoning effort、role-based publishing permissions、app templates、managed MCP server URLs 和 action controls。企业 Agent builder 正把模型强度、发布权和工具入口纳入治理。",
+            href: "https://help.openai.com/en/articles/10128477-chatgpt-enterprise-ve-edu-s%C3%BCr%C3%BCm-notlar%C4%B1", external: true, sourceName: "OpenAI Help Center",
           },
           {
             date: "2026.05.26",
@@ -287,6 +307,11 @@ export const homePages = {
             sourceName: "GitHub Releases",
           },
           {
+            date: "2026.06.01", dateTime: "2026-06-01", title: "AWS frames AgentCore around AgentOps", tag: "Ops",
+            description: "AWS described AgentOps for Bedrock AgentCore, connecting governance, security, build operations, evals, and four telemetry layers into a production loop for runtime control.",
+            href: "https://aws.amazon.com/blogs/machine-learning/agentops-operationalize-agentic-ai-at-scale-with-amazon-bedrock-agentcore/", external: true, sourceName: "AWS Blog",
+          },
+          {
             date: "2026.05.29",
             dateTime: "2026-05-29",
             title: "Copilot metrics API adds agent adoption cohorts",
@@ -307,9 +332,24 @@ export const homePages = {
             sourceName: "OpenAI",
           },
           {
+            date: "2026.05.29", dateTime: "2026-05-29", title: "Cursor Auto-review splits tool-call permissions", tag: "Tool Policy",
+            description: "Cursor Auto-review Run Mode routes Shell, MCP, and Fetch tool calls through allowlists, sandboxes, or a classifier subagent. Review agents are turning tool use into auditable permission decisions.",
+            href: "https://cursor.com/changelog/auto-review", external: true, sourceName: "Cursor Changelog",
+          },
+          {
+            date: "2026.05.29", dateTime: "2026-05-29", title: "Codex adds Windows computer use", tag: "GUI Runtime",
+            description: "OpenAI release notes say Codex can view, click, and type in the Windows app, while remote control keeps local projects, shell, app server, and context on the host.",
+            href: "https://help.openai.com/en/articles/6825453-chatgpt-release-notes", external: true, sourceName: "OpenAI Help Center",
+          },
+          {
             date: "2026.05.28", dateTime: "2026-05-28", title: "Claude Code introduces Dynamic Workflows", tag: "Orchestration",
             description: "Anthropic introduced Claude Code Dynamic Workflows, where Claude writes orchestration scripts and runs parallel subagents in one session. Migrations, audits, and review become managed runtime work.",
             href: "https://claude.com/blog/introducing-dynamic-workflows-in-claude-code", external: true, sourceName: "Claude Blog",
+          },
+          {
+            date: "2026.05.28", dateTime: "2026-05-28", title: "OpenAI adds workspace agent controls", tag: "Governance",
+            description: "OpenAI added reasoning effort, role-based publishing permissions, app templates, managed MCP server URLs, and action controls for ChatGPT workspace agents in Enterprise and Edu.",
+            href: "https://help.openai.com/en/articles/10128477-chatgpt-enterprise-ve-edu-s%C3%BCr%C3%BCm-notlar%C4%B1", external: true, sourceName: "OpenAI Help Center",
           },
           {
             date: "2026.05.26",

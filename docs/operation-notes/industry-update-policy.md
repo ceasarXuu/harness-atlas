@@ -128,6 +128,7 @@ If any answer is no, skip the entry. Prefer leaving the feed unchanged over publ
 
 - Keep each entry based on a primary source.
 - Accept an entry only when the primary source exposes an exact publish date that is strictly later than the current feed latest `dateTime`.
+- In an explicit recent-week backfill run, exact-dated primary-source entries from the last seven calendar days counted from the run date may be accepted even when they are not later than the current feed latest `dateTime`, if they add a materially different harness mechanism and the review notes record the current latest feed date plus a per-entry backfill reason.
 - Treat same-day items, generic `Updated:` timestamps, event dates, and undated overview pages as insufficient for a new feed entry unless the exact new section date is visible in the primary source.
 - Official GitHub Releases pages, including clearly labeled pre-releases or nightlies, are eligible primary sources when they expose an exact publish date and a concrete harness mechanism. If a pre-release is skipped, record the reason in the review notes.
 - Keep `zh-CN` and `en` records aligned by `date`, `dateTime`, `href`, `sourceName`, and order.

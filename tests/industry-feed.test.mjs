@@ -15,6 +15,9 @@ test("localized industry feed records keep matching source identity", () => {
     "Google",
     "Gemini",
     "Qwen",
+    "AWS",
+    "AgentCore",
+    "Cursor",
     "Stainless",
     "MCP",
     "REST API",
@@ -31,6 +34,18 @@ test("localized industry feed records keep matching source identity", () => {
     for (const field of ["title", "tag", "description"]) {
       assert.ok(update[field], `zh record ${index} should keep ${field}`);
       assert.ok(counterpart[field], `en record ${index} should keep ${field}`);
+    }
+    for (const localizedUpdate of [update, counterpart]) {
+      assert.ok(
+        localizedUpdate.description.length >= 100 && localizedUpdate.description.length <= 200,
+        `localized feed record ${index} description should stay between 100 and 200 characters`,
+      );
+    }
+    if (index > 0) {
+      assert.ok(
+        update.dateTime <= zhUpdates[index - 1].dateTime,
+        `localized feed record ${index} should keep dateTime descending order`,
+      );
     }
 
     const zhText = `${update.title} ${update.tag} ${update.description}`;
