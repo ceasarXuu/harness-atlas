@@ -4,7 +4,7 @@ export const githubStars = 0;
 
 export const navModel = [
   { key: "home", href: { "zh-CN": "./", en: "./" } },
-  { key: "course", href: { "zh-CN": "course-01.html", en: "en-course-01.html" } },
+  { key: "framework", href: { "zh-CN": "framework-01.html", en: "en-framework-01.html" } },
   { key: "atlas", href: { "zh-CN": "products.html", en: "products.html" } },
   { key: "locale", href: { "zh-CN": "en.html", en: "index.html" } },
   {
@@ -26,7 +26,7 @@ export const localeMessages = {
     },
     nav: {
       home: "首页",
-      course: "学习",
+      framework: "框架",
       atlas: "生态",
       locale: "EN",
       github: "GitHub",
@@ -42,7 +42,7 @@ export const localeMessages = {
     },
     nav: {
       home: "HOME",
-      course: "COURSE",
+      framework: "FRAMEWORK",
       atlas: "ATLAS",
       locale: "中文",
       github: "GITHUB",
@@ -82,23 +82,23 @@ export const navByLocale = Object.fromEntries(
 );
 
 export const prefetchRoutes = [
-  "course-01.html",
+  "framework-01.html",
   "products.html",
   "timeline.html",
 ];
 
 export {
-  courseLessonPages,
-  courseLessons,
+  frameworkNodePages,
+  frameworkNodes,
   englishGlossaryPage,
-  getCourseLessonPage,
-  getCourseLessons,
-  getLearningOther,
-  getLearningPager,
+  getFrameworkNodePage,
+  getFrameworkNodes,
+  getFrameworkOther,
+  getFrameworkPager,
   glossaryPage,
-  learningChrome,
-  learningOther,
-} from "./course.mjs";
+  frameworkChrome,
+  frameworkOther,
+} from "./framework.mjs";
 export const updates = [
   {
     year: "2026",
@@ -117,7 +117,7 @@ export const updates = [
   {
     year: "2026",
     title: "Agent 评估与基准研究",
-    body: "把评估方法、实验结论和局限沉淀为可复用的学习资料。",
+    body: "把评估方法、实验结论和局限沉淀为可复用的框架资料。",
     tag: "研究进展",
     href: "research.html",
   },
@@ -125,14 +125,14 @@ export const updates = [
 
 export const homeSections = {
   learn: [
-    ["course-01.html", "课程", "第 1 课", "从 Why Agent Harness 开始，按照正式课程目录逐课进入。"],
-    ["course-other-glossary.html", "其他", "术语表", "统一 Agent、Harness、Tool、Skill、MCP 等概念边界。"],
+    ["framework-01.html", "框架", "第 1 章", "从 Why Agent Harness 开始，按照 Harness 框架逐章进入。"],
+    ["framework-glossary.html", "其他", "术语表", "统一 Agent、Harness、Tool、Skill、MCP 等概念边界。"],
   ],
   atlas: [
     ["products.html", "产品", "产品图谱", "整理 Coding Agent、框架、平台和横向能力矩阵。"],
     ["standards.html", "协议", "标准协议", "沉淀 MCP、AGENTS.md、Skills、Tool Calling 等接口规范。"],
     ["patterns.html", "模式", "设计模式", "把产品拆解和工程经验抽象成可复用 Harness 模式。"],
-    ["course-03.html", "架构", "核心组件", "从最小 Harness、上下文、工具、状态、运行时、评测和治理理解系统组成。"],
+    ["framework-03.html", "架构", "核心组件", "从最小 Harness、上下文、工具、状态、运行时、评测和治理理解系统组成。"],
   ],
   evidence: [
     ["research.html", "研究", "研究资料", "收集论文、实验、理论和研究卡片。"],

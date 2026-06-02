@@ -1,0 +1,7 @@
+---
+import FrameworkNodePage from "../components/FrameworkNodePage.astro";
+import { getFrameworkNodePage } from "../data/site.mjs";
+import { Content as ChapterContent } from "../generated/framework/zh-CN/chapters/08-skills-as-capability-packaging.md";
+---
+
+<FrameworkNodePage page={getFrameworkNodePage("framework-08")} content={ChapterContent} />

@@ -1,7 +1,7 @@
 # Harness Atlas
 
 <p align="center">
-  <strong>A public knowledge atlas and systematic course for understanding Agent Harness.</strong>
+  <strong>A public knowledge atlas and systematic framework for understanding Agent Harness.</strong>
 </p>
 
 <p align="center">
@@ -14,7 +14,7 @@
 
 ## Overview
 
-**Harness Atlas** is a public knowledge project and course-style guide for understanding **Agent Harness**: the engineering runtime that enables AI agents to use context, call tools, manage state, execute tasks, validate results, and participate in real software engineering workflows.
+**Harness Atlas** is a public knowledge project and framework-style guide for understanding **Agent Harness**: the engineering runtime that enables AI agents to use context, call tools, manage state, execute tasks, validate results, and participate in real software engineering workflows.
 
 The project does not focus on a single product or vendor. Instead, it studies the general engineering pattern behind AI agents: how context, tools, memory, state, planning, evaluation, human oversight, and governance are combined into a practical, controllable, and measurable agent system.
 
@@ -111,7 +111,7 @@ Harness Atlas covers the following topics:
 
 ---
 
-## Course Map
+## Framework Map
 
 | Module | Topic | Main Question |
 |---|---|---|
@@ -159,7 +159,7 @@ Harness Atlas is designed for:
 The project may include:
 
 - concept explainers
-- course notes
+- framework notes
 - architecture diagrams
 - Mermaid diagrams
 - case studies
@@ -182,7 +182,7 @@ harness-atlas/
 │   ├── en.html
 │   ├── glossary.md
 │   ├── concept-map.md
-│   └── course-outline.md
+│   └── framework-outline.md
 ├── lessons/
 │   ├── 00-introduction/
 │   ├── 01-what-is-harness/
@@ -206,7 +206,7 @@ harness-atlas/
 
 Harness Atlas uses a dual-license model:
 
-- Text content, articles, diagrams, course notes, and visual materials: **Creative Commons Attribution 4.0 International (CC BY 4.0)**
+- Text content, articles, diagrams, framework notes, and visual materials: **Creative Commons Attribution 4.0 International (CC BY 4.0)**
 - Code examples, scripts, configuration files, prompt templates, and engineering materials: **MIT License**
 
 This allows educational content to be freely shared and adapted with attribution, while allowing engineering materials to be reused with minimal restrictions.

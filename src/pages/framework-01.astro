@@ -1,0 +1,7 @@
+---
+import FrameworkNodePage from "../components/FrameworkNodePage.astro";
+import { getFrameworkNodePage } from "../data/site.mjs";
+import { Content as ChapterContent } from "../generated/framework/zh-CN/chapters/01-why-agent-harness.md";
+---
+
+<FrameworkNodePage page={getFrameworkNodePage("framework-01")} content={ChapterContent} />

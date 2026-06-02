@@ -8,15 +8,15 @@ import test from "node:test";
 const root = new URL("..", import.meta.url).pathname;
 const dist = join(root, "dist");
 const docs = join(root, "docs");
-const sourceChapters = join(root, "course", "chapters");
-const localizedCourse = join(root, "src", "generated", "course");
-const englishCoursePages = [
-  ...Array.from({ length: 15 }, (_, index) => `en-course-${String(index + 1).padStart(2, "0")}.html`),
-  "en-course-other-glossary.html",
+const sourceChapters = join(root, "framework", "chapters");
+const localizedFramework = join(root, "src", "generated", "framework");
+const englishFrameworkPages = [
+  ...Array.from({ length: 15 }, (_, index) => `en-framework-${String(index + 1).padStart(2, "0")}.html`),
+  "en-framework-glossary.html",
 ];
-const chineseCoursePages = [
-  ...Array.from({ length: 15 }, (_, index) => `course-${String(index + 1).padStart(2, "0")}.html`),
-  "course-other-glossary.html",
+const chineseFrameworkPages = [
+  ...Array.from({ length: 15 }, (_, index) => `framework-${String(index + 1).padStart(2, "0")}.html`),
+  "framework-glossary.html",
 ];
 
 function read(path) {
@@ -49,7 +49,7 @@ function visibleText(html) {
 }
 
 function withoutLanguageSwitch(html) {
-  return html.replace(/<a href="course-[^"]+\.html">\s*<span>中文<\/span>[\s\S]*?<\/a>/, "");
+  return html.replace(/<a href="framework-[^"]+\.html">\s*<span>中文<\/span>[\s\S]*?<\/a>/, "");
 }
 
 function sectionIntro(html) {
@@ -77,8 +77,8 @@ function articleHeadings(html) {
     .map((match) => visibleText(match[1]));
 }
 
-test("English learning pages do not leak Chinese course content", () => {
-  for (const page of englishCoursePages) {
+test("English framework pages do not leak Chinese framework content", () => {
+  for (const page of englishFrameworkPages) {
     const text = visibleText(withoutLanguageSwitch(read(join(dist, page))));
 
     assert.doesNotMatch(text, /[\u3400-\u9fff]/, `${page} should not contain visible Chinese outside the language switch`);
@@ -86,24 +86,24 @@ test("English learning pages do not leak Chinese course content", () => {
   }
 });
 
-test("Course language switches stay paired by route", () => {
+test("Framework language switches stay paired by route", () => {
   for (let index = 1; index <= 15; index += 1) {
     const num = String(index).padStart(2, "0");
-    const zh = read(join(dist, `course-${num}.html`));
-    const en = read(join(dist, `en-course-${num}.html`));
+    const zh = read(join(dist, `framework-${num}.html`));
+    const en = read(join(dist, `en-framework-${num}.html`));
 
-    assert.match(zh, new RegExp(`href="en-course-${num}\\.html"[\\s\\S]*?>EN</`), `course-${num}.html should switch to matching English lesson`);
-    assert.match(en, new RegExp(`href="course-${num}\\.html"[\\s\\S]*?>中文</`), `en-course-${num}.html should switch to matching Chinese lesson`);
+    assert.match(zh, new RegExp(`href="en-framework-${num}\\.html"[\\s\\S]*?>EN</`), `framework-${num}.html should switch to matching English framework page`);
+    assert.match(en, new RegExp(`href="framework-${num}\\.html"[\\s\\S]*?>中文</`), `en-framework-${num}.html should switch to matching Chinese framework page`);
   }
 
-  const zhGlossary = read(join(dist, "course-other-glossary.html"));
-  const enGlossary = read(join(dist, "en-course-other-glossary.html"));
-  assert.match(zhGlossary, /href="en-course-other-glossary\.html"[\s\S]*?>EN</, "Chinese glossary should switch to English glossary");
-  assert.match(enGlossary, /href="course-other-glossary\.html"[\s\S]*?>中文</, "English glossary should switch to Chinese glossary");
+  const zhGlossary = read(join(dist, "framework-glossary.html"));
+  const enGlossary = read(join(dist, "en-framework-glossary.html"));
+  assert.match(zhGlossary, /href="en-framework-glossary\.html"[\s\S]*?>EN</, "Chinese glossary should switch to English glossary");
+  assert.match(enGlossary, /href="framework-glossary\.html"[\s\S]*?>中文</, "English glossary should switch to Chinese glossary");
 });
 
-test("Course chapter bodies do not repeat subtitles already shown in the page intro", () => {
-  const chapterPages = [...chineseCoursePages, ...englishCoursePages].filter((page) => /course-\d{2}\.html$/.test(page));
+test("Framework chapter bodies do not repeat subtitles already shown in the page intro", () => {
+  const chapterPages = [...chineseFrameworkPages, ...englishFrameworkPages].filter((page) => /framework-\d{2}\.html$/.test(page));
 
   for (const page of chapterPages) {
     const html = read(join(dist, page));
@@ -116,29 +116,29 @@ test("Course chapter bodies do not repeat subtitles already shown in the page in
   }
 });
 
-test("Course chapter bodies avoid draft, coursework, and self-check framing", () => {
-  const chapterPages = [...chineseCoursePages, ...englishCoursePages].filter((page) => /course-\d{2}\.html$/.test(page));
-  const forbidden = /本章|本课程|本节|学习目标|前后关联|本章命题|参考实现方向|复盘|自查|作业|实验|预期产物|Chapter Thesis|How This Chapter Connects|Learning Outcomes|Reference Implementation Direction|Review Checklist|Self[- ]check|Assignment|Homework|Exercise|Lab:|Expected artifact|This chapter|This course/i;
+test("Framework chapter bodies avoid draft, coursework, and self-check framing", () => {
+  const chapterPages = [...chineseFrameworkPages, ...englishFrameworkPages].filter((page) => /framework-\d{2}\.html$/.test(page));
+  const forbidden = /本章|本框架|本章|理解目标|前后关联|本章命题|参考实现方向|复盘|自查|作业|实验|预期产物|Chapter Thesis|How This Chapter Connects|Learning Outcomes|Reference Implementation Direction|Review Checklist|Self[- ]check|Assignment|Homework|Exercise|Lab:|Expected artifact|This chapter|This framework/i;
 
   for (const page of chapterPages) {
     assert.doesNotMatch(
       chapterContentText(read(join(dist, page))),
       forbidden,
-      `${page} should read like explanatory published content, not course draft scaffolding`,
+      `${page} should read like explanatory published content, not framework draft scaffolding`,
     );
   }
 });
 
-test("Chinese course article headings are localized", () => {
-  for (const page of chineseCoursePages.filter((page) => /course-\d{2}\.html$/.test(page))) {
+test("Chinese framework article headings are localized", () => {
+  for (const page of chineseFrameworkPages.filter((page) => /framework-\d{2}\.html$/.test(page))) {
     for (const heading of articleHeadings(read(join(dist, page)))) {
       assert.match(heading, /[\u3400-\u9fff]/, `${page} article heading should be localized: ${heading}`);
     }
   }
 });
 
-test("Course article bodies rely on prose more than lists", () => {
-  const chapterPages = [...chineseCoursePages, ...englishCoursePages].filter((page) => /course-\d{2}\.html$/.test(page));
+test("Framework article bodies rely on prose more than lists", () => {
+  const chapterPages = [...chineseFrameworkPages, ...englishFrameworkPages].filter((page) => /framework-\d{2}\.html$/.test(page));
 
   for (const page of chapterPages) {
     const html = articleHtml(read(join(dist, page)));
@@ -149,16 +149,16 @@ test("Course article bodies rely on prose more than lists", () => {
   }
 });
 
-test("Course article bodies avoid excessive section scaffolding", () => {
-  const chapterPages = [...chineseCoursePages, ...englishCoursePages].filter((page) => /course-\d{2}\.html$/.test(page));
+test("Framework article bodies avoid excessive section scaffolding", () => {
+  const chapterPages = [...chineseFrameworkPages, ...englishFrameworkPages].filter((page) => /framework-\d{2}\.html$/.test(page));
 
   for (const page of chapterPages) {
-    assert.ok(articleHeadings(read(join(dist, page))).length <= 4, `${page} should not read like a fixed-heading lesson outline`);
+    assert.ok(articleHeadings(read(join(dist, page))).length <= 4, `${page} should not read like a fixed-heading framework outline`);
     assert.doesNotMatch(articleHtml(read(join(dist, page))), /<h3\b/, `${page} should not rely on nested note headings`);
   }
 });
 
-test("Canonical course chapters keep complete per-language articles", () => {
+test("Canonical framework chapters keep complete per-language articles", () => {
   for (const file of markdownFiles(sourceChapters)) {
     const markdown = read(join(sourceChapters, file));
 
@@ -169,8 +169,8 @@ test("Canonical course chapters keep complete per-language articles", () => {
   }
 });
 
-test("Course articles avoid paragraph-tagged lists and template fragments", () => {
-  const chapterPages = [...chineseCoursePages, ...englishCoursePages].filter((page) => /course-\d{2}\.html$/.test(page));
+test("Framework articles avoid paragraph-tagged lists and template fragments", () => {
+  const chapterPages = [...chineseFrameworkPages, ...englishFrameworkPages].filter((page) => /framework-\d{2}\.html$/.test(page));
   const templateTerms = /self_check|image_descriptions|rubric|checklist|template|catalog|清单|模板|自查/i;
 
   for (const page of chapterPages) {
@@ -186,23 +186,23 @@ test("Course articles avoid paragraph-tagged lists and template fragments", () =
   }
 });
 
-test("Localized course markdown is reproducible from the formal source package", () => {
-  const temp = mkdtempSync(join(tmpdir(), "harness-atlas-course-"));
+test("Localized framework markdown is reproducible from the formal source package", () => {
+  const temp = mkdtempSync(join(tmpdir(), "harness-atlas-framework-"));
   try {
-    const generated = join(temp, "course");
-    const result = spawnSync("node", ["scripts/generate-localized-course.mjs"], {
+    const generated = join(temp, "framework");
+    const result = spawnSync("node", ["scripts/generate-localized-framework.mjs"], {
       cwd: root,
       encoding: "utf8",
       env: { ...process.env, LOCALIZED_COURSE_OUTPUT: generated },
     });
 
     assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
-    assert.deepEqual(markdownFiles(generated), markdownFiles(localizedCourse), "generated Markdown inventory should match committed localized content");
+    assert.deepEqual(markdownFiles(generated), markdownFiles(localizedFramework), "generated Markdown inventory should match committed localized content");
 
-    for (const file of markdownFiles(localizedCourse)) {
+    for (const file of markdownFiles(localizedFramework)) {
       assert.equal(
         read(join(generated, file)),
-        read(join(localizedCourse, file)),
+        read(join(localizedFramework, file)),
         `${file} should match generator output`,
       );
     }
@@ -212,7 +212,7 @@ test("Localized course markdown is reproducible from the formal source package",
 });
 
 test("Checked-in docs keep the same language split semantics as dist", () => {
-  for (const page of [...englishCoursePages, ...chineseCoursePages]) {
+  for (const page of [...englishFrameworkPages, ...chineseFrameworkPages]) {
     assert.equal(
       visibleText(read(join(docs, page))),
       visibleText(read(join(dist, page))),

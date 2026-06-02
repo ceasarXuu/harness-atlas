@@ -1,0 +1,23 @@
+---
+import FrameworkLayout from "../components/FrameworkLayout.astro";
+import { englishGlossaryPage, getFrameworkPager } from "../data/site.mjs";
+import { Content as GlossaryContent } from "../generated/framework/en/resources/glossary-bilingual.md";
+
+const pager = getFrameworkPager(englishGlossaryPage.active, englishGlossaryPage.locale);
+---
+
+<FrameworkLayout
+  active={englishGlossaryPage.active}
+  locale={englishGlossaryPage.locale}
+  title={englishGlossaryPage.title}
+  description={englishGlossaryPage.description}
+  kicker={englishGlossaryPage.kicker}
+  heading={englishGlossaryPage.heading}
+  intro={englishGlossaryPage.intro}
+  pager={pager}
+  localeHref={englishGlossaryPage.localeHref}
+>
+  <article class="chapter-content">
+    <GlossaryContent />
+  </article>
+</FrameworkLayout>

@@ -1,0 +1,24 @@
+---
+import FrameworkLayout from "./FrameworkLayout.astro";
+import { getFrameworkPager } from "../data/site.mjs";
+
+const { page, content } = Astro.props;
+const ChapterContent = content;
+const pager = getFrameworkPager(page.key, page.locale);
+---
+
+<FrameworkLayout
+  active={page.key}
+  locale={page.locale}
+  title={page.title}
+  description={page.description}
+  kicker={page.kicker}
+  heading={page.heading}
+  intro={page.intro}
+  pager={pager}
+  localeHref={page.localeHref}
+>
+  <article class="chapter-content">
+    {ChapterContent && <ChapterContent />}
+  </article>
+</FrameworkLayout>

@@ -1,7 +1,7 @@
 # Harness Atlas
 
 <p align="center">
-  <strong>面向 Agent Harness 的公开知识图谱与系统课程</strong>
+  <strong>面向 Agent Harness 的公开知识图谱与系统框架</strong>
 </p>
 
 <p align="center">
@@ -14,7 +14,7 @@
 
 ## 项目简介
 
-**Harness Atlas** 是一个面向 **Agent Harness** 的公开知识项目与系统课程，目标是解释 AI Agent 背后的工程化运行环境：模型如何获得上下文、调用工具、管理状态、执行任务、验证结果，并最终进入真实的软件工程流程。
+**Harness Atlas** 是一个面向 **Agent Harness** 的公开知识项目与系统框架，目标是解释 AI Agent 背后的工程化运行环境：模型如何获得上下文、调用工具、管理状态、执行任务、验证结果，并最终进入真实的软件工程流程。
 
 本项目关注的不是某一个具体工具或厂商，而是 AI Agent 产品背后的通用工程范式。它讨论上下文、工具、记忆、状态、规划、评估、人类在环、治理机制等要素如何组合成一个可运行、可控制、可评估的 Agent 系统。
 
@@ -111,7 +111,7 @@ Harness Atlas 覆盖以下主题：
 
 ---
 
-## 课程地图
+## 框架地图
 
 | 模块 | 主题 | 核心问题 |
 |---|---|---|
@@ -159,7 +159,7 @@ Harness Atlas 适合：
 项目内容包括但不限于：
 
 - 概念解释
-- 课程讲义
+- 框架讲义
 - 架构图
 - Mermaid 图
 - 案例分析
@@ -182,7 +182,7 @@ harness-atlas/
 │   ├── en.html
 │   ├── glossary.md
 │   ├── concept-map.md
-│   └── course-outline.md
+│   └── framework-outline.md
 ├── lessons/
 │   ├── 00-introduction/
 │   ├── 01-what-is-harness/
@@ -206,10 +206,10 @@ harness-atlas/
 
 Harness Atlas 采用双协议授权：
 
-- 文本内容、文章、图表、课程讲义和视觉材料：**Creative Commons Attribution 4.0 International (CC BY 4.0)**
+- 文本内容、文章、图表、框架讲义和视觉材料：**Creative Commons Attribution 4.0 International (CC BY 4.0)**
 - 代码示例、脚本、配置文件、Prompt 模板和工程材料：**MIT License**
 
-这意味着课程内容可以在署名条件下自由分享和改编，工程材料可以在保留许可声明的前提下自由复用。
+这意味着框架内容可以在署名条件下自由分享和改编，工程材料可以在保留许可声明的前提下自由复用。
 
 ---
 

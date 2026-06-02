@@ -1,0 +1,7 @@
+---
+import FrameworkNodePage from "../components/FrameworkNodePage.astro";
+import { getFrameworkNodePage } from "../data/site.mjs";
+import { Content as ChapterContent } from "../generated/framework/en/chapters/07-runtime-control.md";
+---
+
+<FrameworkNodePage page={getFrameworkNodePage("framework-07", "en")} content={ChapterContent} />

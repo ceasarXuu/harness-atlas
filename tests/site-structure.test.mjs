@@ -3,17 +3,17 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, normalize } from "node:path";
 import test from "node:test";
 import { homePages } from "../src/data/home.mjs";
-import { courseLessons, getCourseLessons, getLearningOther, getNav, githubStars, glossaryPage, localeMessages, locales, navModel } from "../src/data/site.mjs";
+import { frameworkNodes, getFrameworkNodes, getFrameworkOther, getNav, githubStars, glossaryPage, localeMessages, locales, navModel } from "../src/data/site.mjs";
 
 const root = new URL("..", import.meta.url).pathname;
 const docs = join(root, "docs");
-const courseLessonPages = Array.from({ length: 15 }, (_, index) => {
-  return `course-${String(index + 1).padStart(2, "0")}.html`;
+const frameworkNodePages = Array.from({ length: 15 }, (_, index) => {
+  return `framework-${String(index + 1).padStart(2, "0")}.html`;
 });
 
 const requiredPages = [
-  ...courseLessonPages,
-  "course-other-glossary.html",
+  ...frameworkNodePages,
+  "framework-glossary.html",
   "products.html",
   "standards.html",
   "patterns.html",
@@ -64,7 +64,7 @@ function sourceFiles(dir) {
 
 test("Pages site exposes first-class sections beyond the homepage", () => {
   const index = readDocsFile("index.html");
-  const homepageEntryPages = ["course-01.html", "products.html"];
+  const homepageEntryPages = ["framework-01.html", "products.html"];
 
   for (const page of requiredPages) {
     assert.ok(
@@ -77,10 +77,10 @@ test("Pages site exposes first-class sections beyond the homepage", () => {
     assert.match(index, new RegExp(`href="${page}"`), `index should link ${page}`);
   }
   assert.equal(existsSync(join(docs, "glossary.html")), false, "glossary should not be a standalone docs page");
-  assert.equal(existsSync(join(docs, "course.html")), false, "learning roadmap should not be a standalone docs page");
-  assert.equal(existsSync(join(docs, "course-practice.html")), false, "practice checklist should be removed");
-  assert.equal(existsSync(join(docs, "course-modules.html")), false, "course outline page should be removed");
-  assert.doesNotMatch(index, /href="course-other-glossary\.html"/, "homepage should not link glossary after removing learning path module");
+  assert.equal(existsSync(join(docs, "course.html")), false, "framework roadmap should not be a standalone docs page");
+  assert.equal(existsSync(join(docs, "framework-practice.html")), false, "practice checklist should be removed");
+  assert.equal(existsSync(join(docs, "framework-modules.html")), false, "framework outline page should be removed");
+  assert.doesNotMatch(index, /href="framework-glossary\.html"/, "homepage should not link glossary after removing framework path module");
   assert.doesNotMatch(index, /href="[^"]*#search"/, "homepage should not expose search anchors");
 });
 
@@ -89,8 +89,8 @@ test("Every public docs page has shared navigation and a unique heading", () => 
     const html = readDocsFile(page);
     assert.match(html, /<nav class="nav"/, `${page} should include global nav`);
     assert.match(html, /<h1[^>]*>[\s\S]*?<\/h1>/, `${page} should include an h1`);
-    assert.match(html, /href="course-01\.html"/, `${page} should link Course`);
-    assert.doesNotMatch(html, /href="course\.html"/, `${page} should not link removed learning roadmap`);
+    assert.match(html, /href="framework-01\.html"/, `${page} should link Framework`);
+    assert.doesNotMatch(html, /href="course\.html"/, `${page} should not link removed framework roadmap`);
     assert.match(html, /href="products\.html"/, `${page} should link Products`);
     assert.doesNotMatch(html, /href="glossary\.html"/, `${page} should not link standalone Glossary`);
   }
@@ -231,7 +231,7 @@ test("Localized homepages use the same component structure", () => {
   assert.match(en, /class="equation-group"[\s\S]*?Model[\s\S]*?×[\s\S]*?Harness[\s\S]*?<\/span>/, "English homepage should keep Model times Harness in one equation group");
   assert.doesNotMatch(zh, /<section id="atlas"/, "homepage should not keep a standalone ecosystem atlas section");
   assert.doesNotMatch(zh, /<section id="evidence"/, "homepage should not keep a standalone research/source section");
-  assert.doesNotMatch(zh, /<section id="learn"/, "homepage should not keep a standalone learning path section");
+  assert.doesNotMatch(zh, /<section id="learn"/, "homepage should not keep a standalone framework path section");
   assert.doesNotMatch(zh, /<p class="section-kicker">适合读者<\/p>/, "homepage should not keep audience as a heavy standalone section");
 });
 
@@ -342,16 +342,16 @@ test("Chinese and English top navigation have matching structure", () => {
       });
   }
 
-  assert.deepEqual(navByPage["index.html"].map((item) => item.label), ["首页", "学习", "生态", "EN", `GitHub ★ ${githubStars}`]);
-  assert.deepEqual(navByPage["en.html"].map((item) => item.label), ["HOME", "COURSE", "ATLAS", "中文", `GITHUB ★ ${githubStars}`]);
+  assert.deepEqual(navByPage["index.html"].map((item) => item.label), ["首页", "框架", "生态", "EN", `GitHub ★ ${githubStars}`]);
+  assert.deepEqual(navByPage["en.html"].map((item) => item.label), ["HOME", "FRAMEWORK", "ATLAS", "中文", `GITHUB ★ ${githubStars}`]);
   assert.equal(navByPage["index.html"].length, navByPage["en.html"].length, "localized top nav should expose the same number of tabs");
   assert.deepEqual(
     navByPage["index.html"].map((item) => item.href),
-    ["./", "course-01.html", "products.html", "en.html", "https://github.com/ceasarXuu/harness-atlas"],
+    ["./", "framework-01.html", "products.html", "en.html", "https://github.com/ceasarXuu/harness-atlas"],
   );
   assert.deepEqual(
     navByPage["en.html"].map((item) => item.href),
-    ["./", "en-course-01.html", "products.html", "index.html", "https://github.com/ceasarXuu/harness-atlas"],
+    ["./", "en-framework-01.html", "products.html", "index.html", "https://github.com/ceasarXuu/harness-atlas"],
   );
   for (const page of ["index.html", "en.html"]) {
     const github = navByPage[page].at(-1);
@@ -364,7 +364,7 @@ test("Chinese and English top navigation have matching structure", () => {
 test("Top navigation is generated from one locale-aware schema", () => {
   const keys = navModel.map((item) => item.key);
 
-  assert.deepEqual(keys, ["home", "course", "atlas", "locale", "github"]);
+  assert.deepEqual(keys, ["home", "framework", "atlas", "locale", "github"]);
   assert.deepEqual(locales, ["zh-CN", "en"]);
 
   for (const locale of locales) {
@@ -383,7 +383,7 @@ test("Chinese homepage merges industry updates into the first-scroll experience"
   const nav = html.match(/<nav class="nav"[\s\S]*?<\/nav>/)?.[0] ?? "";
   const navLabels = [...nav.matchAll(/<a [^>]*>([\s\S]*?)<\/a>/g)].map((match) => textContent(match[1]));
 
-  assert.deepEqual(navLabels, ["首页", "学习", "生态", "EN", `GitHub ★ ${githubStars}`]);
+  assert.deepEqual(navLabels, ["首页", "框架", "生态", "EN", `GitHub ★ ${githubStars}`]);
   assert.doesNotMatch(nav, />术语表</);
   assert.doesNotMatch(nav, />行业动态</);
 
@@ -400,52 +400,52 @@ test("Chinese homepage merges industry updates into the first-scroll experience"
   assert.doesNotMatch(industry, />查看全部动态</, "industry section should not render a manual full-updates button"); assert.match(industry, /target="_blank"/, "industry updates should link to source pages");
 });
 
-test("Learning page exposes a left-side directory navigation", () => {
+test("Framework page exposes a left-side directory navigation", () => {
   const learningPages = [
-    ...courseLessons.map((lesson) => [lesson.href, lesson.title]),
-    ["course-other-glossary.html", glossaryPage.heading],
+    ...frameworkNodes.map((lesson) => [lesson.href, lesson.title]),
+    ["framework-glossary.html", glossaryPage.heading],
   ];
 
   for (const [page, heading] of learningPages) {
     const html = readDocsFile(page);
-    const sidebar = html.match(/<aside class="learn-sidebar"[\s\S]*?<\/aside>/)?.[0] ?? "";
+    const sidebar = html.match(/<aside class="framework-sidebar"[\s\S]*?<\/aside>/)?.[0] ?? "";
 
-    assert.match(html, /<section class="section learn-shell">/, `${page} should use the two-column shell`);
-    assert.match(html, /<aside class="learn-sidebar"/, `${page} should include a sidebar`);
-    assert.match(html, /<nav class="learn-nav"/, `${page} sidebar should contain directory navigation`);
-    assert.match(html, new RegExp(`<h1 class="content-title">${heading}</h1>`), `${page} should render its learning subpage`);
-    assert.match(html, /class="learn-content"/, `${page} should include a main content panel`);
-    assert.match(sidebar, /href="course-01\.html"/);
-    assert.match(sidebar, /href="course-15\.html"/);
-    assert.match(sidebar, /href="course-other-glossary\.html"/);
+    assert.match(html, /<section class="section framework-shell">/, `${page} should use the two-column shell`);
+    assert.match(html, /<aside class="framework-sidebar"/, `${page} should include a sidebar`);
+    assert.match(html, /<nav class="framework-nav"/, `${page} sidebar should contain directory navigation`);
+    assert.match(html, new RegExp(`<h1 class="content-title">${heading}</h1>`), `${page} should render its framework subpage`);
+    assert.match(html, /class="framework-content"/, `${page} should include a main content panel`);
+    assert.match(sidebar, /href="framework-01\.html"/);
+    assert.match(sidebar, /href="framework-15\.html"/);
+    assert.match(sidebar, /href="framework-glossary\.html"/);
     assert.doesNotMatch(sidebar, /href="course\.html"/);
-    assert.doesNotMatch(sidebar, />学习路线</);
+    assert.doesNotMatch(sidebar, />框架路线</);
     assert.match(sidebar, />其他</);
     assert.doesNotMatch(sidebar, /href="#/);
     assert.doesNotMatch(sidebar, /href="patterns\.html"/);
-    assert.doesNotMatch(sidebar, /href="course-practice\.html"/);
+    assert.doesNotMatch(sidebar, /href="framework-practice\.html"/);
   }
 });
 
-test("Learning pages expose previous and next navigation at the bottom only", () => {
+test("Framework pages expose previous and next navigation at the bottom only", () => {
   for (const locale of locales) {
-    const labels = locale === "en" ? ["Previous", "Next"] : ["上一节", "下一节"];
+    const labels = locale === "en" ? ["Previous Chapter", "Next Chapter"] : ["上一章", "下一章"];
     const sequence = [
-      ...getCourseLessons(locale).map((lesson) => [lesson.href, lesson.title]),
-      ...getLearningOther(locale).map((item) => [item.href, item.label]),
+      ...getFrameworkNodes(locale).map((lesson) => [lesson.href, lesson.title]),
+      ...getFrameworkOther(locale).map((item) => [item.href, item.label]),
     ];
 
     sequence.forEach(([page], index) => {
       const html = readDocsFile(page);
-      const topPager = html.match(/<nav class="[^"]*\blearn-pager\b[^"]*\btop\b[^"]*"[\s\S]*?<\/nav>/)?.[0] ?? "";
-      const bottomPager = html.match(/<nav class="[^"]*\blearn-pager\b[^"]*\bbottom\b[^"]*"[\s\S]*?<\/nav>/)?.[0] ?? "";
+      const topPager = html.match(/<nav class="[^"]*\bframework-pager\b[^"]*\btop\b[^"]*"[\s\S]*?<\/nav>/)?.[0] ?? "";
+      const bottomPager = html.match(/<nav class="[^"]*\bframework-pager\b[^"]*\bbottom\b[^"]*"[\s\S]*?<\/nav>/)?.[0] ?? "";
       const previous = sequence[index - 1];
       const next = sequence[index + 1];
 
       assert.equal(topPager, "", `${page} should not render pager navigation above the title`);
       assert.ok(bottomPager, `${page} should render pager navigation at the bottom`);
       if (previous) assert.match(bottomPager, new RegExp(`href="${previous[0]}"[\\s\\S]*?${labels[0]}[\\s\\S]*?${previous[1]}`), `${page} should link previous page`);
-      else assert.doesNotMatch(bottomPager, new RegExp(labels[0]), `${page} should not render previous on the first lesson`);
+      else assert.doesNotMatch(bottomPager, new RegExp(labels[0]), `${page} should not render previous on the first framework page`);
       if (next) assert.match(bottomPager, new RegExp(`href="${next[0]}"[\\s\\S]*?${labels[1]}[\\s\\S]*?${next[1]}`), `${page} should link next page`);
       else assert.doesNotMatch(bottomPager, new RegExp(labels[1]), `${page} should not render next on the last lesson`);
     });
@@ -454,8 +454,8 @@ test("Learning pages expose previous and next navigation at the bottom only", ()
 
 test("Section pages start directly with content instead of top heading blocks", () => {
   const sectionPages = [
-    ...courseLessonPages,
-    "course-other-glossary.html",
+    ...frameworkNodePages,
+    "framework-glossary.html",
     "products.html",
     "standards.html",
     "patterns.html",

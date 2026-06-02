@@ -5,12 +5,12 @@
 
 ## Problem
 
-The published `docs/` site only exposed `index.html` and `en.html`, so the repository looked like a single landing page even though the project has course, products, standards, patterns, research, timeline, and references content areas. Glossary content belongs inside the learning page instead of becoming a standalone section.
+The published `docs/` site only exposed `index.html` and `en.html`, so the repository looked like a single landing page even though the project has framework, products, standards, patterns, research, timeline, and references content areas. Glossary content belongs inside the framework page instead of becoming a standalone section.
 
 ## Durable Fix
 
 - Add first-class static HTML entry pages under `docs/` for top-level sections.
-- Keep glossary terms under the learning sidebar's `其他` group, currently `course-other-glossary.html`, so learning concepts stay in the learning flow.
+- Keep glossary terms under the framework sidebar's `其他` group, currently `framework-glossary.html`, so framework concepts stay in the framework flow.
 - Keep the global navigation explicit on every public page.
 - Add a Node test that verifies required Pages files exist, the homepage links them, each public page keeps shared navigation, and local links are not broken.
 
@@ -45,23 +45,23 @@ When updating the Chinese homepage, keep navigation labels, CTA buttons, section
 - Localized homepage variants must share the same section order, class names, repeated card counts, update-row counts, and CTA structure. A language should never add a one-off component such as a source button.
 - Homepage runtime map labels, node names, loop steps, and accessibility labels belong in `homePages[locale].hero`; the map component must stay language-neutral and render the same node count for every locale.
 
-## Learning Shell
+## Framework Shell
 
-- Learning directory entries should be static course subpages under the same learning shell: `course-01.html` through `course-15.html`, plus `course-other-glossary.html`.
-- The English learning shell mirrors those routes as `en-course-01.html` through `en-course-15.html`, plus `en-course-other-glossary.html`; language switches on a lesson must point to the matching lesson, not to the homepage.
-- Do not reintroduce `course.html` as `00 学习路线`; the course entry point is `course-01.html`, and stale generated `docs/course.html` should be moved to Trash before release if it exists.
-- The left learning sidebar must stay visible on every learning subpage and should not use in-page hash links or jump to a non-learning page.
-- The body should render the active lesson content, not duplicate the full course outline that already lives in the sidebar.
+- Framework navigation entries should be static framework subpages under the same framework shell: `framework-01.html` through `framework-15.html`, plus `framework-glossary.html`.
+- The English framework shell mirrors those routes as `en-framework-01.html` through `en-framework-15.html`, plus `en-framework-glossary.html`; language switches on a lesson must point to the matching lesson, not to the homepage.
+- Do not reintroduce `course.html` as `00 框架路线`; the framework entry point is `framework-01.html`, and stale generated `docs/course.html` should be moved to Trash before release if it exists.
+- The left framework sidebar must stay visible on every framework subpage and should not use in-page hash links or jump to a non-framework page.
+- The body should render the active framework chapter content, not duplicate the full framework outline that already lives in the sidebar.
 
-## Official Course Content Import
+## Official Framework Content Import
 
-- The formal course package is 15 Markdown chapters under `course/chapters/`, plus resource files under `course/resources/`.
-- Keep the formal package bilingual and immutable under `course/`; generate localized Markdown with `node scripts/generate-localized-course.mjs` into `src/generated/course/{zh-CN,en}/` before wiring Astro routes.
-- Render localized chapter Markdown through Astro Markdown imports in `src/pages/course-*.astro` and `src/pages/en-course-*.astro`; keep route metadata, titles, subtitles, and pager/sidebar order in `src/data/course.mjs`.
-- Do not render bilingual course bodies inside one page. Chinese pages should show Chinese titles/body only; English pages should show English titles/body only.
-- Rewrite intra-chapter Markdown links from source-file paths such as `./02-task-environment-and-boundary.md` to public routes such as `course-02.html`, otherwise generated Pages output will contain broken local links.
-- After importing course content, run `npm run build`, copy `dist/.` into `docs/`, then run `npm test`. The tests compare generated `dist` artifacts byte-for-byte with checked-in `docs`, so a skipped copy is caught.
-- Browser smoke should cover at least `course-01.html`, `en-course-01.html`, `course-15.html`, `en-course-15.html`, and both glossary routes on desktop and mobile widths. If Playwright's bundled browser is missing, use the local Chrome executable with Playwright instead of installing browsers during a normal content update.
+- The formal framework package is 15 Markdown chapters under `framework/chapters/`, plus resource files under `framework/resources/`.
+- Keep the formal package bilingual and immutable under `framework/`; generate localized Markdown with `node scripts/generate-localized-framework.mjs` into `src/generated/framework/{zh-CN,en}/` before wiring Astro routes.
+- Render localized chapter Markdown through Astro Markdown imports in `src/pages/framework-*.astro` and `src/pages/en-framework-*.astro`; keep route metadata, titles, subtitles, and pager/sidebar order in `src/data/framework.mjs`.
+- Do not render bilingual framework bodies inside one page. Chinese pages should show Chinese titles/body only; English pages should show English titles/body only.
+- Rewrite intra-chapter Markdown links from source-file paths such as `./02-task-environment-and-boundary.md` to public routes such as `framework-02.html`, otherwise generated Pages output will contain broken local links.
+- After importing framework content, run `npm run build`, copy `dist/.` into `docs/`, then run `npm test`. The tests compare generated `dist` artifacts byte-for-byte with checked-in `docs`, so a skipped copy is caught.
+- Browser smoke should cover at least `framework-01.html`, `en-framework-01.html`, `framework-15.html`, `en-framework-15.html`, and both glossary routes on desktop and mobile widths. If Playwright's bundled browser is missing, use the local Chrome executable with Playwright instead of installing browsers during a normal content update.
 
 ## Local Browser Smoke
 

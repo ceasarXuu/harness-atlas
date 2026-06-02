@@ -1,0 +1,7 @@
+---
+import FrameworkNodePage from "../components/FrameworkNodePage.astro";
+import { getFrameworkNodePage } from "../data/site.mjs";
+import { Content as ChapterContent } from "../generated/framework/en/chapters/10-multi-agent-orchestration.md";
+---
+
+<FrameworkNodePage page={getFrameworkNodePage("framework-10", "en")} content={ChapterContent} />

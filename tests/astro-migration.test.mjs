@@ -4,28 +4,28 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { spawnSync } from "node:child_process";
 import test from "node:test";
-import { courseLessons, getCourseLessonPage } from "../src/data/site.mjs";
+import { frameworkNodes, getFrameworkNodePage } from "../src/data/site.mjs";
 
 const root = new URL("..", import.meta.url).pathname;
 const src = join(root, "src");
 const dist = join(root, "dist");
 const docs = join(root, "docs");
-const course = join(root, "course");
+const frameworkRoot = join(root, "framework");
 const pagesBase = "/harness-atlas/";
-const courseLessonPages = Array.from({ length: 15 }, (_, index) => {
-  return `course-${String(index + 1).padStart(2, "0")}.html`;
+const frameworkNodePages = Array.from({ length: 15 }, (_, index) => {
+  return `framework-${String(index + 1).padStart(2, "0")}.html`;
 });
-const englishCourseLessonPages = Array.from({ length: 15 }, (_, index) => {
-  return `en-course-${String(index + 1).padStart(2, "0")}.html`;
+const englishFrameworkNodePages = Array.from({ length: 15 }, (_, index) => {
+  return `en-framework-${String(index + 1).padStart(2, "0")}.html`;
 });
 
 const pages = [
   "index.html",
   "en.html",
-  ...courseLessonPages,
-  ...englishCourseLessonPages,
-  "course-other-glossary.html",
-  "en-course-other-glossary.html",
+  ...frameworkNodePages,
+  ...englishFrameworkNodePages,
+  "framework-glossary.html",
+  "en-framework-glossary.html",
   "products.html",
   "standards.html",
   "patterns.html",
@@ -75,7 +75,7 @@ function distArtifactFiles() {
 }
 
 function chapterFiles() {
-  return readdirSync(join(course, "chapters"))
+  return readdirSync(join(frameworkRoot, "chapters"))
     .filter((file) => /^\d{2}-.*\.md$/.test(file))
     .sort()
     .map((file) => `chapters/${file}`);
@@ -119,11 +119,11 @@ function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function allowedCourseLinkRewrite(source) {
+function allowedFrameworkLinkRewrite(source) {
   let rewritten = source;
   for (const chapter of chapterFiles()) {
     const basename = chapter.split("/").at(-1);
-    const route = `course-${basename.slice(0, 2)}.html`;
+    const route = `framework-${basename.slice(0, 2)}.html`;
     const escapedChapter = escapeRegex(chapter);
     const escapedBasename = escapeRegex(basename);
     rewritten = rewritten
@@ -172,8 +172,8 @@ test("Astro source uses shared layouts and data instead of raw HTML passthrough"
   assert.match(siteData, /export function getNav/, "navigation should be generated from schema and locale messages");
   assert.doesNotMatch(siteData, /export const (zhNav|enNav)/, "localized nav arrays should not be maintained by hand");
   assert.match(siteData, /export const sectionPages/, "section page metadata should be centralized");
-  assert.match(siteData, /courseLessons/, "course lessons should be centralized or re-exported");
-  assert.equal(courseLessons.length, 15, "official course should expose all 15 lessons");
+  assert.match(siteData, /frameworkNodes/, "framework nodes should be centralized or re-exported");
+  assert.equal(frameworkNodes.length, 15, "official framework should expose all 15 framework nodes");
 });
 
 test("Astro build emits static Pages-compatible routes and assets", () => {
@@ -190,44 +190,44 @@ test("Astro build emits static Pages-compatible routes and assets", () => {
     assert.ok(existsSync(join(dist, page)), `missing built route dist/${page}`);
   }
   assert.equal(existsSync(join(dist, "glossary.html")), false, "glossary should be part of learning, not a standalone route");
-  assert.equal(existsSync(join(dist, "course.html")), false, "learning roadmap page should not be emitted");
-  assert.equal(existsSync(join(dist, "course-modules.html")), false, "course outline page should not be emitted");
-  assert.equal(existsSync(join(dist, "course-practice.html")), false, "practice checklist page should not be emitted");
+  assert.equal(existsSync(join(dist, "course.html")), false, "framework roadmap page should not be emitted");
+  assert.equal(existsSync(join(dist, "framework-modules.html")), false, "framework outline page should not be emitted");
+  assert.equal(existsSync(join(dist, "framework-practice.html")), false, "practice checklist page should not be emitted");
 
   assert.ok(existsSync(join(dist, "assets/css/style.css")), "missing shared stylesheet");
-  assert.ok(existsSync(join(dist, "assets/css/learn.css")), "missing learning stylesheet");
+  assert.ok(existsSync(join(dist, "assets/css/framework.css")), "missing framework stylesheet");
   assert.ok(existsSync(join(dist, "favicon.svg")), "missing favicon");
 });
 
-test("Course pages respect the active site language", () => {
-  const zh = read(join(dist, "course-01.html"));
-  const en = read(join(dist, "en-course-01.html"));
+test("Framework pages respect the active site language", () => {
+  const zh = read(join(dist, "framework-01.html"));
+  const en = read(join(dist, "en-framework-01.html"));
 
-  assert.match(zh, /<html lang="zh-CN"/, "Chinese course route should declare Chinese language");
-  assert.match(en, /<html lang="en"/, "English course route should declare English language");
-  assert.match(zh, /href="en-course-01\.html"[\s\S]*?>EN</, "Chinese lesson should switch to the matching English lesson");
-  assert.match(en, /href="course-01\.html"[\s\S]*?>中文</, "English lesson should switch to the matching Chinese lesson");
+  assert.match(zh, /<html lang="zh-CN"/, "Chinese framework route should declare Chinese language");
+  assert.match(en, /<html lang="en"/, "English framework route should declare English language");
+  assert.match(zh, /href="en-framework-01\.html"[\s\S]*?>EN</, "Chinese framework page should switch to the matching English framework page");
+  assert.match(en, /href="framework-01\.html"[\s\S]*?>中文</, "English framework page should switch to the matching Chinese framework page");
 
-  assert.match(zh, /<h1 class="content-title">为什么需要 Agent Harness<\/h1>/, "Chinese lesson should use the Chinese title only");
-  assert.match(en, /<h1 class="content-title">Why Agent Harness<\/h1>/, "English lesson should use the English title only");
-  assert.match(zh, /Agent Harness 的核心不是让模型更聪明/, "Chinese lesson should render Chinese chapter body");
-  assert.match(en, /The core of an Agent Harness is not making the model smarter/, "English lesson should render English chapter body");
+  assert.match(zh, /<h1 class="content-title">为什么需要 Agent Harness<\/h1>/, "Chinese framework page should use the Chinese title only");
+  assert.match(en, /<h1 class="content-title">Why Agent Harness<\/h1>/, "English framework page should use the English title only");
+  assert.match(zh, /Agent Harness 的核心不是让模型更聪明/, "Chinese framework page should render Chinese chapter body");
+  assert.match(en, /The core of an Agent Harness is not making the model smarter/, "English framework page should render English chapter body");
 
-  assert.doesNotMatch(zh, /The core of an Agent Harness is not making the model smarter|English:/, "Chinese lesson should not render English body copy");
-  assert.doesNotMatch(en, /Agent Harness 的核心不是让模型更聪明|中文：|本章命题/, "English lesson should not render Chinese body copy");
-  assert.doesNotMatch(zh, /Why Agent Harness \/ 为什么需要 Agent Harness/, "Chinese lesson should not render bilingual titles");
-  assert.doesNotMatch(en, /Why Agent Harness \/ 为什么需要 Agent Harness/, "English lesson should not render bilingual titles");
+  assert.doesNotMatch(zh, /The core of an Agent Harness is not making the model smarter|English:/, "Chinese framework page should not render English body copy");
+  assert.doesNotMatch(en, /Agent Harness 的核心不是让模型更聪明|中文：|本章命题/, "English framework page should not render Chinese body copy");
+  assert.doesNotMatch(zh, /Why Agent Harness \/ 为什么需要 Agent Harness/, "Chinese framework page should not render bilingual titles");
+  assert.doesNotMatch(en, /Why Agent Harness \/ 为什么需要 Agent Harness/, "English framework page should not render bilingual titles");
 });
 
 test("Built pages keep page-specific loading boundaries", () => {
-  const learningPages = new Set([...courseLessonPages, ...englishCourseLessonPages, "course-other-glossary.html", "en-course-other-glossary.html"]);
+  const learningPages = new Set([...frameworkNodePages, ...englishFrameworkNodePages, "framework-glossary.html", "en-framework-glossary.html"]);
 
   for (const page of pages) {
     const html = read(join(dist, page));
     const stylesheetHrefs = [...html.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="([^"]+)"/g)].map((match) => match[1]);
 
     assert.equal(stylesheetHrefs.filter((href) => href === "assets/css/style.css").length, 1, `${page} should load shared CSS once`);
-    assert.equal(stylesheetHrefs.includes("assets/css/learn.css"), learningPages.has(page), `${page} should only load learning CSS inside learning pages`);
+    assert.equal(stylesheetHrefs.includes("assets/css/framework.css"), learningPages.has(page), `${page} should only load framework CSS inside framework pages`);
     if (page === "index.html" || page === "en.html") {
       assert.match(html, /<script\b[\s\S]*IntersectionObserver/, `${page} should only use script for homepage feed pagination`);
     } else {
@@ -324,35 +324,35 @@ test("Public HTML discovery covers docs and dist link checks", () => {
   }
 });
 
-test("Course route files select lessons by stable keys", () => {
+test("Framework route files select nodes by stable keys", () => {
   for (let index = 1; index <= 15; index += 1) {
-    const route = `course-${String(index).padStart(2, "0")}`;
+    const route = `framework-${String(index).padStart(2, "0")}`;
     const englishRoute = `en-${route}`;
     const source = read(join(src, "pages", `${route}.astro`));
     const englishSource = read(join(src, "pages", `${englishRoute}.astro`));
     const chapter = chapterFiles()[index - 1];
-    const localizedChapter = `generated/course/zh-CN/${chapter}`;
-    const localizedEnglishChapter = `generated/course/en/${chapter}`;
+    const localizedChapter = `generated/framework/zh-CN/${chapter}`;
+    const localizedEnglishChapter = `generated/framework/en/${chapter}`;
 
-    assert.match(source, new RegExp(`getCourseLessonPage\\("${route}"\\)`), `${route}.astro should select by stable lesson key`);
+    assert.match(source, new RegExp(`getFrameworkNodePage\\("${route}"\\)`), `${route}.astro should select by stable framework key`);
     assert.match(source, new RegExp(localizedChapter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${route}.astro should import localized ${chapter}`);
-    assert.doesNotMatch(source, /courseLessonPages\[\d+\]/, `${route}.astro should not depend on lesson array indexes`);
+    assert.doesNotMatch(source, /frameworkNodePages\[\d+\]/, `${route}.astro should not depend on framework array indexes`);
 
-    assert.match(englishSource, new RegExp(`getCourseLessonPage\\("${route}", "en"\\)`), `${englishRoute}.astro should select by stable lesson key and English locale`);
+    assert.match(englishSource, new RegExp(`getFrameworkNodePage\\("${route}", "en"\\)`), `${englishRoute}.astro should select by stable framework key and English locale`);
     assert.match(englishSource, new RegExp(localizedEnglishChapter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${englishRoute}.astro should import localized English ${chapter}`);
   }
 });
 
-test("Course lesson lookup rejects removed or unknown keys", () => {
-  assert.equal(getCourseLessonPage("course-01").heading, "为什么需要 Agent Harness");
-  assert.equal(getCourseLessonPage("course-01", "en").heading, "Why Agent Harness");
-  assert.throws(() => getCourseLessonPage("course-00"), /Unknown course lesson: course-00/);
-  assert.throws(() => getCourseLessonPage("course-missing"), /Unknown course lesson: course-missing/);
+test("Framework node lookup rejects removed or unknown keys", () => {
+  assert.equal(getFrameworkNodePage("framework-01").heading, "为什么需要 Agent Harness");
+  assert.equal(getFrameworkNodePage("framework-01", "en").heading, "Why Agent Harness");
+  assert.throws(() => getFrameworkNodePage("framework-00"), /Unknown framework node: framework-00/);
+  assert.throws(() => getFrameworkNodePage("framework-missing"), /Unknown framework node: framework-missing/);
 });
 
-test("Course routes render the lesson selected by their route number", () => {
-  for (const [index, lesson] of courseLessons.entries()) {
-    const markdown = read(join(course, chapterFiles()[index]));
+test("Framework routes render the lesson selected by their route number", () => {
+  for (const [index, lesson] of frameworkNodes.entries()) {
+    const markdown = read(join(frameworkRoot, chapterFiles()[index]));
     const html = read(join(dist, lesson.href));
     const heading = chapterHeading(markdown);
     const subtitle = [
@@ -362,11 +362,11 @@ test("Course routes render the lesson selected by their route number", () => {
 
     assert.equal(lesson.body, chapterSubtitle(markdown, "中文"), `${lesson.key} Chinese subtitle should match official chapter subtitle`);
     assert.match(html, new RegExp(`<h1 class="content-title">${lesson.title}</h1>`), `${lesson.href} should render ${lesson.title}`);
-    assert.match(html, new RegExp(`学习 / ${lesson.title}`), `${lesson.href} should render its lesson kicker`);
+    assert.match(html, new RegExp(`框架 / ${lesson.title}`), `${lesson.href} should render its lesson kicker`);
     assert.match(html, new RegExp(escapeRegex(firstArticleHeading(markdown))), `${lesson.href} should render localized article body`);
     assert.doesNotMatch(html, /Chapter Thesis \/ 本章命题|本章命题|English:/, `${lesson.href} should not render bilingual or draft chapter labels`);
 
-    const englishLesson = getCourseLessonPage(lesson.key, "en");
+    const englishLesson = getFrameworkNodePage(lesson.key, "en");
     const englishHtml = read(join(dist, englishLesson.href));
     assert.equal(englishLesson.body, chapterSubtitle(markdown, "English"), `${lesson.key} English subtitle should match official chapter subtitle`);
     assert.match(englishHtml, new RegExp(`<h1 class="content-title">${englishLesson.heading}</h1>`), `${englishLesson.href} should render ${englishLesson.heading}`);
@@ -375,46 +375,49 @@ test("Course routes render the lesson selected by their route number", () => {
   }
 });
 
-test("Course pages render the official chapter markdown instead of placeholder cards", () => {
-  const first = read(join(dist, "course-01.html"));
-  const final = read(join(dist, "course-15.html"));
+test("Framework pages render the official chapter markdown instead of placeholder cards", () => {
+  const first = read(join(dist, "framework-01.html"));
+  const final = read(join(dist, "framework-15.html"));
 
-  assert.match(first, /不确定性需要工程边界/, "first lesson should render article-form markdown section headings");
-  assert.match(first, /从 Prompt 到工程系统/, "first lesson should render official subtitle");
-  assert.match(first, /模型能力进入真实系统/, "first lesson should render sustained article prose");
-  assert.doesNotMatch(first, /<h3>本课目标<\/h3>/, "first lesson should not render placeholder objective card");
+  assert.match(first, /不确定性需要工程边界/, "first framework page should render article-form markdown section headings");
+  assert.match(first, /从 Prompt 到工程系统/, "first framework page should render official subtitle");
+  assert.match(first, /模型能力进入真实系统/, "first framework page should render sustained article prose");
+  assert.doesNotMatch(first, /<h3>本课目标<\/h3>/, "first framework page should not render placeholder objective card");
 
-  assert.match(final, /模式、反模式与未来/, "final lesson should render the official final chapter");
-  assert.match(final, /设计原则、反模式与未来方向/, "final lesson should render official final subtitle");
+  assert.match(final, /模式、反模式与未来/, "final framework page should render the official final chapter");
+  assert.match(final, /设计原则、反模式与未来方向/, "final framework page should render official final subtitle");
 
-  for (const page of [...courseLessonPages, ...englishCourseLessonPages]) {
+  for (const page of [...frameworkNodePages, ...englishFrameworkNodePages]) {
     const html = read(join(dist, page));
-    assert.doesNotMatch(html, /<h3>本课目标<\/h3>|<h3>关键边界<\/h3>|<h3>学习产出<\/h3>/, `${page} should not render placeholder course cards`);
+    assert.doesNotMatch(html, /<h3>本课目标<\/h3>|<h3>关键边界<\/h3>|<h3>理解产出<\/h3>/, `${page} should not render placeholder framework cards`);
   }
 });
 
-test("Official course import manifest pins imported markdown files", () => {
-  const manifest = JSON.parse(read(join(course, "import-manifest.json")));
+test("Official framework import manifest pins imported markdown files", () => {
+  const manifest = JSON.parse(read(join(frameworkRoot, "import-manifest.json")));
   const expectedFiles = [
     "README.md",
     "COURSE_INDEX.md",
     ...chapterFiles(),
-    ...readdirSync(join(course, "resources")).filter((file) => file.endsWith(".md")).sort().map((file) => `resources/${file}`),
+    ...readdirSync(join(frameworkRoot, "resources")).filter((file) => file.endsWith(".md")).sort().map((file) => `resources/${file}`),
   ];
   const expectedInventory = [...expectedFiles].sort();
+  const expectedSourceInventory = manifest.files
+    .map((item) => item.sourcePath ?? item.path)
+    .sort();
 
-  assert.equal(manifest.schema, "course-import-v1");
+  assert.equal(manifest.schema, "framework-import-v1");
   assert.equal(manifest.sourcePackage, "/Users/xuzhang/Downloads/agent-harness-atlas-course");
-  assert.ok(existsSync(manifest.sourcePackage), `missing official course source package ${manifest.sourcePackage}`);
+  assert.ok(existsSync(manifest.sourcePackage), `missing official framework source package ${manifest.sourcePackage}`);
   assert.deepEqual(manifest.files.map((item) => item.path), expectedFiles);
-  assert.deepEqual(markdownFiles(course), expectedInventory, "imported Markdown inventory should match manifest");
-  assert.deepEqual(markdownFiles(manifest.sourcePackage), expectedInventory, "source Markdown inventory should match manifest");
+  assert.deepEqual(markdownFiles(frameworkRoot), expectedInventory, "imported Markdown inventory should match manifest");
+  assert.deepEqual(markdownFiles(manifest.sourcePackage), expectedSourceInventory, "source Markdown inventory should match manifest source paths");
 
   for (const item of manifest.files) {
-    const currentPath = join(course, item.path);
-    const sourcePath = join(manifest.sourcePackage, item.path);
-    assert.ok(existsSync(currentPath), `missing imported course file ${item.path}`);
-    assert.ok(existsSync(sourcePath), `missing source course file ${item.path}`);
+    const currentPath = join(frameworkRoot, item.path);
+    const sourcePath = join(manifest.sourcePackage, item.sourcePath ?? item.path);
+    assert.ok(existsSync(currentPath), `missing imported framework file ${item.path}`);
+    assert.ok(existsSync(sourcePath), `missing source framework file ${item.path}`);
     assert.equal(sha256(readBytes(currentPath)), item.importedSha256, `${item.path} should match import manifest hash`);
 
     const source = read(sourcePath);
@@ -422,49 +425,52 @@ test("Official course import manifest pins imported markdown files", () => {
     assert.equal(sha256(source), item.sourceSha256, `${item.path} source hash should match import manifest hash`);
     if (item.editorialRewrite) {
       assert.match(imported, /status: article-v2/, `${item.path} should record editorial article status`);
+    } else if (item.frameworkRebrand) {
+      assert.notEqual(imported, source, `${item.path} should be intentionally rebranded from the source package`);
+      assert.doesNotMatch(imported, /Course Map|systematic course|course-style|课程地图|系统课程|课程目录/, `${item.path} should not keep public course positioning copy`);
     } else {
-      assert.equal(imported, item.transformed ? allowedCourseLinkRewrite(source) : source, `${item.path} should only apply allowed course link rewrites`);
+      assert.equal(imported, item.transformed ? allowedFrameworkLinkRewrite(source) : source, `${item.path} should only apply allowed framework link rewrites`);
     }
   }
 });
 
-test("Official course markdown uses public chapter routes", () => {
+test("Official framework markdown uses public chapter routes", () => {
   const sourceFiles = ["COURSE_INDEX.md", ...chapterFiles()];
 
   for (const file of sourceFiles) {
-    const markdown = read(join(course, file));
+    const markdown = read(join(frameworkRoot, file));
     assert.doesNotMatch(markdown, /\]\(\.\/(?:chapters\/)?\d{2}-[^)]+\.md\)/, `${file} should not link source markdown chapter paths`);
     assert.doesNotMatch(markdown, /href="[^"]+\.md"/, `${file} should not contain HTML links to markdown chapter paths`);
   }
 });
 
-test("Glossary content is nested under the learning page", () => {
-  const course = read(join(dist, "course-other-glossary.html"));
-  const englishCourse = read(join(dist, "en-course-other-glossary.html"));
-  const source = read(join(src, "pages", "course-other-glossary.astro"));
+test("Glossary content is nested under the framework page", () => {
+  const course = read(join(dist, "framework-glossary.html"));
+  const englishCourse = read(join(dist, "en-framework-glossary.html"));
+  const source = read(join(src, "pages", "framework-glossary.astro"));
   const allBuiltHtml = pages.map((page) => read(join(dist, page))).join("\n");
 
-  assert.match(source, /generated\/course\/zh-CN\/resources\/glossary-bilingual\.md/, "glossary page should render the localized official glossary markdown resource");
-  assert.match(course, /学习 \/ 中英术语表/, "glossary should render inside the learning shell");
+  assert.match(source, /generated\/framework\/zh-CN\/resources\/glossary-bilingual\.md/, "glossary page should render the localized official glossary markdown resource");
+  assert.match(course, /框架 \/ 中英术语表/, "glossary should render inside the framework shell");
   assert.match(course, /中英术语表/, "glossary subpage should contain official glossary content");
   assert.match(course, /最小自主权/, "glossary should render official Chinese term definitions");
   assert.doesNotMatch(course, /The engineering control system around an agent|English:/, "Chinese glossary should not render English definitions");
-  assert.match(englishCourse, /Course \/ Bilingual Glossary/, "English glossary should render inside the learning shell");
+  assert.match(englishCourse, /Framework \/ Bilingual Glossary/, "English glossary should render inside the framework shell");
   assert.match(englishCourse, /The engineering control system around an agent/, "English glossary should render official English term definitions");
   assert.doesNotMatch(englishCourse, /围绕 Agent 建立的工程控制系统|中文：/, "English glossary should not render Chinese definitions");
-  assert.match(course, /<aside class="learn-sidebar"/, "glossary subpage should keep the learning sidebar");
+  assert.match(course, /<aside class="framework-sidebar"/, "glossary subpage should keep the framework sidebar");
   assert.doesNotMatch(allBuiltHtml, /href="glossary\.html"/, "built pages should not link a standalone glossary page");
 });
 
-test("Learning directory entries are subpages, not scroll anchors", () => {
-  const learningPages = [...courseLessonPages, ...englishCourseLessonPages, "course-other-glossary.html", "en-course-other-glossary.html"];
+test("Framework navigation entries are subpages, not scroll anchors", () => {
+  const learningPages = [...frameworkNodePages, ...englishFrameworkNodePages, "framework-glossary.html", "en-framework-glossary.html"];
 
   for (const page of learningPages) {
     const html = read(join(dist, page));
-    const expectedPrefix = page.startsWith("en-") ? "en-course-" : "course-";
-    const expectedGlossary = page.startsWith("en-") ? "en-course-other-glossary.html" : "course-other-glossary.html";
-    assert.match(html, /<aside class="learn-sidebar"/, `${page} should keep the learning sidebar`);
-    assert.match(html, /<nav class="learn-nav"/, `${page} should keep the learning directory`);
+    const expectedPrefix = page.startsWith("en-") ? "en-framework-" : "framework-";
+    const expectedGlossary = page.startsWith("en-") ? "en-framework-glossary.html" : "framework-glossary.html";
+    assert.match(html, /<aside class="framework-sidebar"/, `${page} should keep the framework sidebar`);
+    assert.match(html, /<nav class="framework-nav"/, `${page} should keep the framework navigation`);
 
     for (let index = 1; index <= 15; index += 1) {
       const link = `href="${expectedPrefix}${String(index).padStart(2, "0")}.html"`;
@@ -472,12 +478,12 @@ test("Learning directory entries are subpages, not scroll anchors", () => {
     }
     assert.match(html, new RegExp(`href="${expectedGlossary}"`), `${page} should link localized glossary`);
 
-    const sidebar = html.match(/<aside class="learn-sidebar"[\s\S]*?<\/aside>/)?.[0] ?? "";
+    const sidebar = html.match(/<aside class="framework-sidebar"[\s\S]*?<\/aside>/)?.[0] ?? "";
     assert.doesNotMatch(sidebar, /href="#/, `${page} sidebar should not use in-page anchors`);
     assert.doesNotMatch(sidebar, /href="course\.html"/, `${page} sidebar should not expose the removed roadmap page`);
-    assert.doesNotMatch(sidebar, />学习路线</, `${page} sidebar should not expose the removed roadmap item`);
-    assert.doesNotMatch(sidebar, /href="patterns\.html"/, `${page} sidebar should not jump outside the learning shell`);
-    assert.doesNotMatch(sidebar, /href="course-practice\.html"/, `${page} sidebar should not expose practice checklist`);
+    assert.doesNotMatch(sidebar, />框架路线</, `${page} sidebar should not expose the removed roadmap item`);
+    assert.doesNotMatch(sidebar, /href="patterns\.html"/, `${page} sidebar should not jump outside the framework shell`);
+    assert.doesNotMatch(sidebar, /href="framework-practice\.html"/, `${page} sidebar should not expose practice checklist`);
     assert.match(sidebar, page.startsWith("en-") ? />Other</ : />其他</, `${page} sidebar should group glossary under Other`);
   }
 });
