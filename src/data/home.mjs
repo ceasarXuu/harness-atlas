@@ -53,6 +53,16 @@ export const homePages = {
         sourceLinkLabel: "查看原文",
         updates: [
           {
+            date: "2026.06.02",
+            dateTime: "2026-06-02",
+            title: "Qwen Code 重开后保留 /memory 开关",
+            tag: "开关状态",
+            description: "Qwen Code 的 6 月 2 日 nightly 让 `/memory` 开关在 dialog reopen 后保留状态，并把 full-history `structuredClone` 改成 shallow 或 tail variants，防止 resume 时 OOM。",
+            href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.17.0-nightly.20260602.cea15a118",
+            external: true,
+            sourceName: "GitHub Releases",
+          },
+          {
             date: "2026.06.01",
             dateTime: "2026-06-01",
             title: "Qwen Code 夜版增加内存压力监视",
@@ -256,6 +266,16 @@ export const homePages = {
         heading: "Industry Updates",
         sourceLinkLabel: "View Source",
         updates: [
+          {
+            date: "2026.06.02",
+            dateTime: "2026-06-02",
+            title: "Qwen Code keeps /memory toggle on reopen",
+            tag: "Toggle State",
+            description: "Qwen Code's June 2 nightly keeps the `/memory` toggle state across dialog reopen and replaces full-history `structuredClone` with shallow or tail variants to prevent OOM on resume.",
+            href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.17.0-nightly.20260602.cea15a118",
+            external: true,
+            sourceName: "GitHub Releases",
+          },
           {
             date: "2026.06.01",
             dateTime: "2026-06-01",
