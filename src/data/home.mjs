@@ -53,6 +53,16 @@ export const homePages = {
         sourceLinkLabel: "查看原文",
         updates: [
           {
+            date: "2026.06.03",
+            dateTime: "2026-06-03",
+            title: "Qwen Code 正式版收敛压力与拒绝信号",
+            tag: "运行时信号",
+            description: "Qwen Code 的 6 月 3 日 v0.17.1 把 memory pressure monitor、resume OOM 防护、AUTO 模式拒绝观测、shell 子进程上下文环境变量与原子写入收敛进正式版。Agent runtime 正把状态压力、拒绝路径和恢复诊断前移为可观测机制。",
+            href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.17.1",
+            external: true,
+            sourceName: "GitHub Releases",
+          },
+          {
             date: "2026.06.02",
             dateTime: "2026-06-02",
             title: "Qwen Code 重开后保留 /memory 开关",
@@ -286,6 +296,16 @@ export const homePages = {
         heading: "Industry Updates",
         sourceLinkLabel: "View Source",
         updates: [
+          {
+            date: "2026.06.03",
+            dateTime: "2026-06-03",
+            title: "Qwen Code stable rolls in pressure and denial signals",
+            tag: "Runtime Signals",
+            description: "Qwen Code v0.17.1 rolls memory pressure monitoring, OOM resume guards, AUTO denial observability, shell context env vars, and atomic writes into stable release. Pressure and recovery surface clearly.",
+            href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.17.1",
+            external: true,
+            sourceName: "GitHub Releases",
+          },
           {
             date: "2026.06.02",
             dateTime: "2026-06-02",
