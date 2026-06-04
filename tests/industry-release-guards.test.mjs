@@ -82,11 +82,15 @@ test("latest industry update review report is closed before release", () => {
   assert.ok(reviewFile, "industry update release should keep a review report");
   const report = read(join(reviewDir, reviewFile));
   const reportRelativePath = `vs_review/${reviewFile}`;
+  const reportDate = reviewFile.slice(0, 10);
   const metadataEndIndex = report.indexOf("\n## Round ");
   const metadataBlock = metadataEndIndex >= 0 ? report.slice(0, metadataEndIndex) : report;
   const finalConclusionIndex = report.lastIndexOf("\n## Final Conclusion");
   const lastRoundIndex = report.lastIndexOf("\n## Round ");
   const lastClosureIndex = report.lastIndexOf("\n### Closure Status");
+  const candidateAuditIndex = report.lastIndexOf("\n### Candidate Audit");
+  const candidateAuditEndIndex = lastClosureIndex > candidateAuditIndex ? lastClosureIndex : report.length;
+  const candidateAuditBlock = candidateAuditIndex >= 0 ? report.slice(candidateAuditIndex, candidateAuditEndIndex) : "";
   const terminalClosure = lastClosureIndex >= 0 && finalConclusionIndex > lastClosureIndex
     ? report.slice(lastClosureIndex, finalConclusionIndex)
     : "";
@@ -101,6 +105,15 @@ test("latest industry update review report is closed before release", () => {
     ["passed"],
     "latest industry update review report metadata should contain exactly one authoritative passed status",
   );
+  assert.deepEqual(
+    getExactFieldValues(metadataBlock, "Screening run date"),
+    [reportDate],
+    "latest industry update review report metadata should bind the screening run date to the report filename date",
+  );
+  assert.ok(
+    reportDate >= latestDate,
+    "latest industry update review report should not predate the current feed latest date",
+  );
   assert.doesNotMatch(
     report,
     /^\|[^\n]*\|\s*pending\s*\|\s*pending\s*\|\s*pending\s*\|\s*pending\s*\|?$/m,
@@ -108,6 +121,17 @@ test("latest industry update review report is closed before release", () => {
   );
   assert.doesNotMatch(report, /^- pending\b/m, "latest industry update review report should not keep pending list placeholders");
   assert.doesNotMatch(report, /^Pending review\.$/m, "latest industry update review report should not keep a pending conclusion");
+  assert.match(report, /^### Candidate Audit\b/m, "latest industry update review report should include a candidate audit section");
+  assert.match(
+    candidateAuditBlock,
+    /^\| Source \| Visible Date \| Candidate Title \| Gate Result \| Decision \| Reason \|$/m,
+    "latest industry update review report should keep the candidate audit header",
+  );
+  assert.match(
+    candidateAuditBlock,
+    /^\| .+ \| .+ \| .+ \| .+ \| .+ \| .+ \|$/m,
+    "latest industry update review report should include at least one structured candidate audit row",
+  );
   assert.deepEqual(
     getExactFieldValues(terminalClosure, "Feed latest date"),
     [latestDate],
