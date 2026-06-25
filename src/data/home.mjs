@@ -52,6 +52,11 @@ export const homePages = {
         heading: "行业动态",
         sourceLinkLabel: "查看原文",
         updates: [
+          { date: "2026.06.25", dateTime: "2026-06-25", title: "Codex 增加认证网络代理规则", tag: "网络路由", description: "Codex v0.142.1 为 Windows 认证链路新增可选系统代理解析（PAC、WPAD、静态代理与绕过规则）。身份校验时的出站策略被标准化为可配置规则，便于在受控网络下稳定复现 Agent 运行行为。", href: "https://github.com/openai/codex/releases/tag/rust-v0.142.1", external: true, sourceName: "GitHub Releases", },
+          {
+            date: "2026.06.24", dateTime: "2026-06-24", title: "GitHub Copilot 改为自动模型路由", tag: "模型路由", description: "GitHub Copilot Free 与 Student 计划于 2026.06.24 起仅保留自动模型路由：移除手工选择，系统按任务上下文和计划权限边界，在多模型家族间动态分发模型，并把可见模型决策收敛为统一的运行时行为策略。", href: "https://github.blog/changelog/2026-06-24-changes-to-model-selection-for-free-and-student-plans/", external: true, sourceName: "GitHub Changelog", },
+          {
+            date: "2026.06.24", dateTime: "2026-06-24", title: "Qwen Code 加入权限与资源机制", tag: "权限边界", description: "Qwen Code v0.19.2 新增 workspace permissions rules API，并开放 MCP resource read tool。工具读取与会话权限被显式收敛为可追踪边界，runtime 可观测与治理链路更清晰。", href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.19.2", external: true, sourceName: "GitHub Releases", },
           {
             date: "2026.06.23", dateTime: "2026-06-23", title: "Qwen Code 引入可恢复子代理", tag: "子代理生命周期", description: "Qwen Code v0.19.0 把后台 sub-agent 引擎升级为可恢复态：新增会话 transcript 回放、TTL 上下文管理，并定义可重启边界。任务中断后可从明确状态恢复并继续执行，显著提升长任务可追溯性和回滚能力。", href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.19.0", external: true, sourceName: "GitHub Releases", },
           {
@@ -84,21 +89,8 @@ export const homePages = {
           { date: "2026.06.03", dateTime: "2026-06-03", title: "Qwen Code 正式版收敛压力与拒绝信号", tag: "运行时信号", description: "Qwen Code 的 6 月 3 日 v0.17.1 把 memory pressure monitor、resume OOM 防护、AUTO 模式拒绝观测、shell 子进程上下文环境变量与原子写入收敛进正式版。Agent runtime 正把状态压力、拒绝路径和恢复诊断前移为可观测机制。", href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.17.1", external: true, sourceName: "GitHub Releases" },
           { date: "2026.06.02", dateTime: "2026-06-02", title: "Qwen Code 重开后保留 /memory 开关", tag: "开关状态", description: "Qwen Code 的 6 月 2 日 nightly 让 `/memory` 开关在 dialog reopen 后保留状态，并把 full-history `structuredClone` 改成 shallow 或 tail variants，防止 resume 时 OOM。", href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.17.0-nightly.20260602.cea15a118", external: true, sourceName: "GitHub Releases" },
           { date: "2026.06.01", dateTime: "2026-06-01", title: "Qwen Code 夜版增加内存压力监视", tag: "状态治理", description: "Qwen Code 的 6 月 1 日 nightly 预发布新增 `memory pressure monitor`，并补上 resumed history 与 tool results 顺序防护。Agent runtime 正把上下文膨胀和工具序列错误前移为显式状态约束。", href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.17.0-nightly.20260601.1c48e4121", external: true, sourceName: "GitHub Releases" },
-          {
-            date: "2026.06.01", dateTime: "2026-06-01", title: "AWS 用 AgentOps 组织 AgentCore 运维", tag: "观测评测",
-            description: "AWS 介绍 Bedrock AgentCore 的 AgentOps 方法，把治理、安全、构建运维、评测和四层遥测串成生产循环。Agent 运维从单次日志转向可追踪、可反馈的 runtime 控制面。",
-            href: "https://aws.amazon.com/blogs/machine-learning/agentops-operationalize-agentic-ai-at-scale-with-amazon-bedrock-agentcore/", external: true, sourceName: "AWS Blog",
-          },
-          {
-            date: "2026.05.29",
-            dateTime: "2026-05-29",
-            title: "Copilot 指标 API 增加 Agent 采用分层",
-            tag: "观测",
-            description: "GitHub 为 Copilot usage metrics API 新增 `ai_adoption_phase` 和 `totals_by_ai_adoption_phase`，按 code-first、agent-first、多 Agent 分层统计。Agent 使用正从活跃度计数转向 workflow 成熟度观测。",
-            href: "https://github.blog/changelog/2026-05-29-copilot-usage-metrics-api-adds-cohorts-for-ai-adoption/",
-            external: true,
-            sourceName: "GitHub Changelog",
-          },
+          { date: "2026.06.01", dateTime: "2026-06-01", title: "AWS 用 AgentOps 组织 AgentCore 运维", tag: "观测评测", description: "AWS 介绍 Bedrock AgentOps 的 AgentOps 方法，把治理、安全、构建运维、评测和四层遥测串成生产循环。Agent 运维从单次日志转向可追踪、可反馈的 runtime 控制面。", href: "https://aws.amazon.com/blogs/machine-learning/agentops-operationalize-agentic-ai-at-scale-with-amazon-bedrock-agentcore/", external: true, sourceName: "AWS Blog" },
+          { date: "2026.05.29", dateTime: "2026-05-29", title: "Copilot 指标 API 增加 Agent 采用分层", tag: "观测", description: "GitHub 为 Copilot usage metrics API 新增 `ai_adoption_phase` 和 `totals_by_ai_adoption_phase`，按 code-first、agent-first、多 Agent 分层统计。Agent 使用正从活跃度计数转向 workflow 成熟度观测。", href: "https://github.blog/changelog/2026-05-29-copilot-usage-metrics-api-adds-cohorts-for-ai-adoption/", external: true, sourceName: "GitHub Changelog" },
           {
             date: "2026.05.29",
             dateTime: "2026-05-29",
@@ -240,8 +232,7 @@ export const homePages = {
             sourceName: "OpenAI",
           },
         ],
-        initialVisible: 3,
-        pageSize: 2,
+        initialVisible: 3, pageSize: 2,
       },
     ],
   },
@@ -298,6 +289,11 @@ export const homePages = {
         heading: "Industry Updates",
         sourceLinkLabel: "View Source",
         updates: [
+          { date: "2026.06.25", dateTime: "2026-06-25", title: "Codex adds auth proxy resolution", tag: "Network Routing", description: "Codex 0.142.1 adds Windows system proxy support for authentication (PAC, WPAD, static proxies, and bypass rules), standardizing egress policy for deterministic agent behavior on controlled networks.", href: "https://github.com/openai/codex/releases/tag/rust-v0.142.1", external: true, sourceName: "GitHub Releases", },
+          {
+            date: "2026.06.24", dateTime: "2026-06-24", title: "GitHub Copilot enables auto model selection", tag: "policy routing", description: "GitHub Copilot Free and Student plans now use only auto model selection. This removes manual model switching and uses task-aware routing across model families with plan-level constraints.", href: "https://github.blog/changelog/2026-06-24-changes-to-model-selection-for-free-and-student-plans/", external: true, sourceName: "GitHub Changelog", },
+          {
+            date: "2026.06.24", dateTime: "2026-06-24", title: "Qwen Code adds workspace permission gates", tag: "permission model", description: "Qwen Code v0.19.2 adds a workspace permissions rules API and an MCP resource read tool. Access is constrained by explicit rules and controlled reads, improving permission boundaries and observability.", href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.19.2", external: true, sourceName: "GitHub Releases", },
           {
             date: "2026.06.23", dateTime: "2026-06-23", title: "Qwen Code adds revivable sub-agents", tag: "agent lifecycle", description: "Qwen Code v0.19.0 makes background sub-agents revivable with transcript replay and TTL context windows, so interrupted work can restart from explicit state boundaries for safer long runs.", href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.19.0", external: true, sourceName: "GitHub Releases", },
           {
@@ -486,8 +482,7 @@ export const homePages = {
             sourceName: "OpenAI",
           },
         ],
-        initialVisible: 3,
-        pageSize: 2,
+        initialVisible: 3, pageSize: 2,
       },
     ],
   },
