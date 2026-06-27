@@ -52,6 +52,7 @@ export const homePages = {
         heading: "行业动态",
         sourceLinkLabel: "查看原文",
         updates: [
+          { date: "2026.06.26", dateTime: "2026-06-26", title: "GitHub Desktop 深化 Copilot 开发工作流", tag: "工作流编排", description: "GitHub Desktop 3.6 将提交信息生成与冲突处理统一接入 Copilot SDK，并新增模型选择与 BYOK 通道；结合 `.github/copilot-instructions.md` 与 worktree 支持，提交、合并与并行分支运行被放进可控的代理协作边界。", href: "https://github.blog/changelog/2026-06-26-github-desktop-3-6-worktrees-and-deeper-copilot-integration/", external: true, sourceName: "GitHub Changelog", },
           { date: "2026.06.25", dateTime: "2026-06-25", title: "Codex 增加认证网络代理规则", tag: "网络路由", description: "Codex v0.142.1 为 Windows 认证链路新增可选系统代理解析（PAC、WPAD、静态代理与绕过规则）。身份校验时的出站策略被标准化为可配置规则，便于在受控网络下稳定复现 Agent 运行行为。", href: "https://github.com/openai/codex/releases/tag/rust-v0.142.1", external: true, sourceName: "GitHub Releases", },
           {
             date: "2026.06.24", dateTime: "2026-06-24", title: "GitHub Copilot 改为自动模型路由", tag: "模型路由", description: "GitHub Copilot Free 与 Student 计划于 2026.06.24 起仅保留自动模型路由：移除手工选择，系统按任务上下文和计划权限边界，在多模型家族间动态分发模型，并把可见模型决策收敛为统一的运行时行为策略。", href: "https://github.blog/changelog/2026-06-24-changes-to-model-selection-for-free-and-student-plans/", external: true, sourceName: "GitHub Changelog", },
@@ -289,6 +290,7 @@ export const homePages = {
         heading: "Industry Updates",
         sourceLinkLabel: "View Source",
         updates: [
+          { date: "2026.06.26", dateTime: "2026-06-26", title: "GitHub Desktop deepens Copilot workflow primitives", tag: "Workflow Orchestration", description: "GitHub Desktop 3.6 routes commit authoring and merge-conflict help via Copilot SDK, adds model picker and BYOK, plus worktree support, and aligns branch sessions to repository-level instructions.", href: "https://github.blog/changelog/2026-06-26-github-desktop-3-6-worktrees-and-deeper-copilot-integration/", external: true, sourceName: "GitHub Changelog", },
           { date: "2026.06.25", dateTime: "2026-06-25", title: "Codex adds auth proxy resolution", tag: "Network Routing", description: "Codex 0.142.1 adds Windows system proxy support for authentication (PAC, WPAD, static proxies, and bypass rules), standardizing egress policy for deterministic agent behavior on controlled networks.", href: "https://github.com/openai/codex/releases/tag/rust-v0.142.1", external: true, sourceName: "GitHub Releases", },
           {
             date: "2026.06.24", dateTime: "2026-06-24", title: "GitHub Copilot enables auto model selection", tag: "policy routing", description: "GitHub Copilot Free and Student plans now use only auto model selection. This removes manual model switching and uses task-aware routing across model families with plan-level constraints.", href: "https://github.blog/changelog/2026-06-24-changes-to-model-selection-for-free-and-student-plans/", external: true, sourceName: "GitHub Changelog", },
