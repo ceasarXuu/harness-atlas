@@ -52,6 +52,16 @@ export const homePages = {
         heading: "行业动态",
         sourceLinkLabel: "查看原文",
         updates: [
+          {
+            date: "2026.06.28",
+            dateTime: "2026-06-28",
+            title: "Qwen Code 强化 daemon 与 protocol 映射",
+            tag: "运行时控制",
+            description: "Qwen Code v0.19.3 增加 daemon workspace 的语音与控制 API，并在 provider id 与 SDK 协议之间新增 providerProtocol 映射；MCP 配置改动会被实时重载，同时补齐敏感 span 属性与启动基准的可观测控制点，强化了运行时治理与排查能力。",
+            href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.19.3",
+            external: true,
+            sourceName: "GitHub Releases",
+          },
           { date: "2026.06.26", dateTime: "2026-06-26", title: "GitHub Desktop 深化 Copilot 开发工作流", tag: "工作流编排", description: "GitHub Desktop 3.6 将提交信息生成与冲突处理统一接入 Copilot SDK，并新增模型选择与 BYOK 通道；结合 `.github/copilot-instructions.md` 与 worktree 支持，提交、合并与并行分支运行被放进可控的代理协作边界。", href: "https://github.blog/changelog/2026-06-26-github-desktop-3-6-worktrees-and-deeper-copilot-integration/", external: true, sourceName: "GitHub Changelog", },
           { date: "2026.06.25", dateTime: "2026-06-25", title: "Codex 增加认证网络代理规则", tag: "网络路由", description: "Codex v0.142.1 为 Windows 认证链路新增可选系统代理解析（PAC、WPAD、静态代理与绕过规则）。身份校验时的出站策略被标准化为可配置规则，便于在受控网络下稳定复现 Agent 运行行为。", href: "https://github.com/openai/codex/releases/tag/rust-v0.142.1", external: true, sourceName: "GitHub Releases", },
           {
@@ -290,6 +300,16 @@ export const homePages = {
         heading: "Industry Updates",
         sourceLinkLabel: "View Source",
         updates: [
+          {
+            date: "2026.06.28",
+            dateTime: "2026-06-28",
+            title: "Qwen Code reinforces daemon and protocol mapping",
+            tag: "Runtime Control",
+            description: "Qwen Code v0.19.3 adds daemon control APIs, maps provider IDs to `providerProtocol`, and hot-reloads MCP settings. It also sets span limits and startup benchmarks for control and tracing.",
+            href: "https://github.com/QwenLM/qwen-code/releases/tag/v0.19.3",
+            external: true,
+            sourceName: "GitHub Releases",
+          },
           { date: "2026.06.26", dateTime: "2026-06-26", title: "GitHub Desktop deepens Copilot workflow primitives", tag: "Workflow Orchestration", description: "GitHub Desktop 3.6 routes commit authoring and merge-conflict help via Copilot SDK, adds model picker and BYOK, plus worktree support, and aligns branch sessions to repository-level instructions.", href: "https://github.blog/changelog/2026-06-26-github-desktop-3-6-worktrees-and-deeper-copilot-integration/", external: true, sourceName: "GitHub Changelog", },
           { date: "2026.06.25", dateTime: "2026-06-25", title: "Codex adds auth proxy resolution", tag: "Network Routing", description: "Codex 0.142.1 adds Windows system proxy support for authentication (PAC, WPAD, static proxies, and bypass rules), standardizing egress policy for deterministic agent behavior on controlled networks.", href: "https://github.com/openai/codex/releases/tag/rust-v0.142.1", external: true, sourceName: "GitHub Releases", },
           {
