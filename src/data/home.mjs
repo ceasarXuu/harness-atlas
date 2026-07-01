@@ -53,6 +53,26 @@ export const homePages = {
         sourceLinkLabel: "查看原文",
         updates: [
           {
+            date: "2026.07.01",
+            dateTime: "2026-07-01",
+            title: "Codex 过滤 WebSocket trace 中完整响应载荷",
+            tag: "可观测性",
+            description: "Codex 0.142.5 在会话响应链路中将完整 WebSocket 响应体从 trace 日志中排除，避免 trace 观察面泄露原始 payload。同时保留事件级日志用于定位问题，形成“可诊断且更少暴露敏感内容”的运行时观测边界。此举将 session 级可观察性与安全隔离在日志层面解耦。",
+            href: "https://github.com/openai/codex/releases/tag/rust-v0.142.5",
+            external: true,
+            sourceName: "GitHub Releases",
+          },
+          {
+            date: "2026.06.30",
+            dateTime: "2026-06-30",
+            title: "Copilot Agent 在 JetBrains AI Assistant 落地 ACP 会话入口",
+            tag: "工具接入",
+            description: "GitHub 在 JetBrains AI Assistant 内将 Copilot Agent 以 ACP 会话机制接入为原生入口，提供统一的模型与推理深度选择，以及多步任务在 IDE 内的 workflow 交付路径。该机制把 session 启动、任务路由、权限边界与状态回传收敛到统一 agent runtime 上，提升审计与可观测的一致性。",
+            href: "https://github.blog/changelog/2026-06-30-copilot-agent-is-now-available-in-jetbrains-ai-assistant/",
+            external: true,
+            sourceName: "GitHub Changelog",
+          },
+          {
             date: "2026.06.28",
             dateTime: "2026-06-28",
             title: "Qwen Code 强化 daemon 与 protocol 映射",
@@ -300,6 +320,26 @@ export const homePages = {
         heading: "Industry Updates",
         sourceLinkLabel: "View Source",
         updates: [
+          {
+            date: "2026.07.01",
+            dateTime: "2026-07-01",
+            title: "Codex blocks full WebSocket payloads from trace logs",
+            tag: "Observability",
+            description: "Codex 0.142.5 removes full Responses WebSocket payloads from trace logs, preserving session tracing for debugging while reducing sensitive leakage. Event checkpoints remain for replay and forensics.",
+            href: "https://github.com/openai/codex/releases/tag/rust-v0.142.5",
+            external: true,
+            sourceName: "GitHub Releases",
+          },
+          {
+            date: "2026.06.30",
+            dateTime: "2026-06-30",
+            title: "Copilot Agent adds ACP-native JetBrains session workflow",
+            tag: "Tooling",
+            description: "GitHub adds Copilot Agent as a native ACP JetBrains entry with model and reasoning-depth controls. IDE sessions can launch, route, and handoff multi-step tasks through one protocol-level workflow.",
+            href: "https://github.blog/changelog/2026-06-30-copilot-agent-is-now-available-in-jetbrains-ai-assistant/",
+            external: true,
+            sourceName: "GitHub Changelog",
+          },
           {
             date: "2026.06.28",
             dateTime: "2026-06-28",
