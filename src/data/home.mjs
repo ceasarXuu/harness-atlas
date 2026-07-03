@@ -53,6 +53,26 @@ export const homePages = {
         sourceLinkLabel: "查看原文",
         updates: [
           {
+            date: "2026.07.02",
+            dateTime: "2026-07-02",
+            title: "Copilot 提供会话流式与 REST 两种可观测通道",
+            tag: "可观测性",
+            description: "GitHub 在 AI Controls 同步开启 Copilot 会话观测：启用 `Usage Records Streaming` 与 `Usage Records API` 后，prompts、responses、tool calls 可写入 SIEM（含 Microsoft Purview 预览），并可查询最近 48 小时会话记录。",
+            href: "https://github.blog/changelog/2026-07-02-copilot-agent-session-streaming-is-now-in-public-preview/",
+            external: true,
+            sourceName: "GitHub Changelog",
+          },
+          {
+            date: "2026.07.02",
+            dateTime: "2026-07-02",
+            title: "Copilot CLI 在 Actions 中改用 GITHUB_TOKEN",
+            tag: "权限边界",
+            description: "GitHub Changelog 表示 Copilot CLI 现在可直接用内置 `GITHUB_TOKEN` 在组织仓库的 Actions 里运行，不再保存长期 PAT。此变更把 `copilot-requests: write` 与组织策略绑定，并用 `session limit` 强化组织计费与权限边界。",
+            href: "https://github.blog/changelog/2026-07-02-copilot-cli-no-longer-needs-a-personal-access-token-in-github-actions/",
+            external: true,
+            sourceName: "GitHub Changelog",
+          },
+          {
             date: "2026.07.01",
             dateTime: "2026-07-01",
             title: "Codex 过滤 WebSocket trace 中完整响应载荷",
@@ -320,6 +340,26 @@ export const homePages = {
         heading: "Industry Updates",
         sourceLinkLabel: "View Source",
         updates: [
+          {
+            date: "2026.07.02",
+            dateTime: "2026-07-02",
+            title: "Copilot adds streaming and REST channels for session observability",
+            tag: "Observability",
+            description: "GitHub adds Copilot observability channels in AI Controls: streaming and API. Prompts, responses, and tool calls flow to collectors, and 48h usage records are queryable with Microsoft Purview preview.",
+            href: "https://github.blog/changelog/2026-07-02-copilot-agent-session-streaming-is-now-in-public-preview/",
+            external: true,
+            sourceName: "GitHub Changelog",
+          },
+          {
+            date: "2026.07.02",
+            dateTime: "2026-07-02",
+            title: "Copilot CLI now runs in Actions with GITHUB_TOKEN",
+            tag: "Permission Boundaries",
+            description: "GitHub lets Copilot CLI run in Actions with built-in `GITHUB_TOKEN`, avoiding long-lived PATs. `copilot-requests: write` and session limits bind permissions to org policies and billing governance.",
+            href: "https://github.blog/changelog/2026-07-02-copilot-cli-no-longer-needs-a-personal-access-token-in-github-actions/",
+            external: true,
+            sourceName: "GitHub Changelog",
+          },
           {
             date: "2026.07.01",
             dateTime: "2026-07-01",
